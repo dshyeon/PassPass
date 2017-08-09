@@ -1,5 +1,19 @@
 # Contributing
 
+## Basic To-Dos for commits
+1. `git pull --rebase upstream master` (before starting any code changes)
+1. `git checkout -b <branchname>` - see below for name format
+1. do your code changes
+1. `git add .``
+1. `git commit -m '...'`
+1. `git pull --rebase upstream master` (before pushing)
+1. resolve any conflicts (if any or skip to git push step)
+1. `git add .` (any changes)
+1. `git rebase --continue` (don't need to commit again)
+1. `git push -u origin <branchname>` (to your fork)
+1. go to github and create pull request
+1. ask someone to check your work and merge the PR
+
 ## General Workflow
 
 1. Fork the repo
