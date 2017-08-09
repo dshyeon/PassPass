@@ -11,7 +11,7 @@ class SignIn extends React.Component {
   render () {
     return (
       <h1>Pass Pass</h1>
-      <div>Sign In Box Goes Here</div>
+      <div>SignInBox Component Goes Here</div>
     )
   }
 }
