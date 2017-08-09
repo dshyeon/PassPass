@@ -5,9 +5,7 @@ import $ from 'jquery';
 class SignIn extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      items: []
-    }
+    this.state = {};
   }
 
   render () {
