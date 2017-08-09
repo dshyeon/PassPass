@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import List from './components/List.jsx';
 
-class SignIn extends React.Component {
+class SignUp extends React.Component {
   constructor(props) {
     super(props);
     this.state = { 
