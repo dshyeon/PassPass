@@ -13,10 +13,7 @@ class SignIn extends React.Component {
   render () {
     return (
       <h1>Pass Pass</h1>
-      <div>
-        <h1>Item List</h1>
-        <List items={this.state.items}/>
-      </div>
+      <div>Sign In Box Goes Here</div>
     )
   }
 }
