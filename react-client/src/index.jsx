@@ -11,10 +11,13 @@ class SignIn extends React.Component {
   }
 
   render () {
-    return (<div>
-      <h1>Item List</h1>
-      <List items={this.state.items}/>
-    </div>)
+    return (
+      <h1>Pass Pass</h1>
+      <div>
+        <h1>Item List</h1>
+        <List items={this.state.items}/>
+      </div>
+    )
   }
 }
 
