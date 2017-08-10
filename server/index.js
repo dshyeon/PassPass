@@ -1,35 +1,102 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-
-var items = require('../database');
+var cookieParser = require('cookie-parser');
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+var FacebookStrategy = require('passport-facebook').Strategy;
+var database = require('../database');
 
 var app = express();
 
 app.use(express.static(__dirname + '/../react-client/dist'));
+app.use(bodyParser());
+app.use(cookieParser());
+app.use(express.session()); // optional parameter for signed authentication {secret: 'hungry hippos'}
+app.use(passport.initialize());
+app.use(passport.session());
+// app.use(app.router);
+
+passport.use(new LocalStrategy({
+    usernameField: 'email',
+    passwordField: 'password'
+  },
+  (username, password, done) => {
+    //update name of method to database to find matching username
+    database.authUser({email: username, password: password},
+    (err, user) => {
+      if (err) {return done(err);}
+      if (!user) {return done(null, false, {message: 'Incorrect username or password.'});}
+      return done(null, user);
+    });
+  }
+));
+
+passport.use(new FacebookStrategy({
+    clientID: '110135309689111',
+    clientSecret: '7a006d77349fb90f56a5336b08b41bff',
+    callbackURL: 'https://hungryhippopasspass.herokuapp.com/auth/facebook/callback' //should this be an ENV variable?
+    //need to create this path for facebook to work
+  },
+    (accessToken, refreshToken, profile, done) => { //fb profile: http://passportjs.org/docs/profile
+      database.createUser({email: profile.emails[0].value, name: profile.displayName, cookie: accessToken},
+      (err, user) => {
+        if (err) {return done(err);}
+        done(null, user);
+      });
+    }
+));
 
 app.get('/', (req, res) => {
-  // res.send('Hello World and Martin');
   //create a session and check a cookie
-  // res.writeHead(301, {Location: 'http://localhost:3000/react-client/dist/index.html' });
-  // res.writeHead(301, {Location: 'http' + (req.socket.encrypted ? 's' : '') + '://' + req.headers.host + '/index.html'})
-  // res.end();
+  req.login(); //establishes a session for passport to work
+  res.end();
 });
 
-app.post('/user/login', (req, res) => {
-  //req has username and password
-  //call to db to check the login and password
-  //if exists, update authentication token
-  //else send error message wrong login info
+app.post('/auth/email', (req, res, next) => {
+  passport.authenticate('local', (err, user, info) => {
+    //info is optional argument passed by the strategy's callback
+    //req.user contains the authenticated user if approved
+    //req.user = false if fails
+    //if exists, update cookie
+    if (err) {
+      return next(err);
+    }
+    if (!user) {
+      return res.redirect('/login');
+    }
+    req.logIn(user, err => {
+      if (err) {
+        return next(err);
+      }
+      passport.serializeUser((user, done) => {
+        done(null, user.id);
+      });
+      return res.redirect('/interactions/' + user.username);
+    });
+  })(req, res, next);
 });
 
-app.post('/user/signup', (req, res) => {
+app.post('/auth/signup', (req, res) => {
   //req has obj of signup data
   //call to db to add the user data and create new user
   //if successful, return insert id
+  //log user in
+  passport.serializeUser((user, done) => {
+    done(null, user.id);
+  });
+  //add authentication to a session table and cookie to the browser
+  return res.redirect('/interactions/' + user.username);
   //else send error message try again
   //how granular can the error be?
   //if existing account, just login?
 });
+
+app.get('/auth/facebook', passport.authenticate('facebook'));
+
+app.get('/auth/facebook/callback', passport.authenticate('facebook', {
+  successRedirects: '/interactions',
+  failureRedirect: '/login'
+}));
 
 app.post('/user/search', (req, res) => {
   // req has user id
