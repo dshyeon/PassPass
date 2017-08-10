@@ -4,6 +4,8 @@ var React = require('react');
 var AppLoggedOut = require('../../react-client/src/index.jsx');
 var AppLoggedIn = require('../../react-client/src/loggedIn.jsx');
 
+var enzyme = require('enzyme')
+
 describe('appLoggedOut', function() {
 
   var {
@@ -13,6 +15,7 @@ describe('appLoggedOut', function() {
     scryRenderedDOMComponentsWithClass
   } = ReactTestUtils;
 
+  var wrapper = enzyme.shallow(<AppLoggedOut />);
   var appLoggedOut;
 
   beforeEach(function() {
