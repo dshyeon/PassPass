@@ -1,6 +1,6 @@
 # Project Name
 
-Digital Marketplace
+PassPass
 
 ## Team
 

@@ -11,7 +11,7 @@ var app = express();
 app.use(express.static(__dirname + '/../react-client/dist'));
 app.use(bodyParser());
 app.use(cookieParser());
-app.use(express.session()); // optional parameter for signed authentication {secret: 'hungry hippos'}
+// app.use(express.session()); // optional parameter for signed authentication {secret: 'hungry hippos'}
 app.use(passport.initialize());
 app.use(passport.session());
 // app.use(app.router);
