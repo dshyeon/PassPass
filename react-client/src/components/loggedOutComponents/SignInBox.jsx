@@ -30,7 +30,7 @@ class SignInBox extends React.Component {
 		  data: JSON.stringify({
 		  	email: this.state.inputEmail,
 		  	password: this.state.inputPassword
-		  });
+		  }),
 		  success: function (data) {
 		  	console.log(data);
 		  }
