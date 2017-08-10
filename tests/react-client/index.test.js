@@ -1,8 +1,10 @@
 var expect = require('chai').expect;
 var ReactTestUtils = require('react-dom/test-utils');
 var React = require('react');
+var AppLoggedOut = require('../../react-client/src/index.jsx');
+var AppLoggedIn = require('../../react-client/src/loggedIn.jsx');
 
-describe('signUp', function() {
+describe('appLoggedOut', function() {
 
   var {
     Simulate,
@@ -11,21 +13,21 @@ describe('signUp', function() {
     scryRenderedDOMComponentsWithClass
   } = ReactTestUtils;
 
-  var signUp;
+  var appLoggedOut;
 
   beforeEach(function() {
     // TODO
-    // signUp = renderIntoDocument(
-    //   <SignUp searchYouTube={() => {}}/>
+    // appLoggedOut = renderIntoDocument(
+    //   <AppLoggedOut />
     // );
   });
 
   it('should be a stateful class component', function() {
-    expect(React.Component.isPrototypeOf(SignUp)).to.be.true;
+    expect(React.Component.isPrototypeOf(AppLoggedOut)).to.be.true;
   });
 
   xit('should render a single sign up form', function() {
-    var signUpForm = findRenderedDOMComponentWithClass(signUp, 'TODO');
+    var signUpForm = findRenderedDOMComponentWithClass(appLoggedOut, 'TODO');
     expect(signUpForm).to.exist;
   });  
 

@@ -7,24 +7,25 @@ var expect = require('chai').expect;
 xdescribe('Database', function() {
   var dbConnection;
 
-  beforeEach(function(done) {
-    dbConnection = mysql.createConnection({
-      user: 'root',
-      password: 'plantlife',
-      database: 'chat'
-    });
-    dbConnection.connect();
+  // beforeEach(function(done) {
+  //   // TODO
+  //   dbConnection = mysql.createConnection({
+  //     user: 'root',
+  //     password: '',
+  //     database: 'TODO'
+  //   });
+  //   dbConnection.connect();
 
-    var tablename = 'users';
+  //   var tablename = 'users';
 
-    /* Empty the db table before each test so that multiple tests
-     * (or repeated runs of the tests) won't screw each other up: */
-    dbConnection.query('truncate ' + tablename, done);
-  });
+  //    Empty the db table before each test so that multiple tests
+  //    * (or repeated runs of the tests) won't screw each other up: 
+  //   dbConnection.query('truncate ' + tablename, done);
+  // });
 
-  afterEach(function() {
-    dbConnection.end();
-  });
+  // afterEach(function() {
+  //   dbConnection.end();
+  // });
 
   describe('Database Schema:', function() {
     it('contains a users table', function(done) {
