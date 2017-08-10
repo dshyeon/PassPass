@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 
-class SignIn extends React.Component {
+class AppLoggedOut extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -10,10 +10,11 @@ class SignIn extends React.Component {
 
   render () {
     return (
-      <h1>Pass Pass</h1>
-      <div>SignInBox Component Goes Here</div>
+      <div className="pageFlexContainer">
+        <h1 className="logo">PassPass</h1>
+      </div>
     )
   }
 }
 
-ReactDOM.render(<SignIn />, document.getElementById('signIn'));
+ReactDOM.render(<AppLoggedOut />, document.getElementById('appLoggedOut'));
