@@ -1,7 +1,8 @@
 var expect = require('chai').expect;
 var ReactTestUtils = require('react-dom/test-utils');
+var React = require('react');
 
-describe('App', function() {
+describe('signUp', function() {
 
   var {
     Simulate,
@@ -10,14 +11,30 @@ describe('App', function() {
     scryRenderedDOMComponentsWithClass
   } = ReactTestUtils;
 
+  var signUp;
+
   beforeEach(function() {
-    // index = <index? >
+    // TODO
+    // signUp = renderIntoDocument(
+    //   <SignUp searchYouTube={() => {}}/>
+    // );
   });
 
-  describe('Test category 1', function() {
-    it('should render login page', function() {
-      expect(React.Component.isPrototypeOf(App)).to.be.true;
-    });
+  it('should be a stateful class component', function() {
+    expect(React.Component.isPrototypeOf(SignUp)).to.be.true;
   });
+
+  xit('should render a single sign up form', function() {
+    var signUpForm = findRenderedDOMComponentWithClass(signUp, 'TODO');
+    expect(signUpForm).to.exist;
+  });  
+
+  xit('should send a POST request for sign up', function() {
+    //TODO
+  })
+
+  xit('should send a POST request for login', function() {
+    //TODO
+  })
 
 });

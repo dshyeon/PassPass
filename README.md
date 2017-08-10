@@ -23,6 +23,23 @@ Digital Marketplace
 
 > Some usage instructions
 
+### Testing
+
+Tests are done with [Mocha](https://mochajs.org) and [Chai](http://chaijs.com/). Other packages used:
+- [supertest](https://www.npmjs.com/package/supertest)
+- [React Test Utilities](https://facebook.github.io/react/docs/test-utils.html)
+
+Run tests in repo root folder with
+```sh
+npm test
+```
+
+Test results will be output to terminal window.
+
+Tests are split into 3 folders: react-client, server, and database, to match the equivalent folders with JavaScript source code.
+
+Checking test coverage is TBD.
+
 ## Requirements
 
 - Node 6.4.x

@@ -178,10 +178,12 @@ app.post('/chat', (req, res) => {
   // TBD
 });
 
-app.listen(4000, function() {
-  console.log('listening on port 3000');
-});
+app.set('port', 3000);
+// app.set('port', process.env.PORT);
 
-// app.listen(process.env.PORT, function() {
-//   console.log('listening on port ' + process.env.PORT);
-// });
+if (module.parent) {
+  module.exports = app;
+} else {
+  app.listen(app.get('port'));
+  console.log('Listening on', app.get('port'));
+}
