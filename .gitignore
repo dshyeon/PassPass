@@ -28,5 +28,8 @@ react-client/dist/*.bundle.js
 node_modules/
 bower_components/
 
+# Secure Passcodes
+facebook.config.js
+
 ## OS Files
 .DS_Store

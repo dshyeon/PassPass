@@ -1,17 +1,24 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-var cookieParser = require('cookie-parser');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
 var database = require('../database');
+var session = require('express-session');
 
 var app = express();
 
+var headers = {'Content-Type', 'application/json'};
+
 app.use(express.static(__dirname + '/../react-client/dist'));
-app.use(bodyParser());
-app.use(cookieParser());
-// app.use(express.session()); // optional parameter for signed authentication {secret: 'hungry hippos'}
+
+app.use(bodyParser.urlencoded({extended: false})); //will work when the req header Content-Type matches the type option (accepts only UTF-8 ), extended=false means the obj will contain key-value paires and values can be strings or arrays, change to true for any type
+app.use(bodyParser.json()); //default strict parameter only accepts arrays and objects, can change to false, will work when the req header Content-Type matches the type option (default to application/json but can change)
+
+app.use(session({secret: 'hungry hippos'})); // optional parameter for signed authentication {secret: 'hungry hippos'}
+//when to destroy a session?
+//req.session.destroy(err => {})
+
 app.use(passport.initialize());
 app.use(passport.session());
 // app.use(app.router);
@@ -31,12 +38,7 @@ passport.use(new LocalStrategy({
   }
 ));
 
-passport.use(new FacebookStrategy({
-    clientID: '110135309689111',
-    clientSecret: '7a006d77349fb90f56a5336b08b41bff',
-    callbackURL: 'https://hungryhippopasspass.herokuapp.com/auth/facebook/callback' //should this be an ENV variable?
-    //need to create this path for facebook to work
-  },
+passport.use(new FacebookStrategy(FB_CREDS,
     (accessToken, refreshToken, profile, done) => { //fb profile: http://passportjs.org/docs/profile
       database.createUser({email: profile.emails[0].value, name: profile.displayName, cookie: accessToken},
       (err, user) => {
@@ -46,7 +48,11 @@ passport.use(new FacebookStrategy({
     }
 ));
 
-app.get('/', (req, res) => {
+app.get('/', (req, res, next) => {
+  var sesssionID = req.sessionID;
+  var cookie = req.session.cookie;
+  req.session.cookie.expires = false;
+  req.session.hash = 'some value';
   //create a session and check a cookie
   req.login(); //establishes a session for passport to work
   res.end();
@@ -71,6 +77,9 @@ app.post('/auth/email', (req, res, next) => {
       passport.serializeUser((user, done) => {
         done(null, user.id);
       });
+      req.session.save(err => {
+        console.log('save session before redirect ', err);
+      })
       return res.redirect('/interactions/' + user.username);
     });
   })(req, res, next);
@@ -104,6 +113,7 @@ app.post('/user/search', (req, res) => {
   //if successful, return record
   //else send error message try again
   //how granular can the error be?
+  res.end(JSON.stringify(req.body, null, 2));
 });
 
 app.post('/pass/new', (req, res) => {
