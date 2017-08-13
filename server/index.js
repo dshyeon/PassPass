@@ -5,10 +5,11 @@ var LocalStrategy = require('passport-local').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
 var database = require('../database');
 var session = require('express-session');
+var fb = require('../facebook.config.js');
 
 var app = express();
 
-var headers = {'Content-Type', 'application/json'};
+var headers = {'Content-Type': 'application/json'};
 
 app.use(express.static(__dirname + '/../react-client/dist'));
 
@@ -38,7 +39,7 @@ passport.use(new LocalStrategy({
   }
 ));
 
-passport.use(new FacebookStrategy(FB_CREDS,
+passport.use(new FacebookStrategy(fb,
     (accessToken, refreshToken, profile, done) => { //fb profile: http://passportjs.org/docs/profile
       database.createUser({email: profile.emails[0].value, name: profile.displayName, cookie: accessToken},
       (err, user) => {
