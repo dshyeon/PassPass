@@ -114,7 +114,7 @@ app.post('/user/search', (req, res) => {
   //if successful, return record
   //else send error message try again
   //how granular can the error be?
-  res.end(JSON.stringify(req.body, null, 2));
+  res.send(JSON.stringify(req.body, null, 2));
 });
 
 app.post('/pass/new', (req, res) => {

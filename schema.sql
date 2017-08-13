@@ -143,31 +143,31 @@ INSERT INTO sessions (
     1
   );
 
-  INSERT INTO reviews (
-    review_receiver_id,
-    review_giver_id,
-    transaction_type,
-    rating_given,
-    comment_text,
-    created_at,
-    updated_at
-    ) VALUES (
-    2,
-    1,
-    'sale',
-    5.0,
-    'Amazing person to work with!',
-    '2017-02-01',
-    '2017-04-03'
-    ), (
-    3,
-    1,
-    'conversation',
-    2.4,
-    'Avoid them. They are super flaky.',
-    '2017-04-21',
-    NULL
-    );
+INSERT INTO reviews (
+  review_receiver_id,
+  review_giver_id,
+  transaction_type,
+  rating_given,
+  comment_text,
+  created_at,
+  updated_at
+  ) VALUES (
+  2,
+  1,
+  'sale',
+  5.0,
+  'Amazing person to work with!',
+  '2017-02-01',
+  '2017-04-03'
+  ), (
+  3,
+  1,
+  'conversation',
+  2.4,
+  'Avoid them. They are super flaky.',
+  '2017-04-21',
+  NULL
+  );
 
 INSERT INTO for_sale_block (
     id,
