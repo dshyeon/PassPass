@@ -1,4 +1,4 @@
-var expect = require('chai').expect;
+// var expect = require('chai').expect;
 var supertest = require('supertest');
 var path = require('path');
 var server = require('../../server/index');
@@ -6,26 +6,22 @@ var server = require('../../server/index');
 var superReq = supertest.agent(server);
 
 describe('Server', function() {
-  describe('GET Static Files', function () {
-    it('should return the content of index.html', function (done) {
-      // assume that if it contains a <input> tag in index.html
+  describe('GET Static Files', function() {
+    test('should return the content of index.html', function(done) {
       superReq
         .get('/')
-        .expect(200, /<input/, done);
+        .expect(200, /<div id="appLoggedOut"/, done);
     });
 
-    it('should return the content of logged-in.html', function (done) {
-      // assume that if it contains a <input> tag in index.html
+    test('should return the content of logged-in.html', function(done) {
       superReq
         .get('/logged-in.html')
-        .expect(200, /<input/, done);
+        .expect(200, /<div id="appLoggedIn"/, done);
     });
   });
 
-
-
   xdescribe('Account Creation', function() {
-    it('signup creates a new user record', function(done) {
+    test('signup creates a new user record', function(done) {
       superReq
         .post('/signup')
         .type('form')
