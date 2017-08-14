@@ -25,7 +25,7 @@ PassPass
 
 ### Testing
 
-Tests are done with [Mocha](https://mochajs.org) and [Chai](http://chaijs.com/). Other packages used:
+Tests are done with [Jest](https://facebook.github.io/jest) and [Enzyme](http://airbnb.io/enzyme/index.html). Other packages used:
 - [supertest](https://www.npmjs.com/package/supertest)
 - [React Test Utilities](https://facebook.github.io/react/docs/test-utils.html)
 
