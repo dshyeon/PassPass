@@ -19,8 +19,14 @@ module.exports = {
         loader : 'babel-loader',
         query: {
           presets: ['react', 'es2015']
-       }
+        }
       }
     ]
-  }
+  },
+  externals: {
+    cheerio: 'window',
+    'react/addons': 'react',
+    'react/lib/ExecutionEnvironment': 'react',
+    'react/lib/ReactContext': 'react',
+  },
 };
