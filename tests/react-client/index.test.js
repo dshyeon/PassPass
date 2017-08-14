@@ -1,45 +1,31 @@
-var expect = require('chai').expect;
-var ReactTestUtils = require('react-dom/test-utils');
-var React = require('react');
-var AppLoggedOut = require('../../react-client/src/components/loggedOutComponents/AppLoggedOut.jsx');
-var AppLoggedIn = require('../../react-client/src/components/loggedInComponents/AppLoggedIn.jsx');
+// import ReactTestUtils from 'react-dom/test-utils';
+import React from 'react';
+import sinon from 'sinon';
+import AppLoggedOut from '../../react-client/src/components/loggedOutComponents/AppLoggedOut.jsx';
+import SignInBox from '../../react-client/src/components/loggedOutComponents/SignInBox.jsx';
+// import AppLoggedIn from '../../react-client/src/components/loggedInComponents/AppLoggedIn.jsx';
 
-var enzyme = require('enzyme');
+import { shallow, mount } from 'enzyme';
 
-describe('appLoggedOut', function() {
+describe('AppLoggedOut', () => {
 
-  // var {
-  //   Simulate,
-  //   renderIntoDocument,
-  //   findRenderedDOMComponentWithClass,
-  //   scryRenderedDOMComponentsWithClass
-  // } = ReactTestUtils;
-
-  var wrapper = enzyme.shallow(<AppLoggedOut />);
-  // var appLoggedOut;
-
-  beforeEach(function() {
-    // TODO
-    // appLoggedOut = renderIntoDocument(
-    //   <AppLoggedOut />
-    // );
+  test('AppLoggedOut has SignInBox', () => {
+    const app = shallow(<AppLoggedOut />);
+    expect(app.find('SignInBox')).toHaveLength(1);
   });
 
-  xit('should be a stateful class component', function() {
-    expect(React.Component.isPrototypeOf(AppLoggedOut)).to.be.true;
+  test('SignInBox renders correctly in AppLoggedOut', () => {
+    const app = mount(<AppLoggedOut />);
+    expect(app.find('input')).toHaveLength(3);
   });
 
-  xit('should render a single sign up form', function() {
-    var signUpForm = findRenderedDOMComponentWithClass(AppLoggedOut, 'TODO');
-    expect(signUpForm).to.exist;
+  describe('SignInBox', () => {
+    test('POST called when sign in button is clicked', () => {
+      sinon.spy(SignInBox.prototype, 'handleSignIn');
+      const app = mount(<SignInBox />);
+      app.find('button').simulate('click');
+      expect(SignInBox.prototype.handleSignIn.calledOnce).toBe(true);
+    });
+  
   });
-
-  xit('should send a POST request for sign up', function() {
-    //TODO
-  });
-
-  xit('should send a POST request for login', function() {
-    //TODO
-  });
-
 });
