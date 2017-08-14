@@ -68,4 +68,18 @@ module.exports.addUserToSession = function(user, session, callback) {
 };
 
 // connection.end();
-module.exports.connection = connection;
+
+var getForSaleBlocks = function(ignoreUserEmail, callback) {
+  connection.query('SELECT * FROM users, for_sale_block WHERE users.id = for_sale_block.seller_id AND users.email <> "' + ignoreUserEmail + '"', function(error, results, fields) {
+    if (error) {
+      throw error;
+    }
+    callback(null, results);
+  });
+};
+
+module.exports = {
+  getForSaleBlocks: getForSaleBlocks,
+  connection: connection
+}
+

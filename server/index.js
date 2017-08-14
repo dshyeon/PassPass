@@ -165,6 +165,9 @@ app.post('/pass/buyer/search', (req, res) => {
   // if successful, return records
   // else send error message try again
   // how granular can the error be?
+  database.getForSaleBlocks(req.body.ignoreUserEmail, function(error, forSaleBlocks) {
+    res.send(JSON.stringify(forSaleBlocks));
+  });
 });
 
 app.post('/pass/seller/search', (req, res) => {
