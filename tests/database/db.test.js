@@ -2,37 +2,19 @@
  * for these tests to pass. */
 
 var mysql = require('mysql');
-var expect = require('chai').expect;
+var db = require('../../database/index');
+var server = require('../../server/index');
 
-xdescribe('Database', function() {
-  var dbConnection;
+describe('Database', () => {
 
-  // beforeEach(function(done) {
-  //   // TODO
-  //   dbConnection = mysql.createConnection({
-  //     user: 'root',
-  //     password: '',
-  //     database: 'TODO'
-  //   });
-  //   dbConnection.connect();
-
-  //   var tablename = 'users';
-
-  //    Empty the db table before each test so that multiple tests
-  //    * (or repeated runs of the tests) won't screw each other up: 
-  //   dbConnection.query('truncate ' + tablename, done);
-  // });
-
-  // afterEach(function() {
-  //   dbConnection.end();
-  // });
-
-  describe('Database Schema:', function() {
-    it('contains a users table', function(done) {
-      var queryString = 'SELECT * FROM users';
-      db.query(queryString, function(err, results) {
+  describe('Database Schema:', () => {
+    test('contains a users table with first_name column', (done) => {
+      // Note this matches dummy data in schema.sql
+      var queryString = 'SELECT first_name FROM users';
+      db.connection.query(queryString, (err, results) => {
         if (err) { return done(err); }
-        expect(results).to.deep.equal([]);
+        const firstNames = results.map((result) => result.first_name);
+        expect(firstNames).toEqual(['Kelly', 'Brenda', 'David']);
         done();
       });
     });
