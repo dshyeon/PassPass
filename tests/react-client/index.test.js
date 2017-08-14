@@ -1,9 +1,7 @@
-// import ReactTestUtils from 'react-dom/test-utils';
 import React from 'react';
 import sinon from 'sinon';
 import AppLoggedOut from '../../react-client/src/components/loggedOutComponents/AppLoggedOut.jsx';
 import SignInBox from '../../react-client/src/components/loggedOutComponents/SignInBox.jsx';
-// import AppLoggedIn from '../../react-client/src/components/loggedInComponents/AppLoggedIn.jsx';
 
 import { shallow, mount } from 'enzyme';
 

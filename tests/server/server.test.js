@@ -1,4 +1,3 @@
-// var expect = require('chai').expect;
 var supertest = require('supertest');
 var path = require('path');
 var server = require('../../server/index');
