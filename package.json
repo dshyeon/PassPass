@@ -13,8 +13,8 @@
     "start": "node server/index.js",
     "react-dev": "webpack -d --watch",
     "server-dev": "nodemon server/index.js",
-    "test": "mocha --compilers js:babel-register tests/react-client/.setup.js tests --recursive",
-    "test-jest": "jest"
+    "test": "jest",
+    "test-mocha": "mocha --compilers js:babel-register tests/react-client/.setup.js tests --recursive"
   },
   "dependencies": {
     "body-parser": "^1.17.2",
@@ -45,6 +45,7 @@
     "mocha": "^3.5.0",
     "react-test-renderer": "^15.6.1",
     "regenerator-runtime": "^0.10.5",
+    "sinon": "^3.2.0",
     "supertest": "^3.0.0",
     "webpack": "^2.2.1"
   },
