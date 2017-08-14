@@ -5,22 +5,37 @@ var server = require('../../server/index');
 var superReq = supertest.agent(server);
 
 describe('Server', function() {
-  describe('GET Static Files', function() {
-    test('should return the content of index.html', function(done) {
+  describe('GET Static Files', () => {
+    test('should return the content of index.html', (done) => {
       superReq
         .get('/')
         .expect(200, /<div id="appLoggedOut"/, done);
     });
 
-    test('should return the content of logged-in.html', function(done) {
+  });
+  
+  xdescribe('Priviledged Access', () => {
+    test('Redirects to sign in page when not logged in', () => {
+      superReq
+        .get('/logged-in.html')
+        .expect(302)
+        .expect((res) => {
+          expect(res.headers.location).to.equal('/');
+        })
+        .end(done);
+    });
+    
+    test('should return the content of logged-in.html when logged in', (done) => {
+      // TODO log in this session
       superReq
         .get('/logged-in.html')
         .expect(200, /<div id="appLoggedIn"/, done);
     });
+    
   });
 
-  xdescribe('Account Creation', function() {
-    test('signup creates a new user record', function(done) {
+  xdescribe('Account Creation', () => {
+    test('signup creates a new user record', (done) => {
       superReq
         .post('/signup')
         .type('form')
