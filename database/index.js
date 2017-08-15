@@ -16,7 +16,8 @@ module.exports.connection.connect(
 });
 
 module.exports.findUser = function(user, callback) {
-  module.exports.connection.query('SELECT * FROM USERS WHERE email="' + user + '"', (error, results, fields) => {
+  var values = [user];
+  module.exports.connection.query('SELECT * FROM USERS WHERE email= ?', values, (error, results, fields) => {
       if (error) {
         console.log('*********** database find user by email error ', error);
         callback(null, error);
@@ -32,8 +33,9 @@ module.exports.findUser = function(user, callback) {
 };
 
 module.exports.authUser = function(user, callback) {
-  module.exports.connection.query('SELECT * FROM USERS WHERE email="' + user.email + '" AND password=SHA2("' + user.password + user.salt + '", 0)',
-    function (error, results, fields) {
+  var values = [user.email, user.password + user.salt];
+  module.exports.connection.query('SELECT * FROM USERS WHERE email= ? AND password=SHA2( ? , 0)',
+    values, function (error, results, fields) {
       if (error) {
         console.log('*********** database authenicate user email error ', error);
         throw error;
@@ -50,8 +52,9 @@ module.exports.authUser = function(user, callback) {
 };
 
 module.exports.addUserToSession = function(user, session, callback) {
-  module.exports.connection.query('UPDATE SESSIONS SET user_id="' + Number(user) + '" WHERE session_id="' + session + '"',
-    function (error, results, fields) {
+  var values = [Number(user), session];
+  module.exports.connection.query('UPDATE SESSIONS SET user_id= ? WHERE session_id= ? ',
+    values, function (error, results, fields) {
       if (error) {
         console.log('*********** database add user to session error ', error);
         throw error;

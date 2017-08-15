@@ -12,7 +12,8 @@ class SignInBox extends React.Component {
     super();
     this.state = {
     	inputEmail: '',
-    	inputPassword: ''
+    	inputPassword: '',
+      rememberMe: false
     };
   }
 
@@ -20,6 +21,10 @@ class SignInBox extends React.Component {
   	var newState = {};
   	newState[event.target.id] = event.target.value;
   	this.setState(newState);
+  }
+
+  handleCheckbox(event) {
+    this.setState({rememberMe: !this.state.rememberMe});
   }
 
   handleSignIn (event) {
@@ -30,7 +35,8 @@ class SignInBox extends React.Component {
 		  contentType: 'application/JSON',
 		  data: JSON.stringify({
 		  	email: this.state.inputEmail,
-		  	password: this.state.inputPassword
+		  	password: this.state.inputPassword,
+        rememberMe: this.state.rememberMe
 		  }),
 		  success: function (data) {
 		  	console.log('*********** sign in success: data returned ', data);
@@ -54,7 +60,7 @@ class SignInBox extends React.Component {
           	<input onChange={this.handleChange.bind(this)} type="password" id="inputPassword" className="form-control" placeholder="Password" required/>
           	<div className="checkbox">
           		<label>
-          			<input type="checkbox" value="remember-me"/> Remember me
+          			<input type="checkbox" id="remember-me" checked={this.state.rememberMe} onChange={this.handleCheckbox.bind(this)} /> Remember me
           		</label>
           	</div>
           	<button className="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>

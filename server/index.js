@@ -74,6 +74,7 @@ passport.use(new FacebookStrategy(fb,
 ));
 
 app.post('/auth/email', (req, res, next) => {
+  var rememberMe = req.body.rememberMe;
   passport.authenticate('local', (err, user, info) => { //info is optional argument passed by the strategy's callback
     //req.user contains the authenticated user if approved
     //req.user = false if fails
@@ -89,12 +90,16 @@ app.post('/auth/email', (req, res, next) => {
     } else {
       req.session.user = user;
       req.session.loggedIn = true;
+      if (rememberMe) { // add this to user signup too
+        req.session.cookie.maxAge = (30*24*60*60*1000); // 30 days
+      } else {
+        req.session.cookie.expires = false;
+      }
       database.addUserToSession(user[0].id, req.sessionID, (err, results) => {
         if (err) {
           console.log('************ server side add user to session error ', err);
           return next(err);
         } else {
-          console.log('*********** about to redirect');
           res.send(user);
           // res.end()
         }
