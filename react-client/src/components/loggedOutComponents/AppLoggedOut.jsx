@@ -1,5 +1,10 @@
 import React from 'react';
 import $ from 'jquery';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from 'react-router-dom';
 import SignUpBox from './SignUpBox.jsx';
 import SignInBox from './SignInBox.jsx';
 

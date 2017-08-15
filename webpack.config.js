@@ -5,7 +5,6 @@ var DIST_DIR = path.join(__dirname, '/react-client/dist');
 module.exports = {
   entry: {
     index: `${SRC_DIR}/index.jsx`,
-    loggedIn: `${SRC_DIR}/loggedIn.jsx`,
   },
   output: {
     filename: '[name].bundle.js',

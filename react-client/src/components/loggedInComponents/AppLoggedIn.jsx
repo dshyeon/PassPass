@@ -33,21 +33,21 @@ class AppLoggedIn extends React.Component {
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
               <ul className="navbar-nav mr-auto">
                 <li className="nav-item active">
-                  <Link to="/Interactions.jsx">Interactions</Link>
+                  <Link to="/interactions">Interactions</Link>
                 </li>
                 <li className="nav-item">
-                  <Link to="/BuyPasses.jsx">Buy Passes</Link>
+                  <Link to="/buypasses">Buy Passes</Link>
                 </li>
                 <li className="nav-item">
-                  <Link to="/SellPasses.jsx">Sell Passes</Link>
+                  <Link to="/sellpasses">Sell Passes</Link>
                 </li>
               </ul>
             </div>
           </nav>
           <div>
-            <Route exact path="/Interactions.jsx" component={Interactions}/>
-            <Route path="/BuyPasses.jsx" component={BuyPasses}/>
-            <Route path="/SellPasses.jsx" component={SellPasses}/>
+            <Route exact path="/interactions" component={Interactions}/>
+            <Route path="/buypasses" component={BuyPasses}/>
+            <Route path="/sellpasses" component={SellPasses}/>
           </div>
         </div>
       </Router>

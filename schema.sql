@@ -181,8 +181,7 @@ INSERT INTO for_sale_block (
     current_price,
     period_start,
     period_end,
-    passes_sold,
-    restricted_studios
+    passes_sold
   ) VALUES (
     1,
     15,
@@ -190,8 +189,7 @@ INSERT INTO for_sale_block (
     8.90,
     '2017-04-11',
     '2017-04-30',
-    4,
-    "Edmond Climbing,Gold's Gym"
+    4
   ), (
     2,
     9,
@@ -199,8 +197,7 @@ INSERT INTO for_sale_block (
     9.00,
     '2017-05-03',
     '2017-06-01',
-    1,
-    "Edmond Climbing,Gold's Gym"
+    1
   ), (
     3,
     11,
@@ -208,8 +205,7 @@ INSERT INTO for_sale_block (
     10.00,
     '2017-03-03',
     '2017-03-15',
-    1,
-    ''
+    1
   );
 
 INSERT INTO messages (
