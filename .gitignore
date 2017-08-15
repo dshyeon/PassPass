@@ -30,6 +30,7 @@ bower_components/
 
 # Secure Passcodes
 facebook.config.js
+session.config.js
 
 ## OS Files
 .DS_Store
