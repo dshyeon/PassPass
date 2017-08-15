@@ -16,7 +16,7 @@ const BuyPassesListItem = (props) => {
 		<div>
 			<div className="buyPassesListItemRowOne">
 				<div>{props.forSaleBlock.first_name}</div>
-				<div>{props.forSaleBlock.rating}</div>
+				<div>Rating: {props.forSaleBlock.rating}</div>
 				<div>{props.forSaleBlock.email}</div>
 			</div>
 			<div className="buyPassesListItemRowTwo">

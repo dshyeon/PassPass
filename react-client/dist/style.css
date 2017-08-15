@@ -19,3 +19,12 @@ small {
 	height: 100vh;
 	padding: 2em 5em 2em 5em;
 }
+
+.buyPassesSearch {
+	display: flex;
+	justify-content: center;
+}
+
+.buyPassesSearchInput {
+	width: 7.5em;
+}

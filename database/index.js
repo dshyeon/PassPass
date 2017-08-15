@@ -69,8 +69,23 @@ module.exports.addUserToSession = function(user, session, callback) {
 
 // connection.end();
 
-var getForSaleBlocks = function(ignoreUserEmail, callback) {
-  connection.query('SELECT * FROM users, for_sale_block WHERE users.id = for_sale_block.seller_id AND users.email <> "' + ignoreUserEmail + '"', function(error, results, fields) {
+var getForSaleBlocks = function(searchQueries, callback) {
+  var queryString = 'SELECT * FROM users, for_sale_block WHERE users.id = for_sale_block.seller_id AND users.email <> "' + searchQueries.ignoreEmail + '"';
+  for (var key in searchQueries) {
+    if (key === 'priceInput') {
+      queryString += ' AND for_sale_block.current_price < ' + searchQueries[key];
+    } else if (key === 'dateRange') {
+      var dates = searchQueries[key].split(',');
+      var startDate = dates[0];
+      var endDate = dates[1];
+      queryString += ' AND ((for_sale_block.period_start between "' + startDate + '" and "' + endDate + '") OR (for_sale_block.period_end between "' + startDate + '" and "' + endDate + '"))';
+    } else if (key === 'ratingInput') {
+      queryString += ' AND users.rating >= ' + searchQueries[key];
+    } else if (key === 'passesCountInput') {
+      queryString += ' AND for_sale_block.pass_volume - for_sale_block.passes_sold >= ' + searchQueries[key];
+    }
+  }
+  connection.query(queryString, function(error, results, fields) {
     if (error) {
       throw error;
     }

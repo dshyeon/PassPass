@@ -18,23 +18,29 @@ class BuyPasses extends React.Component {
     this.setState(newState);
   }
 
-  componentDidMount() {
+  handleSearch(searchQueries) {
     var context = this;
+    searchQueries.ignoreEmail = this.state.userEmail;
     $.ajax({
       method: 'POST',
       url: '/pass/buyer/search',
       contentType: 'application/json',
-      data: JSON.stringify({ignoreUserEmail: context.state.userEmail}),
+      data: JSON.stringify({searchQueries: searchQueries}),
       success: function(forSaleBlocks) {
         context.updateForSaleBlocks(JSON.parse(forSaleBlocks));
       }
     });
   }
 
+  componentDidMount() {
+    this.handleSearch({});
+  }
+
   render () {
     return (
       <div>
-        <BuyPassesSearch />
+        <h1>Passes For Sale</h1>
+        <BuyPassesSearch handleSearch={this.handleSearch.bind(this)}/>
         <BuyPassesList forSaleBlocks={this.state.forSaleBlocks}/>
       </div>
     )

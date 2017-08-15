@@ -165,7 +165,10 @@ app.post('/pass/buyer/search', (req, res) => {
   // if successful, return records
   // else send error message try again
   // how granular can the error be?
-  database.getForSaleBlocks(req.body.ignoreUserEmail, function(error, forSaleBlocks) {
+  var startDate = req.body.searchQueries.startDateInput || '0000-00-00';
+  var endDate = req.body.searchQueries.endDateInput || '9999-99-99';
+  req.body.searchQueries.dateRange = startDate + ',' + endDate;
+  database.getForSaleBlocks(req.body.searchQueries, function(error, forSaleBlocks) {
     res.send(JSON.stringify(forSaleBlocks));
   });
 });
