@@ -69,7 +69,7 @@ module.exports.addUserToSession = function(user, session, callback) {
 
 // connection.end();
 
-var getForSaleBlocks = function(searchQueries, callback) {
+module.exports.getForSaleBlocks = function(searchQueries, callback) {
   var queryString = 'SELECT * FROM users, for_sale_block WHERE users.id = for_sale_block.seller_id AND users.email <> "' + searchQueries.ignoreEmail + '"';
   for (var key in searchQueries) {
     if (key === 'priceInput') {
@@ -92,9 +92,4 @@ var getForSaleBlocks = function(searchQueries, callback) {
     callback(null, results);
   });
 };
-
-module.exports = {
-  getForSaleBlocks: getForSaleBlocks,
-  connection: connection
-}
 
