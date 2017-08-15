@@ -84,8 +84,7 @@ CREATE TABLE for_sale_block (
   current_price DECIMAL(5,2),
   period_start DATE,
   period_end DATE,
-  passes_sold int,
-  restricted_studios VARCHAR(255),
+  passes_sold int
   FOREIGN KEY (seller_id) REFERENCES users(id)
 );
 
