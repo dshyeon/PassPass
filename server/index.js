@@ -3,11 +3,15 @@ var bodyParser = require('body-parser');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
-var database = require('../database');
+var database = require('../database/index.js');
 var session = require('express-session');
+var SessionStore = require('express-mysql-session')(session);
 var fb = require('../facebook.config.js');
+var session_secret = require('../session.config.js');
+var cryptoRandomString = require('crypto-random-string');
 
 var app = express();
+var sessionStore = new SessionStore({}, database.connection);
 
 var headers = {'Content-Type': 'application/json'};
 
@@ -16,25 +20,45 @@ app.use(express.static(__dirname + '/../react-client/dist'));
 app.use(bodyParser.urlencoded({extended: false})); //will work when the req header Content-Type matches the type option (accepts only UTF-8 ), extended=false means the obj will contain key-value paires and values can be strings or arrays, change to true for any type
 app.use(bodyParser.json()); //default strict parameter only accepts arrays and objects, can change to false, will work when the req header Content-Type matches the type option (default to application/json but can change)
 
-app.use(session({secret: 'hungry hippos'})); // optional parameter for signed authentication {secret: 'hungry hippos'}
-//when to destroy a session?
-//req.session.destroy(err => {})
+app.use(session({
+  secret: session_secret,
+  store: sessionStore,
+  resave: false,
+  saveUninitialized: false
+}));
+// session created on access, added to the DB,
+// on authenication, user added to the session and cookie added to the req header
 
 app.use(passport.initialize());
 app.use(passport.session());
 // app.use(app.router);
 
-passport.use(new LocalStrategy({
+passport.use(new LocalStrategy(
+  {
     usernameField: 'email',
     passwordField: 'password'
   },
   (username, password, done) => {
-    //update name of method to database to find matching username
-    database.authUser({email: username, password: password},
-    (err, user) => {
-      if (err) {return done(err);}
-      if (!user) {return done(null, false, {message: 'Incorrect username or password.'});}
-      return done(null, user);
+    database.findUser(username, (user, err) => {
+      if (err) {
+        console.log('************ server side in strategy - email lookup error ', err);
+        return done(err);
+      } else if (user.length === 0) {
+        console.log('********** success on user email lookup in strategy -  but no user match ', user);
+        return done(null, false, {message: 'Incorrect username. Please try again or signup for a new account.'});
+      } else {
+        database.authUser({email: username, password: password, salt: user[0].salt}, (user, err) => {
+          if (err) {
+            console.log('************ server side in strategy - password check login error ', err);
+            return done(err);
+          } else if (user.length === 0) {
+            console.log('********** success on user password check in strategy -  but no password match ', user);
+            return done(null, false, {message: 'Incorrect password. Please try again or signup for a new account.'});
+          } else {
+            return done(null, user);
+          }
+        });
+      }
     });
   }
 ));
@@ -49,48 +73,43 @@ passport.use(new FacebookStrategy(fb,
     }
 ));
 
-app.get('/', (req, res, next) => {
-  var sesssionID = req.sessionID;
-  var cookie = req.session.cookie;
-  req.session.cookie.expires = false;
-  req.session.hash = 'some value';
-  //create a session and check a cookie
-  req.login(); //establishes a session for passport to work
-  res.end();
-});
-
 app.post('/auth/email', (req, res, next) => {
-  passport.authenticate('local', (err, user, info) => {
-    //info is optional argument passed by the strategy's callback
+  passport.authenticate('local', (err, user, info) => { //info is optional argument passed by the strategy's callback
     //req.user contains the authenticated user if approved
     //req.user = false if fails
     //if exists, update cookie
+      // var cookie = req.cookies['connect.sid'];
     if (err) {
+      console.log('************ server side in post - email login error ', err);
       return next(err);
-    }
-    if (!user) {
+    } else if (!user) {
+      console.log('********** success on user login in post -  but no user match ', user);
+      console.log('********** success on user login in post -  see info ', info);
       return res.redirect('/login');
-    }
-    req.logIn(user, err => {
-      if (err) {
-        return next(err);
-      }
-      passport.serializeUser((user, done) => {
-        done(null, user.id);
+    } else {
+      req.session.user = user;
+      req.session.loggedIn = true;
+      database.addUserToSession(user[0].id, req.sessionID, (err, results) => {
+        if (err) {
+          console.log('************ server side add user to session error ', err);
+          return next(err);
+        } else {
+          console.log('*********** about to redirect');
+          res.send(user);
+          // res.end()
+        }
       });
-      req.session.save(err => {
-        console.log('save session before redirect ', err);
-      })
-      return res.redirect('/interactions/' + user.username);
-    });
+    }
   })(req, res, next);
 });
 
 app.post('/auth/signup', (req, res) => {
+  var salt = cryptoRandomString(10); //use this salt to create a new user
   //req has obj of signup data
   //call to db to add the user data and create new user
   //if successful, return insert id
   //log user in
+  req.logIn() //used to auto login after signing up
   passport.serializeUser((user, done) => {
     done(null, user.id);
   });

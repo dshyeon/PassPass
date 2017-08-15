@@ -8,39 +8,37 @@ import {
 import SignUpBox from './SignUpBox.jsx';
 
 class SignInBox extends React.Component {
-	constructor(props) {
-    super(props);
+	constructor() {
+    super();
     this.state = {
     	inputEmail: '',
     	inputPassword: ''
     };
   }
 
-  handleChangeInputEmail (event) {
-  	var newState = Object.assign({}, this.state);
-  	newState.inputEmail = event.target.value;
-  	this.setState(newState);
-  }
-
-  handleChangeInputPassword (event) {
-  	var newState = Object.assign({}, this.state);
-  	newState.inputPassword = event.target.value;
+  handleChange(event) {
+  	var newState = {};
+  	newState[event.target.id] = event.target.value;
   	this.setState(newState);
   }
 
   handleSignIn (event) {
     event.preventDefault();
   	$.ajax({
-		  method: "POST",
-		  url: "test.js",
-		  contentType: "application/JSON",
+		  method: 'POST',
+		  url: '/auth/email',
+		  contentType: 'application/JSON',
 		  data: JSON.stringify({
 		  	email: this.state.inputEmail,
 		  	password: this.state.inputPassword
 		  }),
 		  success: function (data) {
-		  	console.log(data);
-		  }
+		  	console.log('*********** sign in success: data returned ', data);
+        //redirect to logged in page
+		  },
+      error: function(err) {
+        console.log('********** sign in error ', err);
+      }
 		});
   }
 
@@ -51,9 +49,9 @@ class SignInBox extends React.Component {
           <form className="form-signin" onSubmit={this.handleSignIn.bind(this)}>
           	<h2 className="form-signin-heading">Please sign in</h2>
           	<label htmlFor="inputEmail" className="sr-only">Email address</label>
-          	<input onChange={this.handleChangeInputEmail.bind(this)} value={this.state.inputEmail} type="email" id="inputEmail" className="form-control" placeholder="Email address" required autoFocus/>
+          	<input onChange={this.handleChange.bind(this)} type="email" id="inputEmail" className="form-control" placeholder="Email address" required autoFocus/>
           	<label htmlFor="inputPassword" className="sr-only">Password</label>
-          	<input onChange={this.handleChangeInputPassword.bind(this)} value={this.state.inputPassword} type="password" id="inputPassword" className="form-control" placeholder="Password" required/>
+          	<input onChange={this.handleChange.bind(this)} type="password" id="inputPassword" className="form-control" placeholder="Password" required/>
           	<div className="checkbox">
           		<label>
           			<input type="checkbox" value="remember-me"/> Remember me

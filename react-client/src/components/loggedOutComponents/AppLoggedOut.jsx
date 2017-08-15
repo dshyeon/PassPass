@@ -16,10 +16,11 @@ class AppLoggedOut extends React.Component {
           <h1 className="signedOutLogo">PassPass</h1>
           <small>The Marketplace for Classpass Classes</small>
         </div>
+        <a href="logged-in.html">logged-in</a>
         <div className="signInContainerRow">
           <SignInBox />
         </div>
-        <div>Whatever goes at the bottom of the page (this will be thicker so box will be centered)</div>
+        <div></div>
       </div>
     )
   }

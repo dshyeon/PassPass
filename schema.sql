@@ -17,7 +17,7 @@ CREATE TABLE users (
   id int PRIMARY KEY AUTO_INCREMENT,
   email VARCHAR(50) UNIQUE,
   password VARCHAR(100),
-  salt VARCHAR(50),
+  salt VARCHAR(10),
   first_name VARCHAR(50),
   last_name VARCHAR(50),
   phone VARCHAR(10),
@@ -26,11 +26,13 @@ CREATE TABLE users (
   );
 
 CREATE TABLE sessions (
-    id int PRIMARY KEY AUTO_INCREMENT,
-    hash VARCHAR(100),
+    session_id VARCHAR(128) COLLATE utf8mb4_bin NOT NULL UNIQUE,
+    expires INT(11) unsigned NOT NULL,
+    data TEXT COLLATE utf8mb4_bin,
     user_id int,
+    PRIMARY KEY (session_id),
     FOREIGN KEY (user_id) REFERENCES users(id)
-  );
+  ) ENGINE=InnoDB;
 
 CREATE TABLE reviews (
   id int PRIMARY KEY AUTO_INCREMENT,
@@ -104,27 +106,27 @@ INSERT INTO users (
   ) VALUES (
     1,
   'billy@bob.com',
-  'Svds356password1',
-  'cPjfn67sdvfg456salt1',
-  'Kelly',
-  'Cody-Martin',
+  SHA2('billysPasswordcPjfn67sdv', 0),
+  'cPjfn67sdv',
+  'Billy',
+  'Bob',
   '3332224444',
   '2017-03-05',
   '2017-03-09'
   ), (
     2,
   'sally@sal.com',
-  'oniyGyf67password2',
-  '8nJHBh665vhJhsalt2',
-  'Brenda',
-  'Brenton',
+  SHA2('sallysPassword8nJHBh665v', 0),
+  '8nJHBh665v',
+  'Sally',
+  'Sal',
   '1112224444',
   '2017-04-15',
   NULL),(
     3,
   'david45@gmail.com',
-  'Lcdf87gf8HJpassword3',
-  'vByt76912salt3',
+  SHA2('davidsPasswordvByt76912s', 0),
+  'vByt76912s',
   'David',
   'Drummer',
   '9998887777',
@@ -132,16 +134,7 @@ INSERT INTO users (
   NULL
   );
 
-INSERT INTO sessions (
-    hash,
-    user_id
-  ) VALUES (
-    'HASHcacfG65H78jkjIp0i',
-    2
-  ),(
-    'HASHacdnfd87v6bYT',
-    1
-  );
+-- removed insert for sessions table, unsure what data should look like
 
 INSERT INTO reviews (
   review_receiver_id,
