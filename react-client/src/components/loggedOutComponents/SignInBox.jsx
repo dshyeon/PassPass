@@ -13,7 +13,8 @@ class SignInBox extends React.Component {
     this.state = {
     	inputEmail: '',
     	inputPassword: '',
-      rememberMe: false
+      rememberMe: false,
+      signUp: false
     };
   }
 
@@ -48,26 +49,43 @@ class SignInBox extends React.Component {
 		});
   }
 
+  signUp(){
+    this.setState({signUp: true});
+  }
+
   render () {
-    return (
-      <Router>
-        <div className="signInContainer">
-          <form className="form-signin" onSubmit={this.handleSignIn.bind(this)}>
-          	<h2 className="form-signin-heading">Please sign in</h2>
-          	<label htmlFor="inputEmail" className="sr-only">Email address</label>
-          	<input onChange={this.handleChange.bind(this)} type="email" id="inputEmail" className="form-control" placeholder="Email address" required autoFocus/>
-          	<label htmlFor="inputPassword" className="sr-only">Password</label>
-          	<input onChange={this.handleChange.bind(this)} type="password" id="inputPassword" className="form-control" placeholder="Password" required/>
-          	<div className="checkbox">
-          		<label>
-          			<input type="checkbox" id="remember-me" checked={this.state.rememberMe} onChange={this.handleCheckbox.bind(this)} /> Remember me
-          		</label>
-          	</div>
-          	<button className="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-          </form>
-        </div>
-      </Router>
-    )
+    if (this.state.signUp) {
+      return (
+        <Router>
+          <div>
+            <SignUpBox />
+          </div>
+        </Router>
+      )
+    } else {
+      return (
+        <Router>
+          <div className="signInContainer">
+            <form className="form-signin" onSubmit={this.handleSignIn.bind(this)}>
+            	<h2 className="form-signin-heading">Please sign in</h2>
+            	<label htmlFor="inputEmail" className="sr-only">Email address</label>
+            	<input onChange={this.handleChange.bind(this)} type="email" id="inputEmail" className="form-control" placeholder="Email address" required autoFocus/>
+            	<label htmlFor="inputPassword" className="sr-only">Password</label>
+            	<input onChange={this.handleChange.bind(this)} type="password" id="inputPassword" className="form-control" placeholder="Password" required/>
+            	<div className="checkbox">
+            		<label>
+            			<input type="checkbox" id="remember-me" checked={this.state.rememberMe} onChange={this.handleCheckbox.bind(this)} /> Remember me
+            		</label>
+            	</div>
+            	<button className="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+              <div>
+                New User? <a href='#' onClick={this.signUp.bind(this)}>Sign up</a>
+              </div>
+            </form>
+          </div>
+        </Router>
+      )
+    }
   }
 }
 
