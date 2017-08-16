@@ -2,10 +2,10 @@ import React from 'react';
 
 const BuyPassesListItem = (props) => {
 	var restricted;
-	if (props.forSaleBlock.studio && props.forSaleBlock.studio !== 'none') {
+	if (props.forSaleBlock.studios && props.forSaleBlock.studios !== 'none') {
 		restricted = <div className="buyPassesListItemRowThree">
 									No Passes Available For:
-									{props.forSaleBlock.studio.split(',').map((restrict) => (
+									{props.forSaleBlock.studios.split(',').map((restrict) => (
 										<div>{restrict}</div>
 									))}
 									</div>

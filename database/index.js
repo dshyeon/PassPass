@@ -70,13 +70,17 @@ module.exports.addUserToSession = function(user, session, callback) {
 // connection.end();
 
 module.exports.getForSaleBlocks = function(searchQueries, callback) {
-  var queryString = 'SELECT users.email, users.first_name, users.rating, ' + 
-                      'for_sale_block.pass_volume, for_sale_block.passes_sold, ' +
+  var queryString = 'SELECT users.email, users.first_name, ' + 
+                      'users.rating, for_sale_block.pass_volume, for_sale_block.passes_sold, ' +
                       'for_sale_block.current_price, for_sale_block.period_start, ' +
-                      'for_sale_block.period_end, restricted_list.studio FROM users ' +
-                    'INNER JOIN for_sale_block on users.id = for_sale_block.seller_id ' +
-                    'LEFT JOIN restricted_studios on restricted_studios.block_id = for_sale_block.id ' +
-                    'LEFT JOIN restricted_list on restricted_studios.exempt_studio_id = restricted_list.id ' +
+                      'for_sale_block.period_end, A.studios FROM users ' + 
+                    'INNER JOIN for_sale_block ON users.id = for_sale_block.seller_id ' +
+                    'LEFT JOIN ' +
+                      '(SELECT restricted_studios.block_id, ' +
+                        'GROUP_CONCAT(restricted_list.studio SEPARATOR ",") AS studios FROM restricted_studios ' +
+                      'INNER JOIN restricted_list ON restricted_studios.exempt_studio_id=restricted_list.id ' +
+                      'GROUP BY restricted_studios.block_id) A ' +
+                    'ON for_sale_block.id=A.block_id ' +
                     'WHERE users.id <> ' + searchQueries.ignoreUserId;
   for (var key in searchQueries) {
     if (key === 'priceInput' && searchQueries[key]) {
@@ -89,7 +93,7 @@ module.exports.getForSaleBlocks = function(searchQueries, callback) {
     } else if (key === 'passesCountInput' && searchQueries[key]) {
       queryString += ' AND for_sale_block.pass_volume - for_sale_block.passes_sold >= ' + searchQueries[key];
     } else if (key === 'gymInput' && searchQueries[key] && searchQueries[key].toLowerCase() !== 'none') {
-      queryString += ' AND restricted_list.studio NOT LIKE "%' + searchQueries[key] + '%"';
+      queryString += ' AND studios NOT LIKE "%' + searchQueries[key] + '%"';
     }
   }
   module.exports.connection.query(queryString, function(error, results, fields) {
@@ -97,4 +101,13 @@ module.exports.getForSaleBlocks = function(searchQueries, callback) {
     results && callback(null, results);
   });
 };
+
+// var queryString = 'SELECT users.email, users.first_name, users.rating, ' + 
+//                       'for_sale_block.pass_volume, for_sale_block.passes_sold, ' +
+//                       'for_sale_block.current_price, for_sale_block.period_start, ' +
+//                       'for_sale_block.period_end, restricted_list.studio FROM users ' +
+//                     'INNER JOIN for_sale_block on users.id = for_sale_block.seller_id ' +
+//                     'LEFT JOIN restricted_studios on restricted_studios.block_id = for_sale_block.id ' +
+//                     'LEFT JOIN restricted_list on restricted_studios.exempt_studio_id = restricted_list.id ' +
+//                     'WHERE users.id <> ' + searchQueries.ignoreUserId;
 
