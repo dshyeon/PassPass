@@ -263,6 +263,10 @@ INSERT INTO restricted_list (
     2,
     'Edmond Climbing,Gold Gym',
     1
+  ), (
+    3,
+    'none',
+    NULL
   );
 
 INSERT INTO restricted_studios (
@@ -271,4 +275,10 @@ INSERT INTO restricted_studios (
   ) VALUES (
     1,
     2
+  ), (
+    2,
+    3
+  ), (
+    3,
+    3
   );

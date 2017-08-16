@@ -2,7 +2,7 @@ import React from 'react';
 
 const BuyPassesListItem = (props) => {
 	var restricted;
-	if (props.forSaleBlock.studio) {
+	if (props.forSaleBlock.studio && props.forSaleBlock.studio !== 'none') {
 		restricted = <div className="buyPassesListItemRowThree">
 									No Passes Available For:
 									{props.forSaleBlock.studio.split(',').map((restrict) => (
@@ -16,7 +16,6 @@ const BuyPassesListItem = (props) => {
 		<div>
 			<div className="buyPassesListItemRowOne">
 				<div>{props.forSaleBlock.first_name}</div>
-				<div>Rating: {props.forSaleBlock.rating}</div>
 				<div>{props.forSaleBlock.email}</div>
 			</div>
 			<div className="buyPassesListItemRowTwo">

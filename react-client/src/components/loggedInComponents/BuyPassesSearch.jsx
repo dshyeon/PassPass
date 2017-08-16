@@ -8,7 +8,8 @@ class BuyPassesSearch extends React.Component {
       endDateInput: '',
       priceInput: '',
       ratingInput: '',
-      passesCountInput: ''
+      passesCountInput: '',
+      gymInput: ''
     };
   }
 
@@ -18,46 +19,9 @@ class BuyPassesSearch extends React.Component {
     this.setState(newState);
   }
 
-  // handleChangeStartDateInput (event) {
-  //   var newState = Object.assign({}, this.state);
-  //   newState.startDateInput = event.target.value;
-  //   this.setState(newState);
-  // }
-
-  // handleChangeEndDateInput (event) {
-  //   var newState = Object.assign({}, this.state);
-  //   newState.endDateInput = event.target.value;
-  //   this.setState(newState);
-  // }
-
-  // handleChangePriceInput (event) {
-  //   var newState = Object.assign({}, this.state);
-  //   newState.priceInput = event.target.value;
-  //   this.setState(newState);
-  // }
-
-  // handleChangeRatingInput (event) {
-  //   var newState = Object.assign({}, this.state);
-  //   newState.ratingInput = event.target.value;
-  //   this.setState(newState);
-  // }
-
-  // handleChangePassesCountInput (event) {
-  //   var newState = Object.assign({}, this.state);
-  //   newState.passesCountInput = event.target.value;
-  //   this.setState(newState);
-  // }
-
   handleSubmit(event) {
     event.preventDefault();
     this.props.handleSearch(this.state);
-    this.setState({
-      startDateInput: '',
-      endDateInput: '',
-      priceInput: '',
-      ratingInput: '',
-      passesCountInput: ''
-    });
   }
 
   render () {
@@ -65,41 +29,45 @@ class BuyPassesSearch extends React.Component {
       <form onSubmit={this.handleSubmit.bind(this)} className="buyPassesSearch">
         Start Date:
         <input value={this.state.startDateInput}
-               pattern="\d{4}-\d{1,2}-\d{1,2}"
+               type="date"
                onChange={this.handleChange.bind(this)}
                id="startDateInput"
                className="form-control buyPassesSearchInput" 
-               placeholder="yyyy-mm-dd" 
                autoFocus/>
         End Date:
         <input value={this.state.endDateInput} 
-               pattern="\d{4}-\d{1,2}-\d{1,2}"
+               type="date"
                onChange={this.handleChange.bind(this)}
                id="endDateInput"
-               className="form-control buyPassesSearchInput" 
-               placeholder="yyyy-mm-dd" 
+               className="form-control buyPassesSearchInput"  
                autoFocus/>
         Maximum Price:
         <input value={this.state.priceInput} 
+               type="number" 
+               min="0"
+               step="0.01"
                onChange={this.handleChange.bind(this)}
                id="priceInput"
                className="form-control buyPassesSearchInput" 
                placeholder="e.g. 4.50" 
                autoFocus/>
-        Minimum Rating:
-        <input value={this.state.ratingInput} 
-               pattern="\d{1}"
-               onChange={this.handleChange.bind(this)}
-               id="ratingInput"
-               className="form-control buyPassesSearchInput" 
-               placeholder="1-5" 
-               autoFocus/>
         Minimum # of Passes:
         <input value={this.state.passesCountInput} 
+               type="number"
+               min="1"
+               step="1"
                onChange={this.handleChange.bind(this)}
                id="passesCountInput"
                className="form-control buyPassesSearchInput" 
                placeholder="e.g. 3" 
+               autoFocus/>
+        Gym:
+        <input value={this.state.gymInput}
+               type="text"
+               onChange={this.handleChange.bind(this)}
+               id="gymInput"
+               className="form-control buyPassesSearchInput" 
+               placeholder="e.g. Edmond Climbing" 
                autoFocus/>
         <button className="btn btn-md btn-primary btn-block buyPassesSearchInput" type="submit">Search</button>
       </form>

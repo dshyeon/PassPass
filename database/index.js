@@ -79,17 +79,17 @@ module.exports.getForSaleBlocks = function(searchQueries, callback) {
                     'LEFT JOIN restricted_list on restricted_studios.exempt_studio_id = restricted_list.id ' +
                     'WHERE users.id <> ' + searchQueries.ignoreUserId;
   for (var key in searchQueries) {
-    if (key === 'priceInput') {
+    if (key === 'priceInput' && searchQueries[key]) {
       queryString += ' AND for_sale_block.current_price < ' + searchQueries[key];
-    } else if (key === 'dateRange') {
+    } else if (key === 'dateRange' && searchQueries[key]) {
       var dates = searchQueries[key];
       var startDate = dates[0];
       var endDate = dates[1];
       queryString += ' AND ((for_sale_block.period_start between "' + startDate + '" and "' + endDate + '") OR (for_sale_block.period_end between "' + startDate + '" and "' + endDate + '"))';
-    } else if (key === 'ratingInput') {
-      queryString += ' AND users.rating >= ' + searchQueries[key];
-    } else if (key === 'passesCountInput') {
+    } else if (key === 'passesCountInput' && searchQueries[key]) {
       queryString += ' AND for_sale_block.pass_volume - for_sale_block.passes_sold >= ' + searchQueries[key];
+    } else if (key === 'gymInput' && searchQueries[key] && searchQueries[key].toLowerCase() !== 'none') {
+      queryString += ' AND restricted_list.studio NOT LIKE "%' + searchQueries[key] + '%"';
     }
   }
   module.exports.connection.query(queryString, function(error, results, fields) {
