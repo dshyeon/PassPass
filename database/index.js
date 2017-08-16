@@ -67,6 +67,39 @@ module.exports.addUserToSession = function(user, session, callback) {
   );
 };
 
+module.exports.addSale = function(forSaleBlock, restrictedStudios, callback) {
+  module.exports.connection.query('INSERT INTO for_sale_block SET ?', forSaleBlock, function(err, results) {
+    const blockId = results.insertId;
+    if (restrictedStudios && !err) {
+      restrictedStudios.forEach(studio => {
+        module.exports.connection.query(`SELECT id FROM restricted_list WHERE user_id=${forSaleBlock.seller_id} AND studio="${studio}"`, function(err, results) {
+          if (err) {
+            callback(err);
+          } else {
+            module.exports.connection.query(`INSERT INTO restricted_studios (block_id, exempt_studio_id) VALUES (${blockId}, ${results[0].id})`, function(err, results) {
+              callback(err, results);    
+            });
+          }
+        });
+      });
+    } else {
+      callback(err, results);    
+    }
+  });
+};
+
+module.exports.getRestrictedStudios = function(user, callback) {
+  module.exports.connection.query(`SELECT id, studio FROM restricted_list WHERE user_id=${user.id}`, function(err, results) {
+    callback(err, results);    
+  });
+};
+
+module.exports.addRestrictedStudio = function(user, studio, callback) {
+  module.exports.connection.query(`INSERT INTO restricted_list (studio, user_id) VALUES ("${studio}", ${user.id})`, function(err, results) {
+    callback(err, results);
+  });
+};
+
 // connection.end();
 
 module.exports.getForSaleBlocks = function(searchQueries, callback) {

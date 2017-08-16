@@ -141,7 +141,46 @@ app.post('/user/search', (req, res) => {
   res.send(JSON.stringify(req.body, null, 2));
 });
 
+app.get('/user/restricted', (req, res) => {
+  database.getRestrictedStudios(req.session.user[0], (err, results) => {
+    if (err) {
+      console.log('ERROR failed to get restricted studios ', err);
+      res.sendStatus(500);
+    }
+    res.status(200).send(results);
+  });
+});
+
+app.post('/user/restricted', (req, res) => {
+  const studio = req.body.studio;
+  database.addRestrictedStudio(req.session.user[0], studio, (err, results) => {
+    if (err) {
+      console.log('ERROR failed to add restricted studio ', err);
+      res.sendStatus(500);
+    }
+    res.sendStatus(201);
+  });
+});
+
 app.post('/pass/new', (req, res) => {
+  const forSaleBlock = {
+    seller_id: req.session.user[0].id,
+    pass_volume: req.body.quantity,
+    current_price: req.body.price,
+    period_start: req.body.dateStart,
+    period_end: req.body.dateEnd,
+    period_end: req.body.dateEnd,
+    passes_sold: 0
+  };
+  const restrictedStudios = req.body.restrictedSelect;
+
+  database.addSale(forSaleBlock, restrictedStudios, (err, results) => {
+    if (err) {
+      console.log('ERROR failed to add sale block: ', err);
+      res.sendStatus(500);
+    }
+    res.sendStatus(201);
+  });
   //req has obj of pass data and any new restricted studios
   //call to db to add the new pass data and create new for_sale_block
   // create new restricted studio if needed
