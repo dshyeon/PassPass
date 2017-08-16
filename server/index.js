@@ -183,6 +183,19 @@ app.post('/pass/seller/search', (req, res) => {
   // how granular can the error be?
 });
 
+app.get('/pass/seller/search', (req, res) => {
+ //why is req.body = {} ?
+ console.log('app.get REQ QUERY = ', req.query.users_email);
+ // database.findAllFromCurrentUser(req.query.users_email, function(userCurrentSaleBlocks) {
+ //  res.send(userCurrentSaleBlocks);
+ // });
+ res.send('THIS IS THE RESPONSE FROM THE SERVER');
+
+
+
+
+});
+
 app.post('/pass/seller/clone', (req, res) => {
   // for creating a new record for seller off an old one (req obj has id)
   // call to db for one pass based on matching id
