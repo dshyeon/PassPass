@@ -12,35 +12,41 @@ class BuyPassesSearch extends React.Component {
     };
   }
 
-  handleChangeStartDateInput (event) {
+  handleChange(event) {
     var newState = Object.assign({}, this.state);
-    newState.startDateInput = event.target.value;
+    newState[event.target.id] = event.target.value;
     this.setState(newState);
   }
 
-  handleChangeEndDateInput (event) {
-    var newState = Object.assign({}, this.state);
-    newState.endDateInput = event.target.value;
-    this.setState(newState);
-  }
+  // handleChangeStartDateInput (event) {
+  //   var newState = Object.assign({}, this.state);
+  //   newState.startDateInput = event.target.value;
+  //   this.setState(newState);
+  // }
 
-  handleChangePriceInput (event) {
-    var newState = Object.assign({}, this.state);
-    newState.priceInput = event.target.value;
-    this.setState(newState);
-  }
+  // handleChangeEndDateInput (event) {
+  //   var newState = Object.assign({}, this.state);
+  //   newState.endDateInput = event.target.value;
+  //   this.setState(newState);
+  // }
 
-  handleChangeRatingInput (event) {
-    var newState = Object.assign({}, this.state);
-    newState.ratingInput = event.target.value;
-    this.setState(newState);
-  }
+  // handleChangePriceInput (event) {
+  //   var newState = Object.assign({}, this.state);
+  //   newState.priceInput = event.target.value;
+  //   this.setState(newState);
+  // }
 
-  handleChangePassesCountInput (event) {
-    var newState = Object.assign({}, this.state);
-    newState.passesCountInput = event.target.value;
-    this.setState(newState);
-  }
+  // handleChangeRatingInput (event) {
+  //   var newState = Object.assign({}, this.state);
+  //   newState.ratingInput = event.target.value;
+  //   this.setState(newState);
+  // }
+
+  // handleChangePassesCountInput (event) {
+  //   var newState = Object.assign({}, this.state);
+  //   newState.passesCountInput = event.target.value;
+  //   this.setState(newState);
+  // }
 
   handleSubmit(event) {
     event.preventDefault();
@@ -60,33 +66,38 @@ class BuyPassesSearch extends React.Component {
         Start Date:
         <input value={this.state.startDateInput}
                pattern="\d{4}-\d{1,2}-\d{1,2}"
-               onChange={this.handleChangeStartDateInput.bind(this)}
+               onChange={this.handleChange.bind(this)}
+               id="startDateInput"
                className="form-control buyPassesSearchInput" 
                placeholder="yyyy-mm-dd" 
                autoFocus/>
         End Date:
         <input value={this.state.endDateInput} 
                pattern="\d{4}-\d{1,2}-\d{1,2}"
-               onChange={this.handleChangeEndDateInput.bind(this)}
+               onChange={this.handleChange.bind(this)}
+               id="endDateInput"
                className="form-control buyPassesSearchInput" 
                placeholder="yyyy-mm-dd" 
                autoFocus/>
         Maximum Price:
         <input value={this.state.priceInput} 
-               onChange={this.handleChangePriceInput.bind(this)}
+               onChange={this.handleChange.bind(this)}
+               id="priceInput"
                className="form-control buyPassesSearchInput" 
                placeholder="e.g. 4.50" 
                autoFocus/>
         Minimum Rating:
         <input value={this.state.ratingInput} 
                pattern="\d{1}"
-               onChange={this.handleChangeRatingInput.bind(this)}
+               onChange={this.handleChange.bind(this)}
+               id="ratingInput"
                className="form-control buyPassesSearchInput" 
                placeholder="1-5" 
                autoFocus/>
         Minimum # of Passes:
         <input value={this.state.passesCountInput} 
-               onChange={this.handleChangePassesCountInput.bind(this)}
+               onChange={this.handleChange.bind(this)}
+               id="passesCountInput"
                className="form-control buyPassesSearchInput" 
                placeholder="e.g. 3" 
                autoFocus/>

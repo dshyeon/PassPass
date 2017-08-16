@@ -165,11 +165,13 @@ app.post('/pass/buyer/search', (req, res) => {
   // if successful, return records
   // else send error message try again
   // how granular can the error be?
-  var startDate = req.body.searchQueries.startDateInput || '0000-00-00';
-  var endDate = req.body.searchQueries.endDateInput || '9999-99-99';
-  req.body.searchQueries.dateRange = startDate + ',' + endDate;
+  var startDate = req.body.searchQueries.startDateInput || '1000-01-01';
+  var endDate = req.body.searchQueries.endDateInput || '9999-12-31';
+  req.body.searchQueries.dateRange = [startDate, endDate];
+  req.body.searchQueries.ignoreUserId = 1; // replace this with req.session.user[0].id;
   database.getForSaleBlocks(req.body.searchQueries, function(error, forSaleBlocks) {
-    res.send(JSON.stringify(forSaleBlocks));
+    error && res.send(error);
+    forSaleBlocks && res.send(forSaleBlocks);
   });
 });
 

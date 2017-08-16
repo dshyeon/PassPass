@@ -11,7 +11,7 @@ import AppLoggedIn from './components/loggedInComponents/AppLoggedIn.jsx';
 ReactDOM.render((
 	<Router>
 		<div>
-			<Route exact path="/" component={AppLoggedOut} />
+			<Route exact path="/" component={AppLoggedIn} />
 			<Route path="/interactions" component={AppLoggedIn} />
 		</div>
 	</Router>

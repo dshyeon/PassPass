@@ -7,7 +7,6 @@ class BuyPasses extends React.Component {
 	constructor(props) {
     super(props);
     this.state = {
-      userEmail: 'billy@bob.com',
       forSaleBlocks: []
     };
   }
@@ -20,14 +19,16 @@ class BuyPasses extends React.Component {
 
   handleSearch(searchQueries) {
     var context = this;
-    searchQueries.ignoreEmail = this.state.userEmail;
     $.ajax({
       method: 'POST',
       url: '/pass/buyer/search',
       contentType: 'application/json',
       data: JSON.stringify({searchQueries: searchQueries}),
       success: function(forSaleBlocks) {
-        context.updateForSaleBlocks(JSON.parse(forSaleBlocks));
+        context.updateForSaleBlocks(forSaleBlocks);
+      },
+      error: function(xhr, error) {
+        console.log('error:', error);
       }
     });
   }
