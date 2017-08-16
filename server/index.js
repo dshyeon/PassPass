@@ -100,7 +100,7 @@ app.post('/auth/email', (req, res, next) => {
       console.log('********** success on user login in post -  see info ', info);
       return res.redirect('/login');
     } else {
-      req.session.user = user;
+      req.session.user = user[0];
       req.session.loggedIn = true;
       if (rememberMe) { // add this to user signup too
         req.session.cookie.maxAge = (30*24*60*60*1000); // 30 days
