@@ -51,6 +51,23 @@ module.exports.authUser = function(user, callback) {
   );
 };
 
+module.exports.newUser = function(user, callback) {
+  var values = [user.email, user.password + user.salt, user.salt, user.first_name, user.last_name, user.phone];
+  module.exports.connection.query('INSERT INTO users (email, password, salt, first_name, last_name, phone, created_at)' +
+    'VALUES ?', values, function(error, results, fields) {
+      if (error) {
+        console.log('*********** database add new user ', error);
+        throw error;
+        callback(error);
+      }
+      if (results) {
+        console.log('*********** database add new user error ', error);
+        callback(null, results);
+      }
+    }
+  );
+};
+
 module.exports.addUserToSession = function(user, session, callback) {
   var values = [Number(user), session];
   module.exports.connection.query('UPDATE SESSIONS SET user_id= ? WHERE session_id= ? ',
@@ -75,23 +92,23 @@ module.exports.addSale = function(forSaleBlock, restrictedStudios, callback) {
       // TODO fix asyc calls in each forEach iteration, only do callback when all are done
       module.exports.connection.query(`SELECT id FROM restricted_list WHERE user_id=${forSaleBlock.seller_id} AND studio IN ("${restrictedStudios.join('", "')}")`, function(err, results) {
         if (err) {
-          callback(err, results);    
+          callback(err, results);
         } else {
           const studios = results.map(({id}) => `(${blockId}, ${id})`).join(',');
           module.exports.connection.query(`INSERT INTO restricted_studios (block_id, exempt_studio_id) VALUES ${studios}`, function(err, results) {
-            callback(err, results);    
+            callback(err, results);
           });
         }
       });
     } else {
-      callback(err, results);    
+      callback(err, results);
     }
   });
 };
 
 module.exports.getRestrictedStudios = function(user, callback) {
   module.exports.connection.query(`SELECT id, studio FROM restricted_list WHERE user_id=${user.id}`, function(err, results) {
-    callback(err, results);    
+    callback(err, results);
   });
 };
 
@@ -104,10 +121,10 @@ module.exports.addRestrictedStudio = function(user, studio, callback) {
 // connection.end();
 
 module.exports.getForSaleBlocks = function(searchQueries, callback) {
-  var queryString = 'SELECT users.email, users.first_name, ' + 
+  var queryString = 'SELECT users.email, users.first_name, ' +
                       'users.rating, for_sale_block.pass_volume, for_sale_block.passes_sold, ' +
                       'for_sale_block.current_price, for_sale_block.period_start, ' +
-                      'for_sale_block.period_end, A.studios FROM users ' + 
+                      'for_sale_block.period_end, A.studios FROM users ' +
                     'INNER JOIN for_sale_block ON users.id = for_sale_block.seller_id ' +
                     'LEFT JOIN ' +
                       '(SELECT restricted_studios.block_id, ' +
@@ -147,13 +164,3 @@ module.exports.findAllFromCurrentUser = function(currentUserEmail, callback) {
     callback(rows);
   })
 };
-
-
-
-
-
-
-
-
-
-

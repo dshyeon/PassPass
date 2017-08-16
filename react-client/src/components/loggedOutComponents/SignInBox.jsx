@@ -77,7 +77,9 @@ class SignInBox extends React.Component {
             			<input type="checkbox" id="remember-me" checked={this.state.rememberMe} onChange={this.handleCheckbox.bind(this)} /> Remember me
             		</label>
             	</div>
+              <br></br>
             	<button className="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+              <br></br>
               <div>
                 New User? <a href='#' onClick={this.signUp.bind(this)}>Sign up</a>
               </div>

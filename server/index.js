@@ -121,8 +121,28 @@ app.post('/auth/email', (req, res, next) => {
 });
 
 app.post('/auth/signup', (req, res) => {
-  var salt = cryptoRandomString(10); //use this salt to create a new user
-  //req has obj of signup data
+  var rememberMe = req.body.rememberMe;
+  req.body.salt = cryptoRandomString(10); //use this salt to create a new user
+
+  database.
+
+  database.addUserToSession(user[0].id, req.sessionID, (err, results) => {
+    if (err) {
+      console.log('************ server side add user to session error ', err);
+      return next(err);
+    } else {
+      res.send(user);
+      // res.end()
+    }
+  });
+  req.session.user = user[0];
+  req.session.loggedIn = true;
+  if (rememberMe) { // add this to user signup too
+    req.session.cookie.maxAge = (30*24*60*60*1000); // 30 days
+  } else {
+    req.session.cookie.expires = false;
+  }
+
   //call to db to add the user data and create new user
   //if successful, return insert id
   //log user in
@@ -131,7 +151,7 @@ app.post('/auth/signup', (req, res) => {
     done(null, user.id);
   });
   //add authentication to a session table and cookie to the browser
-  return res.redirect('/interactions/' + user.username);
+  return res.redirect('/interactions/');
   //else send error message try again
   //how granular can the error be?
   //if existing account, just login?

@@ -10,7 +10,12 @@ class SignUpBox extends React.Component {
   constructor() {
     super();
     this.state = {
-
+      inputEmail: '',
+      inputPassword: '',
+      inputFirst: '',
+      inputLast: '',
+      inputPhone: '',
+      rememberMe: false
     };
   }
 
@@ -28,11 +33,14 @@ class SignUpBox extends React.Component {
     event.preventDefault();
   	$.ajax({
 		  method: 'POST',
-		  url: '/auth/email',
+		  url: '/auth/signup',
 		  contentType: 'application/JSON',
 		  data: JSON.stringify({
 		  	email: this.state.inputEmail,
 		  	password: this.state.inputPassword,
+        first_name: this.state.inputFirst,
+		  	last_name: this.state.inputLast,
+        phone: this.state.inputPhone,
         rememberMe: this.state.rememberMe
 		  }),
 		  success: function (data) {
@@ -50,11 +58,17 @@ class SignUpBox extends React.Component {
       <Router>
         <div className="signUpContainer">
           <form className="form-signup" onSubmit={this.handleSignUp.bind(this)}>
-          	<h2 className="form-signup-heading">Please sign up</h2>
-          	<label htmlFor="inputEmail" className="sr-only">Email address</label>
-          	<input onChange={this.handleChange.bind(this)} type="email" id="inputEmail" className="form-control" placeholder="Email address" required autoFocus/>
-          	<label htmlFor="inputPassword" className="sr-only">Password</label>
-          	<input onChange={this.handleChange.bind(this)} type="password" id="inputPassword" className="form-control" placeholder="Password" required/>
+          	<h2 className="form-signup-heading">Sign Up for a New Account</h2>
+          	<label>Email address*: </label>
+            <input onChange={this.handleChange.bind(this)} type="email" id="inputEmail" className="form-control" required autoFocus/>
+          	<label>Password*: </label>
+            <input onChange={this.handleChange.bind(this)} type="password" id="inputPassword" className="form-control" required/>
+            <label>First Name: </label>
+          	<input onChange={this.handleChange.bind(this)} type="text" id="inputFirst" className="form-control" required/>
+            <label>Last Name: </label>
+          	<input onChange={this.handleChange.bind(this)} type="text" id="inputLast" className="form-control" required/>
+            <label>Phone: </label>
+          	<input onChange={this.handleChange.bind(this)} type="text" id="inputPhone" className="form-control" required/>
           	<div className="checkbox">
           		<label>
           			<input type="checkbox" id="remember-me" checked={this.state.rememberMe} onChange={this.handleCheckbox.bind(this)} /> Remember me
