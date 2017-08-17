@@ -123,7 +123,7 @@ module.exports.getForSaleBlocks = function(searchQueries, callback) {
       var dates = searchQueries[key];
       var startDate = dates[0];
       var endDate = dates[1];
-      queryString += ' AND ((for_sale_block.period_start between "' + startDate + '" and "' + endDate + '") OR (for_sale_block.period_end between "' + startDate + '" and "' + endDate + '"))';
+      queryString += ' AND ((for_sale_block.period_start between "' + startDate + '" and "' + endDate + '") OR (for_sale_block.period_end between "' + startDate + '" and "' + endDate + '") OR (for_sale_block.period_start <= "' + startDate + '" AND for_sale_block.period_end >= "' + endDate + '"))';
     } else if (key === 'passesCountInput' && searchQueries[key]) {
       queryString += ' AND for_sale_block.pass_volume - for_sale_block.passes_sold >= ' + searchQueries[key];
     } else if (key === 'gymInput' && searchQueries[key] && searchQueries[key].toLowerCase() !== 'none') {

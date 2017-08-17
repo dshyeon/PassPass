@@ -26,7 +26,3 @@ const BuyPassesListItem = (props) => {
 };
 
 export default BuyPassesListItem;
-
-// .map((restrict) => (
-// 										<div className="restrict">{restrict}</div>
-// 									))

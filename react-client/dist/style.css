@@ -48,7 +48,6 @@ small {
 .searchRow {
 	display: flex;
 	justify-content: space-between;
-	align-items: center;
 }
 
 .buyPassesSearchInput {
@@ -60,6 +59,7 @@ small {
 	height: 3em;
 	background-color: #40e0d0;
 	border-color: #D3D3D3;
+	margin-top: 1em;
 }
 
 input::-webkit-outer-spin-button,
@@ -67,6 +67,10 @@ input::-webkit-inner-spin-button {
     /* display: none; <- Crashes Chrome on hover */
     -webkit-appearance: none;
     margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+input[type=number] {
+    -moz-appearance:textfield;
 }
 
 .buyPassesList {

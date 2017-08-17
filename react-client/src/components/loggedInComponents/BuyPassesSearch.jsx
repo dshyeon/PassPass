@@ -35,7 +35,8 @@ class BuyPassesSearch extends React.Component {
                    type="date"
                    onChange={this.handleChange.bind(this)}
                    id="startDateInput"
-                   className="form-control buyPassesSearchInput" />
+                   className="form-control buyPassesSearchInput"
+                   placeholder="mm/dd/yyyy" />
           </div>
           <div className="buyPassesSearchInput">
             End Date:
@@ -43,7 +44,8 @@ class BuyPassesSearch extends React.Component {
                    type="date"
                    onChange={this.handleChange.bind(this)}
                    id="endDateInput"
-                   className="form-control buyPassesSearchInput" />
+                   className="form-control buyPassesSearchInput"
+                   placeholder="mm/dd/yyyy" />
           </div>
           <div className="buyPassesSearchInput">
             Maximum Price:
