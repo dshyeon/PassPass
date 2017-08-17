@@ -1,7 +1,7 @@
 import React from 'react';
 import $ from 'jquery';
 
-class AddSale extends React.Component {
+class SellPassesAddSale extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -63,7 +63,15 @@ class AddSale extends React.Component {
       context: this,
       success: (data) => {
         console.log('POST /pass/new SUCCEEDED: ', data);
-        this.toggleShowAdd();
+        this.setState({
+          addSalePrice: '',
+          addSaleDateStart: '',
+          addSaleDateEnd: '',
+          addSaleQuantity: '',
+          addSaleAddRestricted: '',
+          addSaleRestrictedSelect: [],
+          showAdd: false
+        });
       },
       error: (err) => {
         console.log('POST /pass/new FAILED');
@@ -119,22 +127,22 @@ class AddSale extends React.Component {
           <fieldset className="form-inline">
             <div className="form-group">
               <label htmlFor="addSaleQuantity">Number of Passes:</label>
-              <input type="text" className="form-control" id="addSaleQuantity" placeholder="Number" value={this.state.addSaleQuantity} onChange={this.handleChange} />
+              <input type="number" min="1" className="form-control" id="addSaleQuantity" placeholder="Number" value={this.state.addSaleQuantity} onChange={this.handleChange} required />
             </div>
 
             <div className="form-group">
               <label htmlFor="addSalePrice">Price Per Pass:</label>
-              <input type="text" className="form-control" id="addSalePrice" placeholder="Dollar amount" value={this.state.addSalePrice} onChange={this.handleChange} />
+              <input type="number" min="0" className="form-control" id="addSalePrice" placeholder="Dollar amount" value={this.state.addSalePrice} onChange={this.handleChange} required />
             </div>
 
             <div className="form-group">
               <label htmlFor="addSaleDateStart">Passes are valid start on:</label>
-              <input type="date" className="form-control" id="addSaleDateStart" placeholder="Start Date" value={this.state.addSaleDateStart} onChange={this.handleChange} />
+              <input type="date" className="form-control" id="addSaleDateStart" placeholder="Start Date" value={this.state.addSaleDateStart} onChange={this.handleChange} required />
             </div>
 
             <div className="form-group">
               <label htmlFor="addSaleDateEnd">Passes are valid until:</label>
-              <input type="date" className="form-control" id="addSaleDateEnd" placeholder="End Date" value={this.state.addSaleDateEnd} onChange={this.handleChange} />
+              <input type="date" className="form-control" id="addSaleDateEnd" placeholder="End Date" value={this.state.addSaleDateEnd} onChange={this.handleChange} required />
             </div>
 
             <div className="form-group">
@@ -168,4 +176,4 @@ class AddSale extends React.Component {
   }
 }
 
-export default AddSale;
+export default SellPassesAddSale;

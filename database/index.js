@@ -70,17 +70,18 @@ module.exports.addUserToSession = function(user, session, callback) {
 module.exports.addSale = function(forSaleBlock, restrictedStudios, callback) {
   module.exports.connection.query('INSERT INTO for_sale_block SET ?', forSaleBlock, function(err, results) {
     const blockId = results.insertId;
+    let error;
     if (restrictedStudios && !err) {
-      restrictedStudios.forEach(studio => {
-        module.exports.connection.query(`SELECT id FROM restricted_list WHERE user_id=${forSaleBlock.seller_id} AND studio="${studio}"`, function(err, results) {
-          if (err) {
-            callback(err);
-          } else {
-            module.exports.connection.query(`INSERT INTO restricted_studios (block_id, exempt_studio_id) VALUES (${blockId}, ${results[0].id})`, function(err, results) {
-              callback(err, results);    
-            });
-          }
-        });
+      // TODO fix asyc calls in each forEach iteration, only do callback when all are done
+      module.exports.connection.query(`SELECT id FROM restricted_list WHERE user_id=${forSaleBlock.seller_id} AND studio IN ("${restrictedStudios.join('", "')}")`, function(err, results) {
+        if (err) {
+          callback(err, results);    
+        } else {
+          const studios = results.map(({id}) => `(${blockId}, ${id})`).join(',');
+          module.exports.connection.query(`INSERT INTO restricted_studios (block_id, exempt_studio_id) VALUES ${studios}`, function(err, results) {
+            callback(err, results);    
+          });
+        }
       });
     } else {
       callback(err, results);    
