@@ -19,7 +19,6 @@ class AppLoggedOut extends React.Component {
       <div className="appLoggedOutPageContainer">
         <div className="pageHeader">
           <h1 className="signedOutLogo">PassPass</h1>
-          <a href="logged-in.html">logged-in</a>
           <small>The Marketplace for Classpass Classes</small>
         </div>
         <div className="signInContainerRow">
