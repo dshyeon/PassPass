@@ -39,8 +39,7 @@ class BuyPasses extends React.Component {
 
   render () {
     return (
-      <div>
-        <h1>Passes For Sale</h1>
+      <div className="buyPasses">
         <BuyPassesSearch handleSearch={this.handleSearch.bind(this)}/>
         <BuyPassesList forSaleBlocks={this.state.forSaleBlocks}/>
       </div>

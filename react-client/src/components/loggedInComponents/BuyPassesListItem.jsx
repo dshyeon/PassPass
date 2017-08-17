@@ -3,27 +3,22 @@ import React from 'react';
 const BuyPassesListItem = (props) => {
 	var restricted;
 	if (props.forSaleBlock.studios && props.forSaleBlock.studios !== 'none') {
-		restricted = <div className="buyPassesListItemRowThree">
-									No Passes Available For:
-									{props.forSaleBlock.studios.split(',').map((restrict) => (
-										<div>{restrict}</div>
-									))}
+		restricted = <div className="buyPassesListItemInfo">
+									<b>No Passes Available For:</b>&nbsp;<div className="restrict">{props.forSaleBlock.studios.replace(',', ', ')}</div>
 									</div>
 	} else {
 		restricted = '';
 	}
 	return (
-		<div>
-			<div className="buyPassesListItemRowOne">
-				<div>{props.forSaleBlock.first_name}</div>
-				<div>{props.forSaleBlock.email}</div>
+		<div className="buyPassesListItem">
+			<div className="buyPassesListItemColumnOne">
+				<div className="buyPassesListItemInfo"><b>Seller:</b>&nbsp;{props.forSaleBlock.first_name}</div>
+				<div className="buyPassesListItemInfo"><b>Email:</b>&nbsp;{props.forSaleBlock.email}</div>
+				<div className="buyPassesListItemInfo"><b>Passes Available:</b>&nbsp;{props.forSaleBlock.pass_volume - props.forSaleBlock.passes_sold}</div>
+				<div className="buyPassesListItemInfo"><b>Pass Price:</b>&nbsp;${props.forSaleBlock.current_price.toFixed(2)}</div>
 			</div>
-			<div className="buyPassesListItemRowTwo">
-				<div>{props.forSaleBlock.pass_volume - props.forSaleBlock.passes_sold} Passes Available</div>
-				<div>Pass Price: ${props.forSaleBlock.current_price}</div>
-				<div>Sale Period: {props.forSaleBlock.period_start.slice(0, 10) + ' through ' + props.forSaleBlock.period_end.slice(0, 10)}</div>
-			</div>
-			<div>
+			<div className="buyPassesListItemColumnTwo">
+				<div className="buyPassesListItemInfo"><b>Sale Period:</b>&nbsp;{new Date(props.forSaleBlock.period_start.slice(0, 10)).toDateString().slice(4) + ' through ' + new Date(props.forSaleBlock.period_end.slice(0, 10)).toDateString().slice(4)}</div>
 				{restricted}
 			</div>
 		</div>
@@ -31,3 +26,7 @@ const BuyPassesListItem = (props) => {
 };
 
 export default BuyPassesListItem;
+
+// .map((restrict) => (
+// 										<div className="restrict">{restrict}</div>
+// 									))

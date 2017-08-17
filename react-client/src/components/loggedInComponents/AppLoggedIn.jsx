@@ -29,23 +29,21 @@ class AppLoggedIn extends React.Component {
                     aria-label="Toggle navigation">
               <span className="navbar-toggler-icon"></span>
             </button>
-            <a className="navbar-brand" href="#">PassPass</a>
+            <h1>
+              <Link to="/buypasses" className="navbar-brand">PassPass</Link>
+            </h1>
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
               <ul className="navbar-nav mr-auto">
-                <li className="nav-item active">
-                  <Link to="/interactions">Interactions</Link>
+                <li className="nav-item">
+                  <Link to="/buypasses" className="nav-link">Buy Passes</Link>
                 </li>
                 <li className="nav-item">
-                  <Link to="/buypasses">Buy Passes</Link>
-                </li>
-                <li className="nav-item">
-                  <Link to="/sellpasses">Sell Passes</Link>
+                  <Link to="/sellpasses" className="nav-link">Sell Passes</Link>
                 </li>
               </ul>
             </div>
           </nav>
           <div>
-            <Route exact path="/interactions" component={Interactions}/>
             <Route path="/buypasses" component={BuyPasses}/>
             <Route path="/sellpasses" component={SellPasses}/>
           </div>
@@ -56,3 +54,9 @@ class AppLoggedIn extends React.Component {
 }
 
 export default AppLoggedIn;
+
+// <li className="nav-item active">
+//   <Link to="/interactions">Interactions</Link>
+// </li>
+
+// <Route exact path="/interactions" component={Interactions}/>

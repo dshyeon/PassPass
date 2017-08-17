@@ -48,4 +48,13 @@ describe('Server', function() {
         });
     });
   });
+
+  xdescribe('Buy Passes Search', () => {
+    test('should send all for_sale_blocks (excluding logged-in user) on blank search', (done) => {
+      
+    });
+    test('should handle POST request with search queries', (done) => {
+      
+    });
+  });
 });

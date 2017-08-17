@@ -12,7 +12,7 @@ ReactDOM.render((
 	<Router>
 		<div>
 			<Route exact path="/" component={AppLoggedIn} />
-			<Route path="/interactions" component={AppLoggedIn} />
+			<Route path="/buypasses" component={AppLoggedIn} />
 		</div>
 	</Router>
 ), document.getElementById('app'));
