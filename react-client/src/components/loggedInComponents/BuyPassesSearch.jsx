@@ -14,7 +14,7 @@ class BuyPassesSearch extends React.Component {
   }
 
   handleChange(event) {
-    var newState = Object.assign({}, this.state);
+    var newState = {};
     newState[event.target.id] = event.target.value;
     this.setState(newState);
   }
