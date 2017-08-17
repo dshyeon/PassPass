@@ -102,12 +102,3 @@ module.exports.getForSaleBlocks = function(searchQueries, callback) {
   });
 };
 
-// var queryString = 'SELECT users.email, users.first_name, users.rating, ' + 
-//                       'for_sale_block.pass_volume, for_sale_block.passes_sold, ' +
-//                       'for_sale_block.current_price, for_sale_block.period_start, ' +
-//                       'for_sale_block.period_end, restricted_list.studio FROM users ' +
-//                     'INNER JOIN for_sale_block on users.id = for_sale_block.seller_id ' +
-//                     'LEFT JOIN restricted_studios on restricted_studios.block_id = for_sale_block.id ' +
-//                     'LEFT JOIN restricted_list on restricted_studios.exempt_studio_id = restricted_list.id ' +
-//                     'WHERE users.id <> ' + searchQueries.ignoreUserId;
-
