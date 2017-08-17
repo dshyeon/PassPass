@@ -186,10 +186,11 @@ app.post('/pass/seller/search', (req, res) => {
 app.get('/pass/seller/search', (req, res) => {
  //why is req.body = {} ?
  console.log('app.get REQ QUERY = ', req.query.users_email);
- // database.findAllFromCurrentUser(req.query.users_email, function(userCurrentSaleBlocks) {
- //  res.send(userCurrentSaleBlocks);
- // });
- res.send('THIS IS THE RESPONSE FROM THE SERVER');
+ console.log('REQ BODY = ', req.body);
+ database.findAllFromCurrentUser(req.query.users_email, function(userCurrentSaleBlocks) {
+  res.send(userCurrentSaleBlocks);
+ });
+ // res.send('THIS IS THE RESPONSE FROM THE SERVER');
 
 
 

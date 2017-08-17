@@ -85,6 +85,7 @@ CREATE TABLE for_sale_block (
   period_start DATE,
   period_end DATE,
   passes_sold int,
+  exclusions VARCHAR(150),
   FOREIGN KEY (seller_id) REFERENCES users(id)
 );
 
@@ -180,7 +181,8 @@ INSERT INTO for_sale_block (
     current_price,
     period_start,
     period_end,
-    passes_sold
+    passes_sold,
+    exclusions
   ) VALUES (
     1,
     15,
@@ -188,7 +190,8 @@ INSERT INTO for_sale_block (
     8.90,
     '2017-04-11',
     '2017-04-30',
-    4
+    4,
+    'Neko\'s Yoga'
   ), (
     2,
     9,
@@ -196,7 +199,8 @@ INSERT INTO for_sale_block (
     9.00,
     '2017-05-03',
     '2017-06-01',
-    1
+    1,
+    NULL
   ), (
     3,
     11,
@@ -204,7 +208,26 @@ INSERT INTO for_sale_block (
     10.00,
     '2017-03-03',
     '2017-03-15',
-    1
+    1,
+    'Hardcore Cycle Spin'
+  ), (
+    4,
+    9,
+    1,
+    9.25,
+    '2017-04-01',
+    '2017-04-19',
+    1,
+    NULL
+  ), (
+    5,
+    9,
+    1,
+    8.99,
+    '2017-04-20',
+    '2017-04-30',
+    5,
+    NULL
   );
 
 INSERT INTO messages (

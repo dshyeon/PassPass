@@ -103,16 +103,16 @@ module.exports.getForSaleBlocks = function(searchQueries, callback) {
 };
 
 
-var findAllFromCurrentUser = function(currentUserEmail, callback) {
+module.exports.findAllFromCurrentUser = function(currentUserEmail, callback) {
   // currentUserEmail = 'sally@sal.com';
   // //WORKS IN mySQL var testquery = SELECT users.id, users.email, for_sale_block.* FROM users, for_sale_block WHERE users.id = for_sale_block.seller_id AND users.email = 'sally@sal.com';
-  // var queryString = 'SELECT users.id, users.email, for_sale_block.* FROM users, for_sale_block WHERE users.id = for_sale_block.seller_id AND users.email = ' + currentUserEmail + ';';
-  // connection.query(queryString, function(err, rows, fields) {
-  //   if(err) {
-  //     throw err;
-  //   }
-  //   callback(rows);
-  // })
+  var queryString = 'SELECT users.id, users.email, for_sale_block.* FROM users, for_sale_block WHERE users.id = for_sale_block.seller_id AND users.email = "' + currentUserEmail + '";';
+  module.exports.connection.query(queryString, function(err, rows, fields) {
+    if(err) {
+      throw err;
+    }
+    callback(rows);
+  })
 };
 
 
