@@ -3,6 +3,26 @@
   "scripts": {
   },
   "env": {
+    "CLEARDB_DATABASE_URL": {
+      "description": "URL for mysql server",
+      "required": true
+    },
+    "FB_CALLBACKURL": {
+      "description": "For FB OAuth",
+      "required": true
+    },
+    "FB_CLIENTID": {
+      "description": "For FB OAuth",
+      "required": true
+    },
+    "FB_CLIENTSECRET": {
+      "description": "For FB OAuth",
+      "required": true
+    },
+    "SESSION_SECRET": {
+      "description": "For server session auth",
+      "required": true
+    }
   },
   "formation": {
   },
