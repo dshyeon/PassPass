@@ -20,13 +20,29 @@ module.exports.findUser = function(user, callback) {
   module.exports.connection.query('SELECT * FROM USERS WHERE email= ?', values, (error, results, fields) => {
       if (error) {
         console.log('*********** database find user by email error ', error);
-        callback(null, error);
+        callback(error);
       }
       if (results.length > 0) {
-        callback(results);
+        callback(null, results);
       } else {
         console.log('*********** database find user by email success but no match ', results);
-        callback(results);
+        callback(null, results);
+      }
+    }
+  );
+};
+
+module.exports.findUserById = function(id, callback) {
+  module.exports.connection.query('SELECT * FROM USERS WHERE id=' + id, (error, results, fields) => {
+      if (error) {
+        console.log('*********** database find user by ID error ', error);
+        callback(error);
+      }
+      if (results.length > 0) {
+        callback(null, results);
+      } else {
+        console.log('*********** database find user by ID success but no match ', results);
+        callback(null, results);
       }
     }
   );
@@ -39,13 +55,13 @@ module.exports.authUser = function(user, callback) {
       if (error) {
         console.log('*********** database authenicate user email error ', error);
         throw error;
-        callback(null, error);
+        callback(error);
       }
       if (results.length > 0) {
-        callback(results);
+        callback(null, results);
       } else {
         console.log('*********** database authenicate user email success but no match ', results);
-        callback(results);
+        callback(null, results);
       }
     }
   );

@@ -27,8 +27,6 @@ var sessionStore = new SessionStore({}, database.connection);
 
 var headers = {'Content-Type': 'application/json'};
 
-app.use(express.static(__dirname + '/../react-client/dist'));
-
 app.use(bodyParser.urlencoded({extended: false})); //will work when the req header Content-Type matches the type option (accepts only UTF-8 ), extended=false means the obj will contain key-value paires and values can be strings or arrays, change to true for any type
 app.use(bodyParser.json()); //default strict parameter only accepts arrays and objects, can change to false, will work when the req header Content-Type matches the type option (default to application/json but can change)
 
@@ -42,8 +40,9 @@ app.use(session({
 // on authenication, user added to the session and cookie added to the req header
 
 app.use(passport.initialize());
-app.use(passport.session());
+app.use(passport.session()); //good resource: http://toon.io/understanding-passportjs-authentication-flow/
 // app.use(app.router);
+app.use(express.static(__dirname + '/../react-client/dist'));
 
 passport.use(new LocalStrategy(
   {
@@ -51,7 +50,7 @@ passport.use(new LocalStrategy(
     passwordField: 'password'
   },
   (username, password, done) => {
-    database.findUser(username, (user, err) => {
+    database.findUser(username, (err, user) => {
       if (err) {
         console.log('************ server side in strategy - email lookup error ', err);
         return done(err);
@@ -59,7 +58,7 @@ passport.use(new LocalStrategy(
         console.log('********** success on user email lookup in strategy -  but no user match ', user);
         return done(null, false, {message: 'Incorrect username. Please try again or signup for a new account.'});
       } else {
-        database.authUser({email: username, password: password, salt: user[0].salt}, (user, err) => {
+        database.authUser({email: username, password: password, salt: user[0].salt}, (err, user) => {
           if (err) {
             console.log('************ server side in strategy - password check login error ', err);
             return done(err);
@@ -85,8 +84,45 @@ passport.use(new FacebookStrategy(fb,
     }
 ));
 
+passport.serializeUser(function(user, done) {
+  console.log('*********** called serializeUser before done, req.session.passport.user  user.id ', user.id);
+  done(null, user.id);
+  // result of this is req.session.passport.user = { // our serialised user object // }
+  // result also attached to req.user
+});
+
+passport.deserializeUser(function(id, done) {
+  console.log('*********** called de-serializeUser, req.session.passport.user ', id);
+  database.findUserById(id, (err, user) => {
+    done(err, user[0]);
+  });
+  // Attaches the loaded user object to the request as req.user
+});
+
+var successUser = (req, res, user, callback) => {
+  // req.session.user = user[0];
+    // req.session.user.id = user[0].id;
+    console.log('*********** in successUser, req.session ', req.session);
+    console.log('*********** in successUser, req.sessionID ', req.sessionID);
+
+    if (req.body.rememberMe) { // add this to user signup too
+      req.session.cookie.maxAge = (30*24*60*60*1000); // 30 days
+    } else {
+      req.session.cookie.expires = false;
+    }
+    console.log('********** req session cookie sets rememberMe? ', req.session.cookie);
+    database.addUserToSession(req.session.passport.user, req.sessionID, (err, results) => {
+      if (err) {
+        console.log('************ server side add user to session error ', err);
+        callback(err);
+      } else {
+        callback(null, user);
+      }
+    });
+}
+
 app.post('/auth/email', (req, res, next) => {
-  var rememberMe = req.body.rememberMe;
+  // var rememberMe = req.body.rememberMe;
   passport.authenticate('local', (err, user, info) => { //info is optional argument passed by the strategy's callback
     //req.user contains the authenticated user if approved
     //req.user = false if fails
@@ -94,28 +130,25 @@ app.post('/auth/email', (req, res, next) => {
       // var cookie = req.cookies['connect.sid'];
     if (err) {
       console.log('************ server side in post - email login error ', err);
-      return next(err);
+      // return next(err);
+      res.send(err);
     } else if (!user) {
       console.log('********** success on user login in post -  but no user match ', user);
       console.log('********** success on user login in post -  see info ', info);
       return res.redirect('/login');
     } else {
-      req.session.user = user[0];
-      req.session.loggedIn = true;
-      if (rememberMe) { // add this to user signup too
-        req.session.cookie.maxAge = (30*24*60*60*1000); // 30 days
-      } else {
-        req.session.cookie.expires = false;
-      }
-      database.addUserToSession(user[0].id, req.sessionID, (err, results) => {
+      req.login(user[0], err => {
+        console.log('************* inside req.login user ', user);
         if (err) {
-          console.log('************ server side add user to session error ', err);
           return next(err);
         } else {
-          res.send(user);
-          // res.end()
+          successUser(req, res, user, (err, user) => {
+            if (err) {res.send(err);}
+            res.send(user);
+          });
         }
-      });
+      }); //called by passport if user is passed back but called by application in this custom setup
+      //that will call serializeUser method defined above
     }
   })(req, res, next);
 });
@@ -124,37 +157,28 @@ app.post('/auth/signup', (req, res) => {
   var rememberMe = req.body.rememberMe;
   req.body.salt = cryptoRandomString(10); //use this salt to create a new user
 
-  database.
-
-  database.addUserToSession(user[0].id, req.sessionID, (err, results) => {
+  database.newUser(req.body, (err, results) => {
     if (err) {
-      console.log('************ server side add user to session error ', err);
-      return next(err);
+      console.log('************ server side new user signup error ', err);
+      res.send(err);
     } else {
-      res.send(user);
-      // res.end()
+      console.log('************ results from new User query ', results);
+      req.body.id = results.insertId;
+      console.log('********** req before log in ', req);
+      req.logIn(); //calls serializeUser
+      console.log('********** req after log in ', req);
+      // passport.serializeUser((user, done) => {
+      //   console.log('********** req after serialize user ', req);
+      //   console.log('********** user after serialize user ', req);
+      //
+      //   done(null, user.id);
+      // });
+      successUser(req, res, req.body, (err, user) => {
+        if (err) {res.send(err);}
+        res.redirect('/interactions/');
+      });
     }
   });
-  req.session.user = user[0];
-  req.session.loggedIn = true;
-  if (rememberMe) { // add this to user signup too
-    req.session.cookie.maxAge = (30*24*60*60*1000); // 30 days
-  } else {
-    req.session.cookie.expires = false;
-  }
-
-  //call to db to add the user data and create new user
-  //if successful, return insert id
-  //log user in
-  req.logIn() //used to auto login after signing up
-  passport.serializeUser((user, done) => {
-    done(null, user.id);
-  });
-  //add authentication to a session table and cookie to the browser
-  return res.redirect('/interactions/');
-  //else send error message try again
-  //how granular can the error be?
-  //if existing account, just login?
 });
 
 app.get('/auth/facebook', passport.authenticate('facebook'));
