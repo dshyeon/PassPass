@@ -1,6 +1,4 @@
-# Project Name
-
-PassPass
+# PassPass
 
 ## Team
 
@@ -21,7 +19,29 @@ PassPass
 
 ## Usage
 
-> Some usage instructions
+### Online
+https://hungryhippopasspass.herokuapp.com/
+
+
+## Requirements
+
+- Node 6.11.x
+- npm 3.10.x
+- MySQL 5.7
+
+## Development
+
+### Installing Dependencies
+Required files: a session.config.js and a facebook.config.js. Please contact a team member for more details on obtaining the necessary configuration variables.
+
+Fork and clone the repo. From within the root directory:
+
+```sh
+npm install
+npm run react-dev
+npm run server-dev
+```
+Go to http://127.0.0.1:3000/ in your browser to run locally
 
 ### Testing
 
@@ -40,30 +60,9 @@ Tests are split into 3 folders: react-client, server, and database, to match the
 
 Checking test coverage is TBD.
 
-## Requirements
-
-- Node 6.4.x
-- Redis 2.6.x
-- Postgresql 9.1.x
-- etc
-- etc
-
-## Development
-
-### Installing Dependencies
-
-From within the root directory:
-
-```sh
-npm install -g bower
-npm install
-bower install
-```
-
 ### Roadmap
 
-View the project roadmap [here](LINK_TO_DOC)
-
+View the project roadmap on Trello [here](https://trello.com/b/Rsxkw459/passpass)
 
 ## Contributing
 
