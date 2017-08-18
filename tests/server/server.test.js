@@ -49,12 +49,15 @@ describe('Server', function() {
     });
   });
 
-  xdescribe('Buy Passes Search', () => {
+  describe('Buy Passes Search', () => {
     test('should send all for_sale_blocks (excluding logged-in user) on blank search', (done) => {
       superReq
         .post('/pass/buyer/search')
-        .send({})
+        .send({searchQueries: {}})
         .expect('Content-Type', /json/)
+        .expect((res) => {
+          expect(res.body[0].first_name).to.equal('Sally');
+        })
         .expect(200, function(err) {
           done(err);
         });
@@ -62,14 +65,37 @@ describe('Server', function() {
     test('should handle POST request with search queries', (done) => {
       superReq
         .post('/pass/buyer/search')
-        .send({ startDateInput: '2017-05-10',
-                endDateInput: '2017-08-24',
-                priceInput: '20',
-                passesCountInput: '3',
-                gymInput: 'C.C. Cycling' 
-              })
+        .send({
+          searchQueries: { 
+                  startDateInput: '2017-05-10',
+                  endDateInput: '2017-08-24',
+                  priceInput: '20',
+                  passesCountInput: '3',
+                  gymInput: 'C.C. Cycling' 
+                }
+        })
         .expect('Content-Type', /json/)
+        .expect((res) => {
+          expect(res.body[0].first_name).to.equal('Sally');
+        })
         .expect(200, function(err) {
+          done(err);
+        });
+    });
+    test('should handle POST request with invalid search queries', (done) => {
+      superReq
+        .post('/pass/buyer/search')
+        .send({
+          searchQueries: { 
+                  startDateInput: 'fawef',
+                  endDateInput: 'sdfasdf',
+                  priceInput: 'ewfaew',
+                  passesCountInput: 'awefwe',
+                  gymInput: 'wafaef,wefawef' 
+                }
+        })
+        .expect('Content-Type', /json/)
+        .expect(500, function(err) {
           done(err);
         });
     });

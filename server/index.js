@@ -216,7 +216,6 @@ app.post('/pass/buyer/search', (req, res) => {
   // if successful, return records
   // else send error message try again
   // how granular can the error be?
-  console.log(req.body.searchQueries);
   var startDate = req.body.searchQueries.startDateInput || '1000-01-01';
   var endDate = req.body.searchQueries.endDateInput || '9999-12-31';
   req.body.searchQueries.dateRange = [startDate, endDate];
