@@ -42,6 +42,10 @@ small {
 	padding: .5em 13vw .5em 13vw;
 }
 
+.buyPasses {
+	padding-top: 76px;
+}
+
 .buyPassesSearch {
 	background-color: #f6f6f6;
 	border-top: thin solid #D3D3D3;
