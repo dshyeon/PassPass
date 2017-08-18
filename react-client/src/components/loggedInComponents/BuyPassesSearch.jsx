@@ -7,7 +7,6 @@ class BuyPassesSearch extends React.Component {
       startDateInput: '',
       endDateInput: '',
       priceInput: '',
-      ratingInput: '',
       passesCountInput: '',
       gymInput: ''
     };
