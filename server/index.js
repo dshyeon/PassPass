@@ -10,7 +10,6 @@ var cryptoRandomString = require('crypto-random-string');
 
 var session_secret;
 var fb;
-console.log('node env: ', process.env.NODE_ENV);
 if (process.env.NODE_ENV === 'production') {
   fb = {
     clientID: process.env.FB_CLIENTID,
@@ -287,8 +286,8 @@ app.post('/chat', (req, res) => {
   // TBD
 });
 
-app.set('port', 3000);
-// app.set('port', process.env.PORT);
+var port = process.env.PORT || 3000;
+app.set('port', port);
 
 if (module.parent) {
   module.exports = app;
