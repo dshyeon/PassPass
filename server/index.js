@@ -6,9 +6,19 @@ var FacebookStrategy = require('passport-facebook').Strategy;
 var database = require('../database/index.js');
 var session = require('express-session');
 var SessionStore = require('express-mysql-session')(session);
-var fb = require('../facebook.config.js');
-var session_secret = require('../session.config.js');
+var session_secret = process.env.SESSION_SECRET || require('../session.config.js');
 var cryptoRandomString = require('crypto-random-string');
+
+var fb;
+if (process.env.FB_CLIENTID) {
+  fb = {
+    clientID: process.env.FB_CLIENTID,
+    clientSecret: process.env.FB_CLIENTSECRET,
+    callbackURL: process.env.FB_CALLBACKURL
+  };
+} else {
+  fb = require('../facebook.config.js');
+}
 
 var app = express();
 var sessionStore = new SessionStore({}, database.connection);
