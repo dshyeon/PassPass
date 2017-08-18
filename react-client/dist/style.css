@@ -36,22 +36,19 @@ small {
 	font-size: 150%;
 }
 
-.buyPassesSearch {
-	display: flex;
-	flex-direction: column;
-	background-color: #f6f6f6;
+.container {
+	margin: 0;
+	width: 100%;
 	padding: .5em 13vw .5em 13vw;
+}
+
+.buyPassesSearch {
+	background-color: #f6f6f6;
 	border-top: thin solid #D3D3D3;
 	border-bottom: thin solid #D3D3D3;
 }
 
 .searchRow {
-	display: flex;
-	justify-content: space-between;
-}
-
-.buyPassesSearchInput {
-	width: 15em;
 	margin-bottom: .5em;
 }
 
@@ -73,25 +70,9 @@ input[type=number] {
     -moz-appearance:textfield;
 }
 
-.buyPassesList {
-	padding: 0 13vw 0 13vw;
-}
-
 .buyPassesListItem {
 	border-bottom: thin solid #40e0d0;
-	display: flex;
 	padding: 1em 0 1em 0;
-}
-
-.buyPassesListItemColumnOne {
-	display: flex;
-	flex-direction: column;
-	margin-right: 8em;
-}
-
-.buyPassesListItemColumnTwo {
-	display: flex;
-	flex-direction: column;
 }
 
 .buyPassesListItemInfo {
@@ -102,5 +83,11 @@ input[type=number] {
 .restrict {
 	color: #FF4136;
 	white-space: normal;
+	margin-left: .5em;
+}
+
+.buyPassesListItemInfoContent {
+	white-space: normal;
+	margin-left: .5em;
 }
 

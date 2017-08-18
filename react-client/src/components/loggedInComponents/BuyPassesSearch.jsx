@@ -26,28 +26,28 @@ class BuyPassesSearch extends React.Component {
 
   render () {
     return (
-      <form onSubmit={this.handleSubmit.bind(this)} className="buyPassesSearch">
-        <h2>For Sale</h2>
-        <div className="searchRow">
-          <div className="buyPassesSearchInput">
+      <form onSubmit={this.handleSubmit.bind(this)} className="buyPassesSearch container">
+        <div className="row searchRow"><h2 className="col">For Sale</h2></div>
+        <div className="row searchRow">
+          <div className="buyPassesSearchInput col-sm">
             Start Date:
             <input value={this.state.startDateInput}
                    type="date"
                    onChange={this.handleChange.bind(this)}
                    id="startDateInput"
-                   className="form-control buyPassesSearchInput"
+                   className="form-control"
                    placeholder="mm/dd/yyyy" />
           </div>
-          <div className="buyPassesSearchInput">
+          <div className="buyPassesSearchInput col-sm">
             End Date:
             <input value={this.state.endDateInput} 
                    type="date"
                    onChange={this.handleChange.bind(this)}
                    id="endDateInput"
-                   className="form-control buyPassesSearchInput"
+                   className="form-control"
                    placeholder="mm/dd/yyyy" />
           </div>
-          <div className="buyPassesSearchInput">
+          <div className="buyPassesSearchInput col-sm">
             Maximum Price:
             <input value={this.state.priceInput} 
                    type="number" 
@@ -59,8 +59,8 @@ class BuyPassesSearch extends React.Component {
                    placeholder="e.g. 4.50" />
           </div>
         </div>
-        <div className="searchRow">
-          <div className="buyPassesSearchInput">
+        <div className="row searchRow">
+          <div className="buyPassesSearchInput col-sm">
             Minimum # of Passes:
             <input value={this.state.passesCountInput} 
                    type="number"
@@ -71,16 +71,18 @@ class BuyPassesSearch extends React.Component {
                    className="form-control" 
                    placeholder="e.g. 3" />
           </div>
-          <div className="buyPassesSearchInput">
+          <div className="buyPassesSearchInput col-sm">
             Gym:
             <input value={this.state.gymInput}
                    type="text"
                    onChange={this.handleChange.bind(this)}
                    id="gymInput"
-                   className="form-control buyPassesSearchInput" 
+                   className="form-control" 
                    placeholder="e.g. Edmond Climbing" />
           </div>
-          <button className="searchButton btn btn-md btn-primary btn-block buyPassesSearchInput" type="submit">Search</button>
+          <div className="buyPassesSearchInput col-sm">
+            <button className="searchButton btn btn-md btn-primary btn-block" type="submit">Search</button>
+          </div>
         </div>
       </form>
     )
