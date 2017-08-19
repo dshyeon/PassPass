@@ -1,1 +1,1 @@
-module.exports = SESSION_SECRET = 'UPDATE_ME';
+module.exports = 'UPDATE_ME';
