@@ -63,7 +63,9 @@ class SignUpBox extends React.Component {
       <Router>
         <div className="signUpContainer">
           <form className="form-signup" onSubmit={this.handleSignUp.bind(this)}>
-          	<h2 className="form-signup-heading">Sign Up for a New Account</h2>
+          	<small className="form-signup-heading">Sign Up for a New Account</small>
+            <br></br>
+            <br></br>
           	<label>Email address*: </label>
             <input onChange={this.handleChange.bind(this)} type="email" id="inputEmail" className="form-control" required autoFocus/>
           	<label>Password*: </label>

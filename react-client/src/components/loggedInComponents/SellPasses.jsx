@@ -11,7 +11,7 @@ var UsersEmail = 'billy@bob.com';
 class SellPasses extends React.Component {
   constructor(props) {
     super(props);
-    this.state = 
+    this.state =
     {currentlySelling: []};
   }
 
