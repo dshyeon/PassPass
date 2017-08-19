@@ -32,15 +32,18 @@ https://hungryhippopasspass.herokuapp.com/
 ## Development
 
 ### Installing Dependencies
-Required files: a session.config.js and a facebook.config.js. Please contact a team member for more details on obtaining the necessary configuration variables.
-
 Fork and clone the repo. From within the root directory:
 
 ```sh
 npm install
-npm run react-dev
-npm run server-dev
 ```
+
+Add `facebook.config.js` file for facebook session keys, use `facebook.example.config.js` as a template.
+Add `session.config.js` file for session encryption key, use `session.example.config.js` as a template.
+Install the `schema.sql` file with instructions at the top of that file
+
+Run webpack with `npm run react-dev`.
+Launch server with `npm run server-dev`.
 Go to http://127.0.0.1:3000/ in your browser to run locally
 
 ### Testing
@@ -59,20 +62,6 @@ Test results will be output to terminal window.
 Tests are split into 3 folders: react-client, server, and database, to match the equivalent folders with JavaScript source code.
 
 Checking test coverage is TBD.
-
-## Requirements
-
-
-## Development
-
-### Installing Dependencies
-
-From within the root directory:
-
-npm install
-add facebook.config.js file for facebook session keys
-add session.config.js file for session encryption key
-install the schema.sql file with instructions at the top of that file
 
 ### Roadmap
 
