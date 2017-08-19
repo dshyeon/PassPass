@@ -9,7 +9,8 @@ small {
 }
 
 .signInContainer {
-	width: 20em;
+	width: 27em;
+  padding-top: 86px;
 }
 
 .appLoggedOutPageContainer {

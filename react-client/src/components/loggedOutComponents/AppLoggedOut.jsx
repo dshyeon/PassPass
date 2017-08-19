@@ -16,16 +16,41 @@ class AppLoggedOut extends React.Component {
 
   render () {
     return (
-      <div className="appLoggedOutPageContainer">
-        <div className="pageHeader">
-          <h1 className="signedOutLogo">PassPass</h1>
-          <small>The Marketplace for Classpass Classes</small>
+      <Router>
+        <div>
+          <nav className="navbar navbar-toggleable-md navbar-light bg-faded fixed-top">
+            <button className="navbar-toggler navbar-toggler-right collapsed"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation">
+              <span className="navbar-toggler-icon"></span>
+            </button>
+            <h1>
+              <Link to="/" className="navbar-brand">PassPass</Link>
+            </h1>
+            <div className="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul className="navbar-nav mr-auto">
+                <li className="nav-item">
+                  <Link to="/" className="nav-link">Buy Passes</Link>
+                </li>
+                <li className="nav-item">
+                  <Link to="/" className="nav-link">Sell Passes</Link>
+                </li>
+              </ul>
+            </div>
+          </nav>
+          <div className="signInContainerRow">
+            <SignInBox />
+          </div>
+          <div>
+            <Route path="/login" component={SignInBox}/>
+            <Route path="/signup" component={SignUpBox}/>
+          </div>
         </div>
-        <div className="signInContainerRow">
-          <SignInBox />
-        </div>
-        <div></div>
-      </div>
+      </Router>
     )
   }
 }
