@@ -20,7 +20,7 @@ class AppLoggedIn extends React.Component {
       <Router>
         <div>
           <nav className="navbar navbar-toggleable-md navbar-light bg-faded fixed-top">
-            <button className="navbar-toggler navbar-toggler-right"
+            <button className="navbar-toggler navbar-toggler-right collapsed"
                     type="button" 
                     data-toggle="collapse" 
                     data-target="#navbarSupportedContent" 
