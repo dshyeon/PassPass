@@ -7,6 +7,7 @@ var database = require('../database/index.js');
 var session = require('express-session');
 var SessionStore = require('express-mysql-session')(session);
 var cryptoRandomString = require('crypto-random-string');
+var path = require('path');
 
 var session_secret;
 var fb;
@@ -313,6 +314,10 @@ app.post('/review/search', (req, res) => {
 app.post('/chat', (req, res) => {
   //integrate with twilio API
   // TBD
+});
+
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../react-client/dist/index.html'));
 });
 
 var port = process.env.PORT || 3000;

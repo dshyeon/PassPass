@@ -11,8 +11,9 @@ import AppLoggedIn from './components/loggedInComponents/AppLoggedIn.jsx';
 ReactDOM.render((
 	<Router>
 		<div>
-			<Route exact path="/" component={AppLoggedIn} />
+			<Route exact path="/" component={AppLoggedOut} />
 			<Route path="/buypasses" component={AppLoggedIn} />
+      <Route path="/sellpasses" component={AppLoggedIn} />
 		</div>
 	</Router>
 ), document.getElementById('app'));
