@@ -25,6 +25,10 @@ small {
 	padding: .5em 13vw .5em 13vw;
 }
 
+.collapsed {
+	margin-right: 13vw;
+}
+
 .navbar-brand {
 	font-weight: bold;
 	font-size: 100%;
