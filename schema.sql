@@ -296,23 +296,6 @@ INSERT INTO restricted_list (
     NULL
   );
 
-<<<<<<< HEAD
-INSERT INTO restricted_studios (
-    block_id,
-    exempt_studio_id
-  ) VALUES (
-    1,
-    1
-  ), (
-    2,
-    2
-  ), (
-    2,
-    3
-  ), (
-    3,
-    4
-  );
-=======
-INSERT INTO restricted_studios (block_id, exempt_studio_id) VALUES (1, 2);
->>>>>>> login and signup working with passport and example config files added
+INSERT INTO restricted_studios (block_id, exempt_studio_id) 
+  VALUES (1, 1), (1, 2), (2, 2), (2, 3), (3, 4);
+  
