@@ -60,6 +60,20 @@ Tests are split into 3 folders: react-client, server, and database, to match the
 
 Checking test coverage is TBD.
 
+## Requirements
+
+
+## Development
+
+### Installing Dependencies
+
+From within the root directory:
+
+npm install
+add facebook.config.js file for facebook session keys
+add session.config.js file for session encryption key
+install the schema.sql file with instructions at the top of that file
+
 ### Roadmap
 
 View the project roadmap on Trello [here](https://trello.com/b/Rsxkw459/passpass)

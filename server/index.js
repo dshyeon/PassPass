@@ -85,14 +85,12 @@ passport.use(new FacebookStrategy(fb,
 ));
 
 passport.serializeUser(function(user, done) {
-  console.log('*********** called serializeUser before done, req.session.passport.user  user.id ', user.id);
   done(null, user.id);
   // result of this is req.session.passport.user = { // our serialised user object // }
   // result also attached to req.user
 });
 
 passport.deserializeUser(function(id, done) {
-  console.log('*********** called de-serializeUser, req.session.passport.user ', id);
   database.findUserById(id, (err, user) => {
     done(err, user[0]);
   });
@@ -100,17 +98,11 @@ passport.deserializeUser(function(id, done) {
 });
 
 var successUser = (req, res, user, callback) => {
-  // req.session.user = user[0];
-    // req.session.user.id = user[0].id;
-    console.log('*********** in successUser, req.session ', req.session);
-    console.log('*********** in successUser, req.sessionID ', req.sessionID);
-
     if (req.body.rememberMe) { // add this to user signup too
       req.session.cookie.maxAge = (30*24*60*60*1000); // 30 days
     } else {
       req.session.cookie.expires = false;
     }
-    console.log('********** req session cookie sets rememberMe? ', req.session.cookie);
     database.addUserToSession(req.session.passport.user, req.sessionID, (err, results) => {
       if (err) {
         console.log('************ server side add user to session error ', err);
@@ -122,23 +114,19 @@ var successUser = (req, res, user, callback) => {
 }
 
 app.post('/auth/email', (req, res, next) => {
-  // var rememberMe = req.body.rememberMe;
   passport.authenticate('local', (err, user, info) => { //info is optional argument passed by the strategy's callback
     //req.user contains the authenticated user if approved
     //req.user = false if fails
-    //if exists, update cookie
-      // var cookie = req.cookies['connect.sid'];
+    //if exists, updates cookie
+    // var cookie = req.cookies['connect.sid'];
     if (err) {
       console.log('************ server side in post - email login error ', err);
-      // return next(err);
       res.send(err);
     } else if (!user) {
-      console.log('********** success on user login in post -  but no user match ', user);
-      console.log('********** success on user login in post -  see info ', info);
-      return res.redirect('/login');
+      return res.send(info); //error message and redirect on client side
     } else {
-      req.login(user[0], err => {
-        console.log('************* inside req.login user ', user);
+      req.login(user[0], err => { //req.login is called by passport if user is passed back but called by application in this custom setup
+        //this will call serializeUser method defined above
         if (err) {
           return next(err);
         } else {
@@ -147,8 +135,7 @@ app.post('/auth/email', (req, res, next) => {
             res.send(user);
           });
         }
-      }); //called by passport if user is passed back but called by application in this custom setup
-      //that will call serializeUser method defined above
+      });
     }
   })(req, res, next);
 });
@@ -157,25 +144,23 @@ app.post('/auth/signup', (req, res) => {
   var rememberMe = req.body.rememberMe;
   req.body.salt = cryptoRandomString(10); //use this salt to create a new user
 
-  database.newUser(req.body, (err, results) => {
+  database.newUser(req.body, (err, user) => {
     if (err) {
       console.log('************ server side new user signup error ', err);
       res.send(err);
     } else {
-      console.log('************ results from new User query ', results);
-      req.body.id = results.insertId;
-      console.log('********** req before log in ', req);
-      req.logIn(); //calls serializeUser
-      console.log('********** req after log in ', req);
-      // passport.serializeUser((user, done) => {
-      //   console.log('********** req after serialize user ', req);
-      //   console.log('********** user after serialize user ', req);
-      //
-      //   done(null, user.id);
-      // });
-      successUser(req, res, req.body, (err, user) => {
-        if (err) {res.send(err);}
-        res.redirect('/interactions/');
+      req.body.id = user.insertId;
+      req.logIn(user[0], err => { //calls serializeUser
+        if (err) {
+          res.send(err);
+        } else {
+          successUser(req, res, req.body, (err, user) => {
+            if (err) {res.send(err);}
+            console.log('*************** about to redirect to interactions');
+            res.redirect('/interactions');
+            //or res.send(user);
+          });
+        }
       });
     }
   });

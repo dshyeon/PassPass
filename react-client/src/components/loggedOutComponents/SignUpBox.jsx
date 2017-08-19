@@ -44,8 +44,13 @@ class SignUpBox extends React.Component {
         rememberMe: this.state.rememberMe
 		  }),
 		  success: function (data) {
-		  	console.log('*********** sign up success: data returned ', data);
-        //redirect to logged in page
+        if (data.sqlMessage) {
+          console.log(data.sqlMessage);
+          //push this error message to a popup with more appropriate wording/display
+        } else {
+          console.log('successful login');
+          //redirect user to right page
+        }
 		  },
       error: function(err) {
         console.log('********** sign up error ', err);

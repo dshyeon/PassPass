@@ -54,7 +54,6 @@ module.exports.authUser = function(user, callback) {
     values, function (error, results, fields) {
       if (error) {
         console.log('*********** database authenicate user email error ', error);
-        throw error;
         callback(error);
       }
       if (results.length > 0) {
@@ -69,15 +68,13 @@ module.exports.authUser = function(user, callback) {
 
 module.exports.newUser = function(user, callback) {
   var values = [user.email, user.password + user.salt, user.salt, user.first_name, user.last_name, user.phone];
-  module.exports.connection.query('INSERT INTO users (email, password, salt, first_name, last_name, phone, created_at)' +
-    'VALUES ?', values, function(error, results, fields) {
+  module.exports.connection.query('INSERT INTO users (email, password, salt, first_name, last_name, phone) ' +
+    'VALUES (?, SHA2(?, 0), ?, ?, ?, ?)', values, function(error, results, fields) {
       if (error) {
-        console.log('*********** database add new user ', error);
-        throw error;
+        console.log('*********** database add new user error ', error);
         callback(error);
       }
       if (results) {
-        console.log('*********** database add new user error ', error);
         callback(null, results);
       }
     }

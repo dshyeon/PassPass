@@ -21,8 +21,8 @@ CREATE TABLE users (
   first_name VARCHAR(50),
   last_name VARCHAR(50),
   phone VARCHAR(10),
-  created_at DATE,
-  updated_at DATE,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME ON UPDATE CURRENT_TIMESTAMP,
   rating int,
   review_count int
   );
@@ -43,8 +43,8 @@ CREATE TABLE reviews (
   transaction_type VARCHAR(15),
   rating_given DECIMAL(2,1),
   comment_text VARCHAR(255),
-  created_at DATE,
-  updated_at DATE,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME ON UPDATE CURRENT_TIMESTAMP,
   FOREIGN KEY (review_receiver_id) REFERENCES users(id),
   FOREIGN KEY (review_giver_id) REFERENCES users(id)
 );
@@ -296,6 +296,7 @@ INSERT INTO restricted_list (
     NULL
   );
 
+<<<<<<< HEAD
 INSERT INTO restricted_studios (
     block_id,
     exempt_studio_id
@@ -312,3 +313,6 @@ INSERT INTO restricted_studios (
     3,
     4
   );
+=======
+INSERT INTO restricted_studios (block_id, exempt_studio_id) VALUES (1, 2);
+>>>>>>> login and signup working with passport and example config files added

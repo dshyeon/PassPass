@@ -40,7 +40,13 @@ class SignInBox extends React.Component {
         rememberMe: this.state.rememberMe
 		  }),
 		  success: function (data) {
-		  	console.log('*********** sign in success: data returned ', data);
+        if (data.message) {
+          console.log(data.message);
+          //push this error message to a popup with more appropriate wording/display
+        } else {
+          console.log('successful login ', data[0]);
+          //redirect user to right page
+        }
         //redirect to logged in page
 		  },
       error: function(err) {
