@@ -1,3 +1,5 @@
+// FB_CREDS
+
 module.exports = {
     clientID: 'UPDATE_ME',
     clientSecret: 'UPDATE_ME',
