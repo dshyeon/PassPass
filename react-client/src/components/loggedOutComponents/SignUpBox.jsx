@@ -5,6 +5,7 @@ import {
   Route,
   Link
 } from 'react-router-dom';
+import SignInBox from './SignInBox.jsx';
 
 class SignUpBox extends React.Component {
   constructor() {
@@ -61,28 +62,31 @@ class SignUpBox extends React.Component {
   render () {
     return (
       <Router>
-        <div className="signUpContainer">
-          <form className="form-signup" onSubmit={this.handleSignUp.bind(this)}>
-          	<small className="form-signup-heading">Sign Up for a New Account</small>
-            <br></br>
-            <br></br>
-          	<label>Email address*: </label>
-            <input onChange={this.handleChange.bind(this)} type="email" id="inputEmail" className="form-control" required autoFocus/>
-          	<label>Password*: </label>
-            <input onChange={this.handleChange.bind(this)} type="password" id="inputPassword" className="form-control" required/>
-            <label>First Name: </label>
-          	<input onChange={this.handleChange.bind(this)} type="text" id="inputFirst" className="form-control" required/>
-            <label>Last Name: </label>
-          	<input onChange={this.handleChange.bind(this)} type="text" id="inputLast" className="form-control" required/>
-            <label>Phone: </label>
-          	<input onChange={this.handleChange.bind(this)} type="text" id="inputPhone" className="form-control" required/>
-          	<div className="checkbox">
-          		<label>
-          			<input type="checkbox" id="remember-me" checked={this.state.rememberMe} onChange={this.handleCheckbox.bind(this)} /> Remember me
-          		</label>
-          	</div>
-          	<button className="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
-          </form>
+        <div className="signInContainerRow">
+          <div className="signInContainer">
+            <form className="form-signup" onSubmit={this.handleSignUp.bind(this)}>
+            	<small className="form-signup-heading">Sign Up for a New Account</small>
+              <br></br>Existing User? <a href='#' onClick={this.props.signup}>Log In</a>
+              <br></br>
+              <br></br>
+            	<label>Email address*: </label>
+              <input onChange={this.handleChange.bind(this)} type="email" id="inputEmail" className="form-control" required autoFocus/>
+            	<label>Password*: </label>
+              <input onChange={this.handleChange.bind(this)} type="password" id="inputPassword" className="form-control" required/>
+              <label>First Name: </label>
+            	<input onChange={this.handleChange.bind(this)} type="text" id="inputFirst" className="form-control" required/>
+              <label>Last Name: </label>
+            	<input onChange={this.handleChange.bind(this)} type="text" id="inputLast" className="form-control" required/>
+              <label>Phone: </label>
+            	<input onChange={this.handleChange.bind(this)} type="text" id="inputPhone" className="form-control" required/>
+            	<div className="checkbox">
+            		<label>
+            			<input type="checkbox" id="remember-me" checked={this.state.rememberMe} onChange={this.handleCheckbox.bind(this)} /> Remember me
+            		</label>
+            	</div>
+            	<button className="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
+            </form>
+          </div>
         </div>
       </Router>
     )

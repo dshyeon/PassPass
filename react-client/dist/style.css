@@ -13,11 +13,6 @@ small {
   padding-top: 86px;
 }
 
-.signUpContainer {
-	width: 27em;
-  padding-top: 86px;
-}
-
 .appLoggedOutPageContainer {
 	display: flex;
 	flex-direction: column;

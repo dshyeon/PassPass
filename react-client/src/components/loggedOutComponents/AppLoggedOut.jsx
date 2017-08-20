@@ -5,13 +5,21 @@ import {
   Route,
   Link
 } from 'react-router-dom';
+import Redirect from 'react-router';
 import SignUpBox from './SignUpBox.jsx';
 import SignInBox from './SignInBox.jsx';
 
 class AppLoggedOut extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      loggedIn: false,
+      signup: false
+    };
+  }
+
+  signUp(){
+    this.setState({signup: !this.state.signup});
   }
 
   render () {
@@ -32,20 +40,20 @@ class AppLoggedOut extends React.Component {
               <Link to="/" className="navbar-brand">PassPass</Link>
             </h1>
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul className="navbar-nav mr-auto">
-                <li className="nav-item">
-                  <Link to="/" className="nav-link">Buy Passes</Link>
-                </li>
-                <li className="nav-item">
-                  <Link to="/" className="nav-link">Sell Passes</Link>
-                </li>
-              </ul>
             </div>
           </nav>
-          <div className="signInContainerRow">
-            <SignInBox />
-          </div>
           <div>
+            <Route exact path="/" render={() => (
+                this.state.loggedIn ? (
+                  <Redirect to="/buypasses"/>
+                ) : (
+                  this.state.signup ? (
+                    <SignUpBox signup={this.signUp.bind(this)} />
+                  ) : (
+                    <SignInBox  signup={this.signUp.bind(this)} />
+                  )
+                )
+              )}/>
             <Route path="/login" component={SignInBox}/>
             <Route path="/signup" component={SignUpBox}/>
           </div>

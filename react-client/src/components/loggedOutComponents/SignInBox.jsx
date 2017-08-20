@@ -5,16 +5,14 @@ import {
   Route,
   Link
 } from 'react-router-dom';
-import SignUpBox from './SignUpBox.jsx';
 
 class SignInBox extends React.Component {
-	constructor() {
-    super();
+	constructor(props) {
+    super(props);
     this.state = {
     	inputEmail: '',
     	inputPassword: '',
-      rememberMe: false,
-      signUp: false
+      rememberMe: false
     };
   }
 
@@ -55,48 +53,34 @@ class SignInBox extends React.Component {
 		});
   }
 
-  signUp(){
-    this.setState({signUp: true});
-  }
-
   render () {
-    if (this.state.signUp) {
-      return (
-        <Router>
-          <div>
-            <SignUpBox />
+    return (
+      <Router>
+        <div className="signInContainerRow">
+          <div className="signInContainer">
+            <small>The Marketplace for Classpass Classes</small>
+            <form className="form-signin" onSubmit={this.handleSignIn.bind(this)}>
+              <br></br>
+            	<label htmlFor="inputEmail" className="sr-only">Email address</label>
+            	<input onChange={this.handleChange.bind(this)} type="email" id="inputEmail" className="form-control" placeholder="Email address" required autoFocus/>
+            	<label htmlFor="inputPassword" className="sr-only">Password</label>
+            	<input onChange={this.handleChange.bind(this)} type="password" id="inputPassword" className="form-control" placeholder="Password" required/>
+            	<div className="checkbox">
+            		<label>
+            			<input type="checkbox" id="remember-me" checked={this.state.rememberMe} onChange={this.handleCheckbox.bind(this)} /> Remember me
+            		</label>
+            	</div>
+              <br></br>
+            	<button className="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+              <br></br>
+              <div>
+                New User? <a href='#' onClick={this.props.signup}>Sign Up</a>
+              </div>
+            </form>
           </div>
-        </Router>
-      )
-    } else {
-      return (
-        <Router>
-          <div>
-            <div className="signInContainer">
-              <small>The Marketplace for Classpass Classes</small>
-              <form className="form-signin" onSubmit={this.handleSignIn.bind(this)}>
-                <br></br>
-              	<label htmlFor="inputEmail" className="sr-only">Email address</label>
-              	<input onChange={this.handleChange.bind(this)} type="email" id="inputEmail" className="form-control" placeholder="Email address" required autoFocus/>
-              	<label htmlFor="inputPassword" className="sr-only">Password</label>
-              	<input onChange={this.handleChange.bind(this)} type="password" id="inputPassword" className="form-control" placeholder="Password" required/>
-              	<div className="checkbox">
-              		<label>
-              			<input type="checkbox" id="remember-me" checked={this.state.rememberMe} onChange={this.handleCheckbox.bind(this)} /> Remember me
-              		</label>
-              	</div>
-                <br></br>
-              	<button className="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-                <br></br>
-                <div>
-                  New User? <a href='#' onClick={this.signUp.bind(this)}>Sign up</a>
-                </div>
-              </form>
-            </div>
-          </div>
-        </Router>
-      )
-    }
+        </div>
+      </Router>
+    )
   }
 }
 
