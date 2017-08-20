@@ -8,8 +8,8 @@ import {
 import SignInBox from './SignInBox.jsx';
 
 class SignUpBox extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       inputEmail: '',
       inputPassword: '',
@@ -31,6 +31,7 @@ class SignUpBox extends React.Component {
   }
 
   handleSignUp (event) {
+    var context = this;
     event.preventDefault();
   	$.ajax({
 		  method: 'POST',
@@ -50,7 +51,7 @@ class SignUpBox extends React.Component {
           //push this error message to a popup with more appropriate wording/display
         } else {
           console.log('successful login');
-          //redirect user to right page
+          context.props.login();
         }
 		  },
       error: function(err) {

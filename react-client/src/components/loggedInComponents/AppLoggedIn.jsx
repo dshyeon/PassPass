@@ -12,7 +12,15 @@ import SellPasses from './SellPasses.jsx';
 class AppLoggedIn extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      page: 'home'
+    };
+  }
+
+  pageChange(newPage) {
+    this.setState({
+      page: newPage
+    });
   }
 
   render () {
@@ -21,11 +29,11 @@ class AppLoggedIn extends React.Component {
         <div>
           <nav className="navbar navbar-toggleable-md navbar-light bg-faded fixed-top">
             <button className="navbar-toggler navbar-toggler-right collapsed"
-                    type="button" 
-                    data-toggle="collapse" 
-                    data-target="#navbarSupportedContent" 
-                    aria-controls="navbarSupportedContent" 
-                    aria-expanded="false" 
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent"
+                    aria-expanded="false"
                     aria-label="Toggle navigation">
               <span className="navbar-toggler-icon"></span>
             </button>
@@ -43,6 +51,19 @@ class AppLoggedIn extends React.Component {
               </ul>
             </div>
           </nav>
+          <div>
+            <Route path="/" render={() => (
+                this.state.page === 'home' ? (
+                  <Interactions />
+                ) : (
+                  this.state.page === 'buy' ? (
+                    <BuyPasses pageChange={this.pageChange.bind(this)} />
+                  ) : (
+                    <SellPasses pageChange={this.pageChange.bind(this)} />
+                  )
+                )
+              )}/>
+          </div>
           <div>
             <Route path="/buypasses" component={BuyPasses}/>
             <Route path="/sellpasses" component={SellPasses}/>

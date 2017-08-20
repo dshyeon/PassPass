@@ -27,6 +27,7 @@ class SignInBox extends React.Component {
   }
 
   handleSignIn (event) {
+    var context = this;
     event.preventDefault();
   	$.ajax({
 		  method: 'POST',
@@ -43,9 +44,8 @@ class SignInBox extends React.Component {
           //push this error message to a popup with more appropriate wording/display
         } else {
           console.log('successful login ', data[0]);
-          //redirect user to right page
+          context.props.login();
         }
-        //redirect to logged in page
 		  },
       error: function(err) {
         console.log('********** sign in error ', err);

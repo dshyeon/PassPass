@@ -2,6 +2,10 @@ small {
 	font-size: 150%;
 }
 
+smallest {
+	font-size: 125%;
+}
+
 .signInContainerRow {
 	width: 100%;
 	display: flex;
@@ -124,3 +128,14 @@ input[type=number] {
 	white-space: normal;
 	margin-left: .5em;
 }
+
+.interactionsRow {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+
+.interactionsContainer {
+	width: 17em;
+  padding-top: 86px;
+  text-align: center;

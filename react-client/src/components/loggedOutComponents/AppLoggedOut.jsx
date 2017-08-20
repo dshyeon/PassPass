@@ -5,21 +5,25 @@ import {
   Route,
   Link
 } from 'react-router-dom';
-import Redirect from 'react-router';
 import SignUpBox from './SignUpBox.jsx';
 import SignInBox from './SignInBox.jsx';
+import LoggedIn from '../loggedInComponents/AppLoggedIn.jsx';
 
 class AppLoggedOut extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loggedIn: false,
+      authenicated: false,
       signup: false
     };
   }
 
   signUp(){
     this.setState({signup: !this.state.signup});
+  }
+
+  logIn(){
+    this.setState({authenicated: !this.state.authenicated});
   }
 
   render () {
@@ -44,18 +48,16 @@ class AppLoggedOut extends React.Component {
           </nav>
           <div>
             <Route exact path="/" render={() => (
-                this.state.loggedIn ? (
-                  <Redirect to="/buypasses"/>
+                this.state.authenicated ? (
+                  <LoggedIn />
                 ) : (
                   this.state.signup ? (
-                    <SignUpBox signup={this.signUp.bind(this)} />
+                    <SignUpBox signup={this.signUp.bind(this)} login={this.logIn.bind(this)} />
                   ) : (
-                    <SignInBox  signup={this.signUp.bind(this)} />
+                    <SignInBox signup={this.signUp.bind(this)} login={this.logIn.bind(this)} />
                   )
                 )
               )}/>
-            <Route path="/login" component={SignInBox}/>
-            <Route path="/signup" component={SignUpBox}/>
           </div>
         </div>
       </Router>
