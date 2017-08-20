@@ -1,6 +1,6 @@
 # Contributing
 
-## Basic To-Dos for commits
+## Step-by-step To-Dos for commits
 1. `git pull --rebase upstream master` (**before** starting any code changes; skip to next step if you already have made changes)
 1. `git checkout -b <branchname>` (see below for name format)
 1. do your code changes
@@ -10,7 +10,7 @@
 1. resolve any conflicts (if any or skip to git push step)
 1. `git add .` (any changes, **do not commit** in the middle of a rebase)
 1. `git rebase --continue` (don't need to commit again)
-1. repeat the resolve/add/continue for each commit that rebase is layering on top. 
+1. repeat the resolve/add/continue for each commit that rebase is layering on top.
 1. `git push -u origin <branchname>` (to your fork)
 1. if your fork:branch already exists, you may hit a conflict and have to delete the branch on the fork and then redo the git push
 1. go to github and create pull request from your fork:repo to team repo:master
@@ -19,9 +19,7 @@
 ## General Workflow
 
 1. Fork the repo
-1. Cut a namespaced feature branch from master
-1. Make commits to your feature branch. Prefix each commit like so:
-1. When you've finished with your fix or feature, Rebase upstream changes into your branch. submit a pull request directly to master. Include a description of your changes.
+1. Follow the above step-by-step instructions for saving and merging your codebase
 1. Your pull request will be reviewed by another maintainer. The point of code reviews is to help keep the codebase clean and of high quality and, equally as important, to help you grow as a programmer. If your code reviewer requests you make a change you don't understand, ask them why.
 1. Fix any issues raised by your code reviwer, and push your fixes as a single new commit.
 1. Once the pull request has been reviewed, it will be merged by another member of the team. Do not merge your own commits.
@@ -33,7 +31,7 @@
 Use github’s interface to make a fork of the repo, then add that repo as an upstream remote:
 
 ```
-git remote add upstream https://github.com/reactorcore/<NAME_OF_REPO>.git
+git remote add upstream https://github.com/TheRealHungryHippos/PassPass.git
 ```
 
 ### Cut a namespaced feature branch from master
@@ -45,15 +43,12 @@ Your branch should follow this naming convention:
   - doc/...
   - refactor/...
 
-These commands will help you do this:
-
-``` bash
 
 # Creates your branch and brings you there
 git checkout -b `your-branch-name`
 ```
 
-### Make commits to your feature branch. 
+### Make commits to your feature branch.
 
 Prefix each commit like so
   - (feat) Add a new feature
@@ -136,10 +131,10 @@ Thanks for contributing!
 ### Guidelines
 
 1. Uphold the current code standard:
-    - Keep your code [DRY][].
-    - Apply the [boy scout rule][].
-    - Follow [STYLE-GUIDE.md](_STYLE-GUIDE.md)
-1. Run the [tests][] before submitting a pull request.
+    - Keep your code [DRY].
+    - Apply the [boy scout rule].
+    - Follow [STYLE-GUIDE.md]
+1. Run the tests with 'npm run tests' before submitting a pull request.
 1. Tests are very, very important. Submit tests if your pull request contains
    new, testable behavior.
 

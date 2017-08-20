@@ -7,6 +7,8 @@ module.exports.connection = mysql.createConnection({
   database : 'pass_database'
 });
 
+var del = module.exports.connection._protocol._delegateError;
+
 module.exports.connection.connect(
   function (err) {
     if (err) { console.log(err)
@@ -15,10 +17,17 @@ module.exports.connection.connect(
   }
 });
 
+module.exports.connection._protocol._delegateError = function(err, sequence) {
+  if (err.fatal) {
+    console.trace('fatal error: ' + err.message);
+  }
+  return del.call(this, err, sequence);
+};
+
 module.exports.findUser = function(user, callback) {
   var values = [user];
   module.exports.connection.query('SELECT * FROM USERS WHERE email= ?', values, (error, results, fields) => {
-      if (error) {
+      if (error || !results) {
         console.log('*********** database find user by email error ', error);
         callback(error);
       }
@@ -34,7 +43,7 @@ module.exports.findUser = function(user, callback) {
 
 module.exports.findUserById = function(id, callback) {
   module.exports.connection.query('SELECT * FROM USERS WHERE id=' + id, (error, results, fields) => {
-      if (error) {
+      if (error || !results) {
         console.log('*********** database find user by ID error ', error);
         callback(error);
       }
@@ -52,7 +61,7 @@ module.exports.authUser = function(user, callback) {
   var values = [user.email, user.password + user.salt];
   module.exports.connection.query('SELECT * FROM USERS WHERE email= ? AND password=SHA2( ? , 0)',
     values, function (error, results, fields) {
-      if (error) {
+      if (error || !results) {
         console.log('*********** database authenicate user email error ', error);
         callback(error);
       }

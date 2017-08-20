@@ -33,6 +33,7 @@ https://hungryhippopasspass.herokuapp.com/
 
 ### Installing Dependencies
 Fork and clone the repo. From within the root directory:
+https://github.com/TheRealHungryHippos/PassPass
 
 ```sh
 npm install
@@ -40,11 +41,12 @@ npm install
 
 Add `facebook.config.js` file for facebook session keys, use `facebook.example.config.js` as a template.
 Add `session.config.js` file for session encryption key, use `session.example.config.js` as a template.
-Install the `schema.sql` file with instructions at the top of that file
+Install the database by running the `schema.sql` file with instructions at the top of that file
 
-Run webpack with `npm run react-dev`.
-Launch server with `npm run server-dev`.
+Launch webpack with `npm run react-dev`.
+Launch the server with `npm run server-dev`.
 Go to http://127.0.0.1:3000/ in your browser to run locally
+If you need to change the port, do that in the server/index.js file at the bottom
 
 ### Testing
 
@@ -57,7 +59,7 @@ Run tests in repo root folder with
 npm test
 ```
 
-Test results will be output to terminal window.
+Test results will be output to the terminal window.
 
 Tests are split into 3 folders: react-client, server, and database, to match the equivalent folders with JavaScript source code.
 

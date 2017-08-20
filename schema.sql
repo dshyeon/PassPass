@@ -96,206 +96,37 @@ CREATE TABLE restricted_studios (
     FOREIGN KEY (exempt_studio_id) REFERENCES restricted_list(id)
   );
 
-INSERT INTO users (
-  id,
-  email,
-  password,
-  salt,
-  first_name,
-  last_name,
-  phone,
-  created_at,
-  updated_at,
-  rating,
-  review_count
-  ) VALUES (
-    1,
-  'billy@bob.com',
-  SHA2('billysPasswordcPjfn67sdv', 0),
-  'cPjfn67sdv',
-  'Billy',
-  'Bob',
-  '3332224444',
-  '2017-03-05',
-  '2017-03-09',
-  4,
-  4
-  ), (
-    2,
-  'sally@sal.com',
-  SHA2('sallysPassword8nJHBh665v', 0),
-  '8nJHBh665v',
-  'Sally',
-  'Sal',
-  '1112224444',
-  '2017-04-15',
-  NULL,
-  3,
-  10
-  ),(
-    3,
-  'david45@gmail.com',
-  SHA2('davidsPasswordvByt76912s', 0),
-  'vByt76912s',
-  'David',
-  'Drummer',
-  '9998887777',
-  '2017-06-09',
-  NULL,
-  4.5,
-  20
-  );
+INSERT INTO users (id, email, password, salt, first_name, last_name, phone, created_at, updated_at, rating, review_count) VALUES
+  (1, 'billy@bob.com', SHA2('billysPasswordcPjfn67sdv', 0), 'cPjfn67sdv', 'Billy', 'Bob', '3332224444', '2017-03-05', '2017-03-09', 4, 4),
+  (2, 'sally@sal.com', SHA2('sallysPassword8nJHBh665v', 0), '8nJHBh665v', 'Sally', 'Sal', '1112224444', '2017-04-15', NULL,3,10),
+  (3, 'david45@gmail.com', SHA2('davidsPasswordvByt76912s', 0), 'vByt76912s', 'David', 'Drummer', '9998887777', '2017-06-09', NULL, 4.5, 20);
 
--- removed insert for sessions table, unsure what data should look like
+INSERT INTO reviews (review_receiver_id, review_giver_id, transaction_type, rating_given, comment_text, created_at, updated_at) VALUES
+  (2, 1, 'sale', 5.0, 'Amazing person to work with!', '2017-02-01', '2017-04-03'),
+  (3, 1, 'conversation', 2.4, 'Avoid them. They are super flaky.', '2017-04-21', NULL);
 
-INSERT INTO reviews (
-  review_receiver_id,
-  review_giver_id,
-  transaction_type,
-  rating_given,
-  comment_text,
-  created_at,
-  updated_at
-  ) VALUES (
-  2,
-  1,
-  'sale',
-  5.0,
-  'Amazing person to work with!',
-  '2017-02-01',
-  '2017-04-03'
-  ), (
-  3,
-  1,
-  'conversation',
-  2.4,
-  'Avoid them. They are super flaky.',
-  '2017-04-21',
-  NULL
-  );
+INSERT INTO for_sale_block (id, pass_volume, seller_id, current_price, period_start, period_end, passes_sold, exclusions) VALUES
+  (1, 15, 2, 8.90, '2017-04-11', '2017-04-30', 4, 'Neko\'s Yoga' ),
+  (2, 9, 2, 9.00, '2017-05-03', '2017-06-01', 1, NULL),
+  (3, 11, 1, 10.00, '2017-03-03', '2017-03-15', 1, 'Hardcore Cycle Spin'),
+  (4, 9, 1, 9.25, '2017-04-01', '2017-04-19', 1, NULL),
+  (5, 9, 1, 8.99, '2017-04-20', '2017-04-30', 5, NULL);
 
-INSERT INTO for_sale_block (
-    id,
-    pass_volume,
-    seller_id,
-    current_price,
-    period_start,
-    period_end,
-    passes_sold,
-    exclusions
-  ) VALUES (
-    1,
-    15,
-    2,
-    8.90,
-    '2017-04-11',
-    '2017-04-30',
-    4,
-    'Neko\'s Yoga'
-  ), (
-    2,
-    9,
-    2,
-    9.00,
-    '2017-05-03',
-    '2017-06-01',
-    1,
-    NULL
-  ), (
-    3,
-    11,
-    1,
-    10.00,
-    '2017-03-03',
-    '2017-03-15',
-    1,
-    'Hardcore Cycle Spin'
-  ), (
-    4,
-    9,
-    1,
-    9.25,
-    '2017-04-01',
-    '2017-04-19',
-    1,
-    NULL
-  ), (
-    5,
-    9,
-    1,
-    8.99,
-    '2017-04-20',
-    '2017-04-30',
-    5,
-    NULL
-  );
+INSERT INTO messages (sender_id, reciever_id, time_sent, text) VALUES
+  (1, 2,'2017-05-06 11:12:13', 'Hi, how are you doing?'),
+  (2, 1, '2017-05-06 11:12:45', 'I\'m great! Do you have class passes?'),
+  (1, 2, '2017-05-06 11:13:40', 'Absolutely!'),
+  (3, 2, '2017-02-05 15:40:01', 'I\'d like to buy passes from you.');
 
-INSERT INTO messages (
-    sender_id,
-    reciever_id,
-    time_sent,
-    text
-  ) VALUES (
-    1,
-    2,
-    '2017-05-06 11:12:13',
-    'Hi, how are you doing?'
-  ),  (
-    2,
-    1,
-    '2017-05-06 11:12:45',
-    'I\'m great! Do you have class passes?'
-  ),  (
-    1,
-    2,
-    '2017-05-06 11:13:40',
-    'Absolutely!'
-  ),  (
-    3,
-    2,
-    '2017-02-05 15:40:01',
-    'I\'d like to buy passes from you.'
-  );
+INSERT INTO sold_passes (seller_id, buyer_id, notes, sell_date) VALUES
+  (1, 2, 'Easy to work with', '2017-02-05'),
+  (3, 2, NULL, '2017-07-12');
 
-INSERT INTO sold_passes (
-    seller_id,
-    buyer_id,
-    notes,
-    sell_date
-  ) VALUES (
-    1,
-    2,
-    'Easy to work with',
-    '2017-02-05'
-  ),(
-    3,
-    2,
-    NULL,
-    '2017-07-12'
-);
+INSERT INTO restricted_list (id, studio, user_id) VALUES
+  (1, 'C.C. Cycling', 2),
+  (2, 'Edmond Climbing', 1),
+  (3, 'Gold Gym', 1),
+  (4, 'none', NULL);
 
-INSERT INTO restricted_list (
-    id,
-    studio,
-    user_id
-  ) VALUES (
-    1,
-    'C.C. Cycling',
-    2
-  ), (
-    2,
-    'Edmond Climbing',
-    1
-  ), (
-    3,
-    'Gold Gym',
-    1
-  ), (
-    4,
-    'none',
-    NULL
-  );
-
-INSERT INTO restricted_studios (block_id, exempt_studio_id) 
+INSERT INTO restricted_studios (block_id, exempt_studio_id)
   VALUES (1, 1), (1, 2), (2, 2), (2, 3), (3, 4);
-  

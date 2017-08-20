@@ -10,7 +10,7 @@ const BuyPassesListItem = (props) => {
 		restricted = '';
 	}
 	return (
-		<div className="buyPassesListItem">
+		<div className="buyPassesListItem" key={props.i}>
 			<div className="row">
 				<div className="col-sm">
 					<div className="buyPassesListItemInfo"><b>Seller:</b><div className="buyPassesListItemInfoContent">{props.forSaleBlock.first_name}</div></div>

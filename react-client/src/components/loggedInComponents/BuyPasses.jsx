@@ -7,13 +7,15 @@ class BuyPasses extends React.Component {
 	constructor(props) {
     super(props);
     this.state = {
-      forSaleBlocks: []
+      forSaleBlocks: [],
+      search: false
     };
   }
 
   updateForSaleBlocks(forSaleBlocks) {
     var newState = Object.assign({}, this.state);
     newState.forSaleBlocks = forSaleBlocks;
+    newState.search = true;
     this.setState(newState);
   }
 
@@ -34,14 +36,14 @@ class BuyPasses extends React.Component {
   }
 
   componentDidMount() {
-    this.handleSearch({});
+    // this.handleSearch({});
   }
 
   render () {
     return (
       <div className="buyPasses">
         <BuyPassesSearch handleSearch={this.handleSearch.bind(this)}/>
-        <BuyPassesList forSaleBlocks={this.state.forSaleBlocks}/>
+        <BuyPassesList forSaleBlocks={this.state.forSaleBlocks} searchState={this.state.search}/>
       </div>
     )
   }
