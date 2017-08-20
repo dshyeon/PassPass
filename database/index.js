@@ -1,11 +1,14 @@
 var mysql      = require('mysql');
 
-module.exports.connection = mysql.createConnection({
-  host     : 'localhost',
-  user     : 'root',
-  password : '',
-  database : 'pass_database'
-});
+module.exports.connection = mysql.createConnection(
+  process.env.CLEARDB_DATABASE_URL || 
+  {
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'pass_database'
+  }
+);
 
 var del = module.exports.connection._protocol._delegateError;
 
