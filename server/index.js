@@ -232,12 +232,11 @@ app.post('/pass/new', (req, res) => {
 });
 
 app.post('/pass/edit', (req, res) => {
-  //req has obj of pass data and unique id and possible restricted studios
-  //call to db to edit the pass data in for_sale_block table
-  // create new restricted studio if needed
-  //if successful, return insert id
-  //else send error message try again
-  //how granular can the error be?
+  // res.status(200).send('WORKED123');
+  console.log('REQ BODY FROM INFOCHANGED = ', req.body);
+  // database.makeBlockChanges(req.body, function(data) {
+  //   res.status(200).res.send(data);
+  // });
 });
 
 app.post('/pass/buyer/search', (req, res) => {
@@ -256,26 +255,15 @@ app.post('/pass/buyer/search', (req, res) => {
   });
 });
 
-app.post('/pass/seller/search', (req, res) => {
-  // for displaying all seller history of pass records - req obj has seller id
-  // call to db for passes based on user id
-  // if successful, return records
-  // else send error message try again
-  // how granular can the error be?
-});
-
 app.get('/pass/seller/search', (req, res) => {
  //why is req.body = {} ?
- console.log('app.get REQ QUERY = ', req.query.users_email);
+ console.log('app.get REQ QUERY 2 = ', req.query.users_id);
  console.log('REQ BODY = ', req.body);
- database.findAllFromCurrentUser(req.query.users_email, function(userCurrentSaleBlocks) {
+ console.log('REQ FIND ID HERE 123456 = ', req.session);
+ database.findAllFromCurrentUser(req.query.users_id, function(userCurrentSaleBlocks) {
   res.send(userCurrentSaleBlocks);
  });
  // res.send('THIS IS THE RESPONSE FROM THE SERVER');
-
-
-
-
 });
 
 app.post('/pass/seller/clone', (req, res) => {

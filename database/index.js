@@ -178,10 +178,8 @@ module.exports.getForSaleBlocks = function(searchQueries, callback) {
 };
 
 
-module.exports.findAllFromCurrentUser = function(currentUserEmail, callback) {
-  // currentUserEmail = 'sally@sal.com';
-  // //WORKS IN mySQL var testquery = SELECT users.id, users.email, for_sale_block.* FROM users, for_sale_block WHERE users.id = for_sale_block.seller_id AND users.email = 'sally@sal.com';
-  var queryString = 'SELECT users.id, users.email, for_sale_block.* FROM users, for_sale_block WHERE users.id = for_sale_block.seller_id AND users.email = "' + currentUserEmail + '";';
+module.exports.findAllFromCurrentUser = function(currentUserId, callback) {
+  var queryString = 'SELECT users.id, users.email, for_sale_block.* FROM users, for_sale_block WHERE users.id = for_sale_block.seller_id AND users.id = "' + currentUserId + '";';
   module.exports.connection.query(queryString, function(err, rows, fields) {
     if(err) {
       throw err;
@@ -189,3 +187,24 @@ module.exports.findAllFromCurrentUser = function(currentUserEmail, callback) {
     callback(rows);
   })
 };
+
+
+
+module.exports.makeBlockChanges = function(currentStateObject, callback) {
+  //UPDATE for_sale_block SET pass_volume=1000, passes_sold= 50, current_price=4.11, period_start="2017-01-01", period_end="2017-12-30", exclusions="New asdf" WHERE id= 5;
+  // var queryString = 'UPDATE for_sale_block SET pass_volume=' + currentStateObject.pass_volume + ', passes_sold=' + currentStateObject.passes_sold + ', current_price=' + currentStateObject.current_price + ', period_start=' + currentStateObject.period_start + ', period_end=' + currentStateObject.period_end + ', exclusions=' + currentStateObject.exclusions + ' WHERE id= ' + currentStateObject.current_block_id + ';';
+  var queryString = 'UPDATE for_sale_block SET pass_volume=9000, passes_sold= 500, current_price=1.23, period_start="2017-01-01", period_end="2017-12-30", exclusions="ZZZZZZZZ" WHERE id= 5;';
+  module.exports.connection.query(queryString, function(err, rows, fields) {
+    if(err) {
+      throw err;
+    }
+    callback(rows);
+  })
+};
+
+
+
+
+
+
+

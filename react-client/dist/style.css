@@ -144,3 +144,13 @@ input[type=number] {
 	width: 17em;
   padding-top: 86px;
   text-align: center;
+}
+
+.sellPassesList {
+	padding-top: 80px;
+}
+
+.editbutton {
+	float: right;
+	padding: 10px, 30px;
+}
