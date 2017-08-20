@@ -10,12 +10,12 @@ import { shallow, mount } from 'enzyme';
 
 describe('AppLoggedOut', () => {
 
-  test('AppLoggedOut has SignInBox', () => {
+  xtest('AppLoggedOut has SignInBox', () => {
     const app = shallow(<AppLoggedOut />);
     expect(app.find('SignInBox')).toHaveLength(1);
   });
 
-  test('SignInBox renders correctly in AppLoggedOut', () => {
+  xtest('SignInBox renders correctly in AppLoggedOut', () => {
     const app = mount(<AppLoggedOut />);
     expect(app.find('input')).toHaveLength(3);
   });
@@ -28,7 +28,7 @@ describe('AppLoggedOut', () => {
       app.find('button').simulate('click');
       expect(SignInBox.prototype.handleSignIn.calledOnce).toBe(true);
     });
-  
+
   });
 });
 
@@ -56,6 +56,6 @@ describe('BuyPasses', () => {
       buyPasses.find('form').simulate('submit');
       expect(BuyPassesSearch.prototype.handleSubmit.calledOnce).toBe(true);
     });
-  
+
   });
 });
