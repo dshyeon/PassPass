@@ -50,19 +50,25 @@ small {
 	padding-top: 76px;
 }
 
-.buyPassesSearch {
+.buyPassesSearch, .addSale {
 	background-color: #f6f6f6;
 	border-top: thin solid #D3D3D3;
 	border-bottom: thin solid #D3D3D3;
 }
 
-.searchRow {
+.searchRow, .addSaleRow {
 	margin-bottom: .5em;
 }
 
-.searchButton {
+.searchButton, .addSaleButton, .editSaleButton {
 	height: 3em;
 	background-color: #40e0d0;
+	border-color: #D3D3D3;
+	margin-top: 1em;
+}
+
+.addStudio, .postSaleButton, .cancelSaleButton {
+	height: 3em;
 	border-color: #D3D3D3;
 	margin-top: 1em;
 }
@@ -99,3 +105,21 @@ input[type=number] {
 	margin-left: .5em;
 }
 
+.sellPasses {
+	padding-top: 76px;
+}
+
+.sellPassesPassBlock {
+	border-bottom: thin solid #40e0d0;
+	padding: 1em 0 1em 0;
+}
+
+.sellPassesPassBlockInfo {
+	display: flex;
+	white-space: nowrap;
+}
+
+.sellPassesPassBlockInfoContent {
+	white-space: normal;
+	margin-left: .5em;
+}

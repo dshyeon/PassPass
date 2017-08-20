@@ -36,7 +36,7 @@ class SellPasses extends React.Component {
 
   render () {
     return (
-      <div>
+      <div className="sellPasses">
         <SellPassesAddSale />
         <SellPassesList data={this.state.currentlySelling}/>
         {/*<button type="button" onClick = {this.getInfo}>Refresh Information</button>*/}
