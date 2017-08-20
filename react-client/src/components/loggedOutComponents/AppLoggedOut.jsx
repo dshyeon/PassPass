@@ -49,7 +49,7 @@ class AppLoggedOut extends React.Component {
           <div>
             <Route exact path="/" render={() => (
                 this.state.authenicated ? (
-                  <LoggedIn />
+                  <LoggedIn logout={this.logIn.bind(this)}/>
                 ) : (
                   this.state.signup ? (
                     <SignUpBox signup={this.signUp.bind(this)} login={this.logIn.bind(this)} />

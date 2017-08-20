@@ -45,6 +45,11 @@ smallest {
 	font-size: 150%;
 }
 
+.nav-right {
+	font-size: 90%;
+  text-align: right;
+}
+
 .container {
 	margin: 0;
 	width: 100%;
