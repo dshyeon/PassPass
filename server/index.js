@@ -232,7 +232,7 @@ app.post('/pass/new', (req, res) => {
 });
 
 app.post('/pass/edit', (req, res) => {
-  // res.status(200).send('WORKED123');
+  res.status(200).send('WORKED123');
   console.log('REQ BODY FROM INFOCHANGED = ', req.body);
   // database.makeBlockChanges(req.body, function(data) {
   //   res.status(200).res.send(data);
