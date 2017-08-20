@@ -37,16 +37,17 @@ class AppLoggedIn extends React.Component {
                     aria-label="Toggle navigation">
               <span className="navbar-toggler-icon"></span>
             </button>
-            <h1>
-              <Link to="/buypasses" className="navbar-brand">PassPass</Link>
+            <h1 onClick={() => {this.pageChange('home')}}>
+              PassPass
             </h1>
+            &emsp;&emsp;&emsp;
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
               <ul className="navbar-nav mr-auto">
-                <li className="nav-item">
-                  <Link to="/buypasses" className="nav-link">Buy Passes</Link>
+                <li className="nav-item nav-link" onClick={() => {this.pageChange('buy')}}>
+                  Buy Passes
                 </li>
-                <li className="nav-item">
-                  <Link to="/sellpasses" className="nav-link">Sell Passes</Link>
+                <li className="nav-item nav-link" onClick={() => {this.pageChange('sell')}}>
+                  Sell Passes
                 </li>
               </ul>
             </div>
@@ -54,12 +55,12 @@ class AppLoggedIn extends React.Component {
           <div>
             <Route path="/" render={() => (
                 this.state.page === 'home' ? (
-                  <Interactions />
+                  <Interactions pageChange={this.pageChange.bind(this)} />
                 ) : (
                   this.state.page === 'buy' ? (
-                    <BuyPasses pageChange={this.pageChange.bind(this)} />
+                    <BuyPasses />
                   ) : (
-                    <SellPasses pageChange={this.pageChange.bind(this)} />
+                    <SellPasses />
                   )
                 )
               )}/>

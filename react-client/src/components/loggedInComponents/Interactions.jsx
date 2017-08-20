@@ -17,11 +17,11 @@ class Interactions extends React.Component {
           <div>
             <smallest>Are you looking to</smallest>
           </div>
-          <button className="btn btn-lg btn-primary btn-block" type="submit">BUY PASSES</button>
+          <button className="btn btn-lg btn-primary btn-block" onClick={() => {this.props.pageChange('buy')}} >BUY PASSES</button>
           <div>
             <smallest>OR</smallest>
           </div>
-          <button className="btn btn-lg btn-primary btn-block" type="submit">SELL PASSES</button>
+          <button className="btn btn-lg btn-primary btn-block" onClick={() => {this.props.pageChange('sell')}} >SELL PASSES</button>
         </div>
       </div>
     )
