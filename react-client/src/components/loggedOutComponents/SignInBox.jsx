@@ -65,13 +65,13 @@ class SignInBox extends React.Component {
             	<input onChange={this.handleChange.bind(this)} type="email" id="inputEmail" className="form-control" placeholder="Email address" required autoFocus/>
             	<label htmlFor="inputPassword" className="sr-only">Password</label>
             	<input onChange={this.handleChange.bind(this)} type="password" id="inputPassword" className="form-control" placeholder="Password" required/>
-            	<div className="checkbox">
+            <br></br>
+            <div className="checkbox">
             		<label>
             			<input type="checkbox" id="remember-me" checked={this.state.rememberMe} onChange={this.handleCheckbox.bind(this)} /> Remember me
             		</label>
             	</div>
-              <br></br>
-            	<button className="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+            	<button className="searchButton btn btn-md btn-primary btn-block" type="submit">Sign in</button>
               <br></br>
               <div>
                 New User? <a href='#' onClick={this.props.signup}>Sign Up</a>

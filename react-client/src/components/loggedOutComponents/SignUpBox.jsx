@@ -85,7 +85,7 @@ class SignUpBox extends React.Component {
             			<input type="checkbox" id="remember-me" checked={this.state.rememberMe} onChange={this.handleCheckbox.bind(this)} /> Remember me
             		</label>
             	</div>
-            	<button className="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
+            	<button className="searchButton btn btn-md btn-primary btn-block" type="submit">Sign up</button>
             </form>
           </div>
         </div>

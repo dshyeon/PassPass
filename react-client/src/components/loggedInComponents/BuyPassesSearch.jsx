@@ -26,7 +26,7 @@ class BuyPassesSearch extends React.Component {
   render () {
     return (
       <form onSubmit={this.handleSubmit.bind(this)} className="buyPassesSearch container">
-        <div className="row searchRow"><h2 className="col">For Sale</h2></div>
+        <div className="row searchRow"><h2 className="col">Search Passes Available For Sale</h2></div>
         <div className="row searchRow">
           <div className="buyPassesSearchInput col-sm">
             Start Date:
@@ -39,7 +39,7 @@ class BuyPassesSearch extends React.Component {
           </div>
           <div className="buyPassesSearchInput col-sm">
             End Date:
-            <input value={this.state.endDateInput} 
+            <input value={this.state.endDateInput}
                    type="date"
                    onChange={this.handleChange.bind(this)}
                    id="endDateInput"
@@ -48,26 +48,26 @@ class BuyPassesSearch extends React.Component {
           </div>
           <div className="buyPassesSearchInput col-sm">
             Maximum Price:
-            <input value={this.state.priceInput} 
-                   type="number" 
+            <input value={this.state.priceInput}
+                   type="number"
                    min="0"
                    step="0.01"
                    onChange={this.handleChange.bind(this)}
                    id="priceInput"
-                   className="form-control" 
+                   className="form-control"
                    placeholder="e.g. 4.50" />
           </div>
         </div>
         <div className="row searchRow">
           <div className="buyPassesSearchInput col-sm">
             Minimum # of Passes:
-            <input value={this.state.passesCountInput} 
+            <input value={this.state.passesCountInput}
                    type="number"
                    min="1"
                    step="1"
                    onChange={this.handleChange.bind(this)}
                    id="passesCountInput"
-                   className="form-control" 
+                   className="form-control"
                    placeholder="e.g. 3" />
           </div>
           <div className="buyPassesSearchInput col-sm">
@@ -76,7 +76,7 @@ class BuyPassesSearch extends React.Component {
                    type="text"
                    onChange={this.handleChange.bind(this)}
                    id="gymInput"
-                   className="form-control" 
+                   className="form-control"
                    placeholder="e.g. Edmond Climbing" />
           </div>
           <div className="buyPassesSearchInput col-sm">
