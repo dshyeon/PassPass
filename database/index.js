@@ -157,8 +157,8 @@ module.exports.getRestrictedStudios = function(user, callback) {
   });
 };
 
-module.exports.addRestrictedStudio = function(user, studio, callback) {
-  module.exports.connection.query(`INSERT INTO restricted_list (studio, user_id) VALUES ("${studio}", ${user.id})`, function(err, results) {
+module.exports.addRestrictedStudio = function(id, studio, callback) {
+  module.exports.connection.query('INSERT INTO restricted_list (studio, user_id) VALUES (' + studio +', ' + id + ')', function(err, results) {
     callback(err, results);
   });
 };
@@ -217,9 +217,9 @@ module.exports.findAllFromCurrentUser = function(currentUserId, callback) {
 };
 
 module.exports.makeBlockChanges = function(currentStateObject, restrictedStudios, callback) {
-  var queryString = 'UPDATE for_sale_block SET pass_volume=' + currentStateObject.pass_volume + 
-    ', passes_sold=' + currentStateObject.passes_sold + ', current_price=' + currentStateObject.current_price + 
-    ', period_start="' + currentStateObject.current_start + '", period_end="' + currentStateObject.current_end + 
+  var queryString = 'UPDATE for_sale_block SET pass_volume=' + currentStateObject.pass_volume +
+    ', passes_sold=' + currentStateObject.passes_sold + ', current_price=' + currentStateObject.current_price +
+    ', period_start="' + currentStateObject.current_start + '", period_end="' + currentStateObject.current_end +
     '" WHERE id=' + currentStateObject.current_block_id;
   module.exports.connection.query(queryString, function(err, results, fields) {
     if (err) {

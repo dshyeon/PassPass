@@ -132,6 +132,7 @@ app.post('/auth/email', (req, res, next) => {
     } else {
       req.login(user[0], err => { //req.login is called by passport if user is passed back but called by application in this custom setup
         //this will call serializeUser method defined above
+        //find user id at req.session.passport.user
         if (err) {
           return next(err);
         } else {
@@ -156,6 +157,8 @@ app.post('/auth/signup', (req, res) => {
     } else {
       req.body.id = user.insertId;
       req.logIn(user[0], err => { //calls serializeUser
+        //find user id at req.session.passport.user
+
         if (err) {
           res.send(err);
         } else {
@@ -200,7 +203,7 @@ app.get('/user/restricted', (req, res) => {
 
 app.post('/user/restricted', (req, res) => {
   const studio = req.body.studio;
-  database.addRestrictedStudio({ id: req.session.passport.user }, studio, (err, results) => {
+  database.addRestrictedStudio(req.session.passport.user, studio, (err, results) => {
     if (err) {
       console.log('ERROR failed to add restricted studio ', err);
       res.sendStatus(500);
