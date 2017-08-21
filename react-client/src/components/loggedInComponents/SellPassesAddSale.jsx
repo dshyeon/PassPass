@@ -220,7 +220,7 @@ class SellPassesAddSale extends React.Component {
         <div className="sellPassesAddSale">
           <div className="row addSaleRow">
             <div className="col-md-3">
-              <button className="addSaleButton btn btn-md btn-primary btn-block" onClick={this.toggleShowAdd} >+Sell Passes</button>
+              <button className="addSaleButton btn btn-md btn-primary btn-block" onClick={() => { this.getRestricted(); this.toggleShowAdd(); }} >Sell Passes</button>
             </div>
             <div className="col-md-9">
             </div>
