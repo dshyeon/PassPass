@@ -56,19 +56,7 @@ class AppLoggedIn extends React.Component {
             </div>
           </nav>
           <div>
-            <Route path="/" render={() => (
-                this.state.page === 'home' ? (
-                  <Interactions pageChange={this.pageChange.bind(this)} />
-                ) : (
-                  this.state.page === 'buy' ? (
-                    <BuyPasses />
-                  ) : (
-                    <SellPasses />
-                  )
-                )
-              )}/>
-          </div>
-          <div>
+            <Route path="/interactions" component={Interactions}/>
             <Route path="/buypasses" component={BuyPasses}/>
             <Route path="/sellpasses" component={SellPasses}/>
           </div>

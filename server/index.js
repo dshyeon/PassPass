@@ -75,15 +75,19 @@ passport.use(new LocalStrategy(
   }
 ));
 
-passport.use(new FacebookStrategy(fb,
-    (accessToken, refreshToken, profile, done) => { //fb profile: http://passportjs.org/docs/profile
-      database.createUser({email: profile.emails[0].value, name: profile.displayName, cookie: accessToken},
-      (err, user) => {
-        if (err) {return done(err);}
-        done(null, user);
-      });
-    }
-));
+// ADD BACK IN FOR AUTHENTICATION
+// passport.use(new FacebookStrategy(fb,
+//     (accessToken, refreshToken, profile, done) => { //fb profile: http://passportjs.org/docs/profile
+//       console.log('********** accessToken ', accessToken);
+//       console.log('********** refreshToken ', refreshToken);
+//       console.log('*********** profile ', profile);
+//       // database.findOrCreateUser({email: profile.emails[0].value, name: profile.displayName, cookie: accessToken},
+//       // (err, user) => {
+//       //   if (err) {return done(err);}
+//       //   done(null, user);
+//       // });
+//     }
+// ));
 
 passport.serializeUser(function(user, done) {
   done(null, user.id);
@@ -167,12 +171,13 @@ app.post('/auth/signup', (req, res) => {
   });
 });
 
-app.get('/auth/facebook', passport.authenticate('facebook'));
-
-app.get('/auth/facebook/callback', passport.authenticate('facebook', {
-  successRedirects: '/interactions',
-  failureRedirect: '/login'
-}));
+// ADD BACK IN FOR AUTHENTICATION
+// app.get('/auth/facebook', passport.authenticate('facebook'));
+//
+// app.get('/auth/facebook/callback', passport.authenticate('facebook', {
+//   successRedirects: '/interactions',
+//   failureRedirect: '/login'
+// }));
 
 app.post('/user/search', (req, res) => {
   // req has user id

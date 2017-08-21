@@ -1,7 +1,7 @@
 var mysql      = require('mysql');
 
 module.exports.connection = mysql.createConnection(
-  process.env.CLEARDB_DATABASE_URL || 
+  process.env.CLEARDB_DATABASE_URL ||
   {
     host: 'localhost',
     user: 'root',
@@ -92,6 +92,27 @@ module.exports.newUser = function(user, callback) {
     }
   );
 };
+
+// add back in for facebook authentication
+// module.exports.findOrCreateUser = function (user, callback) {
+//   //user = {email: profile.emails[0].value, first_name: profile.displayName.split(' ')[0], fb_id: profile.id, fb_accessToken: accessToken, fb_accessToken_New: refreshToken}
+//   module.exports.findUser(user.email, (err, results) => {
+//     if (err) {
+//       console.log('*********** database findOrCreateUser error in findUser ', err);
+//       callback(err);
+//     }
+//     if (results.length > 0) {
+//       callback(null, results);
+//     } else {
+//       console.log('*********** database findOrCreateUser in findUser success but no match so will Create ');
+//       //create user
+//       //var values = [user.email, user.password + user.salt, user.salt, user.first_name, user.last_name, user.phone];
+//       module.exports.newUser(user); //need to update this query for additional fb_id param
+//       //confirm info received from FB
+//     }
+//
+//   });
+// };
 
 module.exports.addUserToSession = function(user, session, callback) {
   var values = [Number(user), session];

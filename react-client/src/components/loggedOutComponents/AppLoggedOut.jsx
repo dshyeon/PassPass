@@ -3,6 +3,7 @@ import $ from 'jquery';
 import {
   BrowserRouter as Router,
   Route,
+  Redirect,
   Link
 } from 'react-router-dom';
 import SignUpBox from './SignUpBox.jsx';
@@ -18,8 +19,13 @@ class AppLoggedOut extends React.Component {
     };
   }
 
-  signUp(){
+  signUpChange(e){
+    e.preventDefault();
     this.setState({signup: !this.state.signup});
+  }
+
+  redirectSignUp(){
+    return this.state.signup ? <Redirect to="/signup"/> : null
   }
 
   logIn(){
@@ -47,17 +53,30 @@ class AppLoggedOut extends React.Component {
             </div>
           </nav>
           <div>
-            <Route exact path="/" render={() => (
-                this.state.authenicated ? (
-                  <LoggedIn logout={this.logIn.bind(this)}/>
-                ) : (
+              <Route exact path="/" render={() => (
                   this.state.signup ? (
-                    <SignUpBox signup={this.signUp.bind(this)} login={this.logIn.bind(this)} />
+                    <Redirect to="/signup" />
                   ) : (
-                    <SignInBox signup={this.signUp.bind(this)} login={this.logIn.bind(this)} />
+                    <SignInBox signUpChange={this.signUpChange.bind(this)} />
                   )
+                )}
+              />
+            <Route path="/login" render={() => (
+                  this.state.signup ? (
+                    <Redirect to="/signup" />
+                  ) : (
+                    <SignInBox signUpChange={this.signUpChange.bind(this)} />
+                  )
+                )}
+              />
+            <Route path="/signup" render={() => (
+                !this.state.signup ? (
+                  <Redirect to="/login" />
+                ) : (
+                  <SignUpBox signUpChange={this.signUpChange.bind(this)} />
                 )
-              )}/>
+              )}
+            />
           </div>
         </div>
       </Router>

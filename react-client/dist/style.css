@@ -10,6 +10,7 @@ smallest {
 	width: 100%;
 	display: flex;
 	justify-content: center;
+  text-align: center;
 }
 
 .signInContainer {
@@ -75,6 +76,13 @@ smallest {
 	background-color: #40e0d0;
 	border-color: #D3D3D3;
 	margin-top: 1em;
+}
+
+.fbButton {
+  background-color: #3b5998;
+  border-color: #3b5998;
+  margin-top: 1em;
+  	height: 3em;
 }
 
 .addStudio, .postSaleButton, .cancelSaleButton {

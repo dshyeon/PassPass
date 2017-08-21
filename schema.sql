@@ -18,6 +18,8 @@ CREATE TABLE users (
   email VARCHAR(50) UNIQUE,
   password VARCHAR(100),
   salt VARCHAR(10),
+  fb_id VARCHAR(50),
+  fb_accessToken VARCHAR(200),
   first_name VARCHAR(50),
   last_name VARCHAR(50),
   phone VARCHAR(10),

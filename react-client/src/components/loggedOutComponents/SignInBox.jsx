@@ -3,8 +3,12 @@ import $ from 'jquery';
 import {
   BrowserRouter as Router,
   Route,
+  Redirect,
   Link
 } from 'react-router-dom';
+// import Redirect from 'react-router';
+import SignUpBox from './SignUpBox.jsx';
+
 
 class SignInBox extends React.Component {
 	constructor(props) {
@@ -53,12 +57,36 @@ class SignInBox extends React.Component {
 		});
   }
 
+  // ADD BACK IN FOR AUTHENTICATION
+  // fbSignIn (event) {
+  //   var context = this;
+  //   event.preventDefault();
+  // 	$.ajax({
+	// 	  method: 'GET',
+	// 	  url: '/auth/facebook',
+	// 	  contentType: 'application/JSON',
+	// 	  success: function (data) {
+  //       if (data.message) {
+  //         console.log(data.message);
+  //         //push this error message to a popup with more appropriate wording/display
+  //       } else {
+  //         console.log('successful fb login ', data[0]);
+  //         context.props.login();
+  //       }
+	// 	  },
+  //     error: function(err) {
+  //       console.log('********** fb sign in error ', err);
+  //     }
+	// 	});
+  // }
+
   render () {
     return (
       <Router>
         <div className="signInContainerRow">
           <div className="signInContainer">
             <small>The Marketplace for Classpass Classes</small>
+            <br></br>
             <form className="form-signin" onSubmit={this.handleSignIn.bind(this)}>
               <br></br>
             	<label htmlFor="inputEmail" className="sr-only">Email address</label>
@@ -74,7 +102,7 @@ class SignInBox extends React.Component {
             	<button className="searchButton btn btn-md btn-primary btn-block" type="submit">Sign in</button>
               <br></br>
               <div>
-                New User? <a href='#' onClick={this.props.signup}>Sign Up</a>
+                New User? <a href="#" onClick={this.props.signUpChange}>Sign Up</a>
               </div>
             </form>
           </div>
@@ -85,3 +113,8 @@ class SignInBox extends React.Component {
 }
 
 export default SignInBox;
+
+// ADD BACK IN FOR AUTHENTICATION
+// <br></br>
+// <button onClick={this.fbSignIn.bind(this)} className="fbButton btn btn-md btn-primary btn-block" type="submit">Login with Facebook</button>
+// <br></br>Or Login with Email:

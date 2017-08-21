@@ -50,14 +50,26 @@ https://github.com/TheRealHungryHippos/PassPass
 npm install
 ```
 
+### Email Authentication
+Use a LocalStrategy to utilize email authentication and create sessions and cookies for your users. More information can be found in the Passport documentation [http://passportjs.org/docs/overview]
+
+You will need to add a `session.config.js` file for session encryption key, use `session.example.config.js` as a template.
+
+### Facebook Authentication - NOT CURRENTLY IMPLEMENTED BUT INFRASTRUCTURE IS THERE
+In order to use Facebook authentication, you must first create an app at Facebook Developers [https://developers.facebook.com/]. When created, an app is assigned an App ID and App Secret. Your application must also implement a redirect URL, to which Facebook will redirect users after they have approved access for your application. Save the App ID and App Secret in a config file.
+
 Add `facebook.config.js` file for facebook session keys, use `facebook.example.config.js` as a template.
-Add `session.config.js` file for session encryption key, use `session.example.config.js` as a template.
+
+Additional information about this can be found in the Passport documentation [http://passportjs.org/docs/facebook]
+
+### Database and Other Setups
 Install the database by running the `schema.sql` file with instructions at the top of that file
 
 Launch webpack with `npm run react-dev`.
 Launch the server with `npm run server-dev`.
 Go to http://127.0.0.1:3000/ in your browser to run locally
 If you need to change the port, do that in the server/index.js file at the bottom
+Production ENV configuration variables are maintained on Heroku
 
 ### Testing
 

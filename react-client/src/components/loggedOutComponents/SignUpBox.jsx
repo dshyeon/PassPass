@@ -3,6 +3,7 @@ import $ from 'jquery';
 import {
   BrowserRouter as Router,
   Route,
+  Redirect,
   Link
 } from 'react-router-dom';
 import SignInBox from './SignInBox.jsx';
@@ -67,7 +68,7 @@ class SignUpBox extends React.Component {
           <div className="signInContainer">
             <form className="form-signup" onSubmit={this.handleSignUp.bind(this)}>
             	<small className="form-signup-heading">Sign Up for a New Account</small>
-              <br></br>Existing User? <a href='#' onClick={this.props.signup}>Log In</a>
+              <br></br>Existing User? <a href="#" onClick={this.props.signUpChange}>Log In</a>
               <br></br>
               <br></br>
             	<label>Email address*: </label>
