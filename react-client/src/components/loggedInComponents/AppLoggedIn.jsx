@@ -4,6 +4,7 @@ import {
   BrowserRouter as Router,
   Route,
   Redirect,
+  Switch,
   Link
 } from 'react-router-dom';
 import Interactions from './Interactions.jsx';
@@ -60,6 +61,7 @@ class AppLoggedIn extends React.Component {
             </div>
           </nav>
           <div>
+            <Switch>
             <Route exact path="/interactions" render={() => {
                 if (this.props.authenicated && this.state.page === 'home') {
                   return <Interactions authenicated={this.props.authenicated} pageChange={this.pageChange.bind(this)}/>
@@ -88,6 +90,7 @@ class AppLoggedIn extends React.Component {
                 )
               )}
             />
+          </Switch>
           </div>
         </div>
       </Router>

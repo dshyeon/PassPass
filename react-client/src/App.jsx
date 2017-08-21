@@ -4,6 +4,7 @@ import {
   BrowserRouter as Router,
   Route,
   Redirect,
+  Switch,
   Link
 } from 'react-router-dom';
 import AppLoggedOut from './components/loggedOutComponents/AppLoggedOut.jsx';
@@ -29,6 +30,7 @@ class App extends React.Component {
     return (
       <Router>
     		<div>
+          <Switch>
           <Route path="/interactions" render={() => (
               this.state.authenicated ? (
                 <AppLoggedIn logout={this.logOut.bind(this)} authenicated={this.state.authenicated}/>
@@ -45,7 +47,7 @@ class App extends React.Component {
               )
             )}
           />
-        
+        </Switch>
     		</div>
     	</Router>
     )
