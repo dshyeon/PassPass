@@ -23,7 +23,6 @@ class SellPasses extends React.Component {
       method: 'GET',
       url: '/pass/seller/search',
       contentType: 'application/json',
-      data: {users_id: UsersId},
       context: this,
       success: function(passesBeingSoldByBuyer) {console.log('ajax success', passesBeingSoldByBuyer);
         this.setState({currentlySelling: passesBeingSoldByBuyer});

@@ -254,7 +254,7 @@ app.post('/pass/buyer/search', (req, res) => {
 });
 
 app.get('/pass/seller/search', (req, res) => {
- database.findAllFromCurrentUser(req.query.users_id, function(userCurrentSaleBlocks) {
+ database.findAllFromCurrentUser(req.session.passport.user, function(userCurrentSaleBlocks) {
   res.send(userCurrentSaleBlocks);
  });
 });
