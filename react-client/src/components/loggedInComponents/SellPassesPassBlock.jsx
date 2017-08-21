@@ -276,7 +276,6 @@ class SellPassesPassBlock extends React.Component {
             </div>
             <div className="addSaleSearchInput col-sm">
                     <label htmlFor="addSaleQuantity">Number of Passes:</label>
-                      <div class="input-group">
               <div className="input-group">
                <span className = "input-group-addon">
                 <button type="button" onClick={this.addPass.bind(this)}>+</button>
@@ -290,7 +289,6 @@ class SellPassesPassBlock extends React.Component {
                   <span className = "input-group-addon">
                     <button type="button" onClick={this.subtractPass.bind(this)}>-</button>
                   </span>
-              </div>
               </div>
             </div>
           </div>
