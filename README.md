@@ -72,3 +72,25 @@ View the project roadmap on Trello [here](https://trello.com/b/Rsxkw459/passpass
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
+
+## Deployment
+To deploy on Heroku:
+
+Add ClearDB's addon, use the free ignite database. This will automatically add a `CLEARDB_DATABASE_URL` config variable. This is in the format of: 
+`mysql://<username>:<password>@<hostname>/<database name>?reconnect=true`
+
+To add the schema to ClearDB, run the following command in your terminal:
+```bash
+mysql -h <hostname> -u <username> -p <database name> < schema.sql
+```
+it will then prompt you for your password. You can log in to your data base by running only `mysql -h <hostname> -u <username> -p <database name>`. You will have to `use <database name>` after logging in. Note this means your database name is different than you may be using in your `schema.sql` for local development.
+
+Additional config variables to be set are:
+- FB_CALLBACKURL
+- FB_CLIENTID
+- FB_CLIENTSECRET
+- SESSION_SECRET
+
+These replace the two config files used for local develpoment, `facebook.config.js` and `session.config.js`. 
+
+Set config variables for both production and staging parts of your heroku pipeline. Review Apps will inherit config vars from your chosen app, but the `app.json` in your root folder must specify that these variables are to be inherited. To do so, mark those variables are required, but do not provide in `app.json`.
