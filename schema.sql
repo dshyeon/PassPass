@@ -105,12 +105,12 @@ INSERT INTO reviews (review_receiver_id, review_giver_id, transaction_type, rati
   (2, 1, 'sale', 5.0, 'Amazing person to work with!', '2017-02-01', '2017-04-03'),
   (3, 1, 'conversation', 2.4, 'Avoid them. They are super flaky.', '2017-04-21', NULL);
 
-INSERT INTO for_sale_block (id, pass_volume, seller_id, current_price, period_start, period_end, passes_sold, exclusions) VALUES
-  (1, 15, 2, 8.90, '2017-04-11', '2017-04-30', 4, 'Neko\'s Yoga' ),
-  (2, 9, 2, 9.00, '2017-05-03', '2017-06-01', 1, NULL),
-  (3, 11, 1, 10.00, '2017-03-03', '2017-03-15', 1, 'Hardcore Cycle Spin'),
-  (4, 9, 1, 9.25, '2017-04-01', '2017-04-19', 1, NULL),
-  (5, 9, 1, 8.99, '2017-04-20', '2017-04-30', 5, NULL);
+INSERT INTO for_sale_block (id, pass_volume, seller_id, current_price, period_start, period_end, passes_sold) VALUES
+  (1, 15, 2, 8.90, '2017-04-11', '2017-04-30', 4),
+  (2, 9, 2, 9.00, '2017-05-03', '2017-06-01', 1),
+  (3, 11, 1, 10.00, '2017-03-03', '2017-03-15', 1),
+  (4, 9, 1, 9.25, '2017-04-01', '2017-04-19', 1),
+  (5, 9, 1, 8.99, '2017-04-20', '2017-04-30', 5);
 
 INSERT INTO messages (sender_id, reciever_id, time_sent, text) VALUES
   (1, 2,'2017-05-06 11:12:13', 'Hi, how are you doing?'),
@@ -125,8 +125,9 @@ INSERT INTO sold_passes (seller_id, buyer_id, notes, sell_date) VALUES
 INSERT INTO restricted_list (id, studio, user_id) VALUES
   (1, 'C.C. Cycling', 2),
   (2, 'Edmond Climbing', 1),
-  (3, 'Gold Gym', 1),
-  (4, 'none', NULL);
+  (3, 'Edmond Climbing', 2),
+  (4, 'Gold Gym', 1),
+  (5, 'none', NULL);
 
 INSERT INTO restricted_studios (block_id, exempt_studio_id)
-  VALUES (1, 1), (1, 2), (2, 2), (2, 3), (3, 4);
+  VALUES (1, 1), (1, 3), (2, 3), (3, 2), (3, 4), (5, 2);
