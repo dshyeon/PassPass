@@ -3,10 +3,6 @@ import $ from 'jquery';
 import SellPassesAddSale from './SellPassesAddSale.jsx';
 import SellPassesList from './SellPassesList.jsx';
 
-//STUBBED TEST DATA
-var UsersId = 1;
-// var PassData = [{"id":3,"email":"billy@bob.com","pass_volume":11,"seller_id":1,"current_price":10,"period_start":"2017-03-03T08:00:00.000Z","period_end":"2017-03-15T07:00:00.000Z","passes_sold":1,"exclusions":"Hardcore Cycle Spin"},{"id":4,"email":"billy@bob.com","pass_volume":9,"seller_id":1,"current_price":9.25,"period_start":"2017-04-01T07:00:00.000Z","period_end":"2017-04-19T07:00:00.000Z","passes_sold":1,"exclusions":null}];
-
 class SellPasses extends React.Component {
   constructor(props) {
     super(props);
