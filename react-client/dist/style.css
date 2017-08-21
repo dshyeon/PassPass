@@ -60,6 +60,11 @@ smallest {
 .buyPasses {
 	padding-top: 76px;
 }
+@media (max-width: 991px) {
+	.buyPasses {
+		padding-top: 98px;
+	}
+}
 
 .buyPassesSearch, .addSale {
 	background-color: #f6f6f6;
@@ -126,7 +131,20 @@ input[type=number] {
 .sellPasses {
 	padding-top: 76px;
 }
+@media (max-width: 991px) {
+	.sellPasses {
+		padding-top: 98px;
+	}
+}
 
+.interactionsRow {
+	padding-top: 76px;
+}
+@media (max-width: 991px) {
+	.interactionsRow {
+		padding-top: 98px;
+	}
+}
 .sellPassesPassBlock {
 	border-bottom: thin solid #40e0d0;
 	padding: 1em 0 1em 0;

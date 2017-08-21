@@ -14,7 +14,7 @@ const BuyPassesListItem = (props) => {
 			<div className="row">
 				<div className="col-sm">
 					<div className="buyPassesListItemInfo"><b>Seller:</b><div className="buyPassesListItemInfoContent">{props.forSaleBlock.first_name}</div></div>
-					<div className="buyPassesListItemInfo"><b>Email:</b><div className="buyPassesListItemInfoContent">{props.forSaleBlock.email}</div></div>
+					<div className="buyPassesListItemInfo"><b>Email:</b><div className="buyPassesListItemInfoContent"><a href={`mailto:${props.forSaleBlock.email}`}>{props.forSaleBlock.email}</a></div></div>
 				</div>
 				<div className="col-sm">
 					<div className="buyPassesListItemInfo"><b>Sale Period:</b><div className="buyPassesListItemInfoContent">{new Date(props.forSaleBlock.period_start.slice(0, 10)).toDateString().slice(4) + ' through ' + new Date(props.forSaleBlock.period_end.slice(0, 10)).toDateString().slice(4)}</div></div>

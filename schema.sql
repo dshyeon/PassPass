@@ -87,7 +87,6 @@ CREATE TABLE for_sale_block (
   period_start DATE,
   period_end DATE,
   passes_sold int,
-  exclusions VARCHAR(150),
   FOREIGN KEY (seller_id) REFERENCES users(id)
 );
 
