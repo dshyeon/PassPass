@@ -14,9 +14,13 @@ class SellPassesPassBlock extends React.Component {
       current_start: this.formatDateForYYYMMDDOutPut(this.props.BlockData.period_start),
       current_end: this.formatDateForYYYMMDDOutPut(this.props.BlockData.period_end),
       excluded: this.props.BlockData.exclusions,
-      current_block_id: this.props.id,
+      current_block_id: this.props.BlockData.id,
       last_state: {}
     };
+  }
+
+  componentDidMount() {
+    console.log('PROPS = ', this.props);
   }
 
   //FORMAT DATES

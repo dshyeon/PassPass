@@ -263,7 +263,6 @@ app.get('/pass/seller/search', (req, res) => {
  database.findAllFromCurrentUser(req.query.users_id, function(userCurrentSaleBlocks) {
   res.send(userCurrentSaleBlocks);
  });
- // res.send('THIS IS THE RESPONSE FROM THE SERVER');
 });
 
 app.post('/pass/seller/clone', (req, res) => {

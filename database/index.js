@@ -189,11 +189,9 @@ module.exports.findAllFromCurrentUser = function(currentUserId, callback) {
 };
 
 
-
 module.exports.makeBlockChanges = function(currentStateObject, callback) {
-  //UPDATE for_sale_block SET pass_volume=1000, passes_sold= 50, current_price=4.11, period_start="2017-01-01", period_end="2017-12-30", exclusions="New asdf" WHERE id= 5;
-  // var queryString = 'UPDATE for_sale_block SET pass_volume=' + currentStateObject.pass_volume + ', passes_sold=' + currentStateObject.passes_sold + ', current_price=' + currentStateObject.current_price + ', period_start=' + currentStateObject.period_start + ', period_end=' + currentStateObject.period_end + ', exclusions=' + currentStateObject.exclusions + ' WHERE id= ' + currentStateObject.current_block_id + ';';
-  var queryString = 'UPDATE for_sale_block SET pass_volume=9000, passes_sold= 500, current_price=1.23, period_start="2017-01-01", period_end="2017-12-30", exclusions="ZZZZZZZZ" WHERE id= 5;';
+  var queryString = 'UPDATE for_sale_block SET pass_volume=' + currentStateObject.pass_volume + ', passes_sold=' + currentStateObject.passes_sold + ', current_price=' + currentStateObject.current_price + ', period_start="' + currentStateObject.current_start + '", period_end="' + currentStateObject.current_end + '", exclusions="' + currentStateObject.excluded + '" WHERE id=' + currentStateObject.current_block_id + ';';
+  // var queryString = 'UPDATE for_sale_block SET pass_volume=555, passes_sold= 555, current_price=5.55, period_start="2017-01-01", period_end="2017-12-30", exclusions="ZZZZZZZZ" WHERE id= 5;';
   module.exports.connection.query(queryString, function(err, rows, fields) {
     if(err) {
       throw err;
