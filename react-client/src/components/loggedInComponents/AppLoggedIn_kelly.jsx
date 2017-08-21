@@ -8,7 +8,6 @@ import {
 import Interactions from './Interactions.jsx';
 import BuyPasses from './BuyPasses.jsx';
 import SellPasses from './SellPasses.jsx';
-import AppLoggedOut from '../loggedOutComponents/AppLoggedOut.jsx';
 
 class AppLoggedIn extends React.Component {
   constructor(props) {
@@ -38,49 +37,28 @@ class AppLoggedIn extends React.Component {
                     aria-label="Toggle navigation">
               <span className="navbar-toggler-icon"></span>
             </button>
-            <h1>
-              <Link to="/interactions" className="navbar-brand">PassPass</Link>
+            <h1 onClick={() => {this.pageChange('home')}}>
+              PassPass
             </h1>
             &emsp;&emsp;&emsp;
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
               <ul className="navbar-nav mr-auto">
-                <li className="nav-item">
-                  <Link to="/buypasses" className="nav-link">Buy Passes</Link>
+                <li className="nav-item nav-link" onClick={() => {this.pageChange('buy')}}>
+                  Buy Passes
                 </li>
-                <li className="nav-item">
-                  <Link to="/sellpasses" className="nav-link">Sell Passes</Link>
+                <li className="nav-item nav-link" onClick={() => {this.pageChange('sell')}}>
+                  Sell Passes
                 </li>
-                <li className="nav-item nav-link" onClick={this.props.logout}>
+                <li className="nav-right nav-link" onClick={this.props.logout}>
                   Log Out
                 </li>
               </ul>
             </div>
           </nav>
           <div>
-            <Route exact path="/interactions" render={() => (
-              this.props.authenicated ? (
-                <Interactions authenicated={this.props.authenicated}/>
-              ) : (
-                <AppLoggedOut />
-              )
-              )}
-            />
-            <Route path="/buypasses" render={() => (
-                this.props.authenicated ? (
-                  <BuyPasses authenicated={this.props.authenicated}/>
-                ) : (
-                  <AppLoggedOut />
-                )
-              )}
-            />
-            <Route path="/sellpasses" render={() => (
-                this.props.authenicated ? (
-                  <SellPasses authenicated={this.props.authenicated}/>
-                ) : (
-                  <AppLoggedOut />
-                )
-              )}
-            />
+            <Route path="/interactions" component={Interactions}/>
+            <Route path="/buypasses" component={BuyPasses}/>
+            <Route path="/sellpasses" component={SellPasses}/>
           </div>
         </div>
       </Router>

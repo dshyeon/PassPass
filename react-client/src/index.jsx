@@ -5,18 +5,8 @@ import {
   Route,
   Link
 } from 'react-router-dom';
-import AppLoggedOut from './components/loggedOutComponents/AppLoggedOut.jsx';
-import AppLoggedIn from './components/loggedInComponents/AppLoggedIn.jsx';
+import App from './App.jsx';
 
 ReactDOM.render((
-	<Router>
-		<div>
-			<Route exact path="/" component={AppLoggedOut} />
-			<Route path="/login" component={AppLoggedOut} />
-      <Route path="/signup" component={AppLoggedOut} />
-      <Route path="/interactions" component={AppLoggedIn} />
-			<Route path="/buypasses" component={AppLoggedIn} />
-      <Route path="/sellpasses" component={AppLoggedIn} />
-		</div>
-	</Router>
+	<App />
 ), document.getElementById('app'));

@@ -14,7 +14,6 @@ class AppLoggedOut extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      authenicated: false,
       signup: false
     };
   }
@@ -22,14 +21,6 @@ class AppLoggedOut extends React.Component {
   signUpChange(e){
     e.preventDefault();
     this.setState({signup: !this.state.signup});
-  }
-
-  redirectSignUp(){
-    return this.state.signup ? <Redirect to="/signup"/> : null
-  }
-
-  logIn(){
-    this.setState({authenicated: !this.state.authenicated});
   }
 
   render () {
@@ -53,27 +44,35 @@ class AppLoggedOut extends React.Component {
             </div>
           </nav>
           <div>
-              <Route exact path="/" render={() => (
+            <Route exact path="/" render={(props) => (
+                this.state.signup ? (
+                  <Redirect to="/signup" />
+                ) : (
+                  <SignInBox signUpChange={this.signUpChange.bind(this)} login={this.props.login.bind(this)}/>
+                )
+              )}
+            />
+          <Route path="/login" render={(props) => (
                   this.state.signup ? (
                     <Redirect to="/signup" />
                   ) : (
-                    <SignInBox signUpChange={this.signUpChange.bind(this)} />
+                    <SignInBox signUpChange={this.signUpChange.bind(this)} login={this.props.login.bind(this)}/>
                   )
                 )}
               />
-            <Route path="/login" render={() => (
-                  this.state.signup ? (
-                    <Redirect to="/signup" />
-                  ) : (
-                    <SignInBox signUpChange={this.signUpChange.bind(this)} />
-                  )
-                )}
-              />
-            <Route path="/signup" render={() => (
+            <Route path="/signup" render={(props) => (
                 !this.state.signup ? (
                   <Redirect to="/login" />
                 ) : (
-                  <SignUpBox signUpChange={this.signUpChange.bind(this)} />
+                  <SignUpBox signUpChange={this.signUpChange.bind(this)} login={this.props.login.bind(this)}/>
+                )
+              )}
+            />
+          <Route path="/" render={(props) => (
+                this.state.signup ? (
+                  <Redirect to="/signup" />
+                ) : (
+                  <SignInBox signUpChange={this.signUpChange.bind(this)} login={this.props.login.bind(this)}/>
                 )
               )}
             />
