@@ -103,7 +103,7 @@ infoChanged () {
       contentType: 'application/json',
       data: JSON.stringify(that.state),
       context: this,
-      success: function(res) {console.log(res)
+      success: function(res) {
         console.log('SUCCESS!!!! RES = ', res);
       },
       error: function(err) { console.log('INFOCHANGED FUNCTION FOR SELLPASSES FAILED', err); }

@@ -191,7 +191,6 @@ module.exports.findAllFromCurrentUser = function(currentUserId, callback) {
 
 module.exports.makeBlockChanges = function(currentStateObject, callback) {
   var queryString = 'UPDATE for_sale_block SET pass_volume=' + currentStateObject.pass_volume + ', passes_sold=' + currentStateObject.passes_sold + ', current_price=' + currentStateObject.current_price + ', period_start="' + currentStateObject.current_start + '", period_end="' + currentStateObject.current_end + '", exclusions="' + currentStateObject.excluded + '" WHERE id=' + currentStateObject.current_block_id + ';';
-  // var queryString = 'UPDATE for_sale_block SET pass_volume=555, passes_sold= 555, current_price=5.55, period_start="2017-01-01", period_end="2017-12-30", exclusions="ZZZZZZZZ" WHERE id= 5;';
   module.exports.connection.query(queryString, function(err, rows, fields) {
     if(err) {
       throw err;

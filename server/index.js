@@ -232,11 +232,9 @@ app.post('/pass/new', (req, res) => {
 });
 
 app.post('/pass/edit', (req, res) => {
-  res.status(200).send('WORKED123');
-  console.log('REQ BODY FROM INFOCHANGED = ', req.body);
-  // database.makeBlockChanges(req.body, function(data) {
-  //   res.status(200).res.send(data);
-  // });
+  database.makeBlockChanges(req.body, function(data) {
+    res.status(200).send(data);
+  });
 });
 
 app.post('/pass/buyer/search', (req, res) => {
@@ -256,10 +254,6 @@ app.post('/pass/buyer/search', (req, res) => {
 });
 
 app.get('/pass/seller/search', (req, res) => {
- //why is req.body = {} ?
- console.log('app.get REQ QUERY 2 = ', req.query.users_id);
- console.log('REQ BODY = ', req.body);
- console.log('REQ FIND ID HERE 123456 = ', req.session);
  database.findAllFromCurrentUser(req.query.users_id, function(userCurrentSaleBlocks) {
   res.send(userCurrentSaleBlocks);
  });

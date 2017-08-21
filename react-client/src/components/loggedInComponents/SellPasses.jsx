@@ -29,7 +29,7 @@ class SellPasses extends React.Component {
         this.setState({currentlySelling: passesBeingSoldByBuyer});
         console.log('STATE', this.state.currentlySelling);
       },
-      error: function(err) { console.log('GETINFO FUNCTION FOR SELLPASSES FAILED', err); }
+      error: function(err) {console.log('GETINFO FUNCTION FOR SELLPASSES FAILED', err);}
     });
   }
 
@@ -38,7 +38,6 @@ class SellPasses extends React.Component {
       <div className="sellPasses">
         <SellPassesAddSale />
         <SellPassesList className="sellPassesList" data={this.state.currentlySelling}/>
-        {/*<button type="button" onClick = {this.getInfo}>Refresh Information</button>*/}
       </div>
     );
   }
