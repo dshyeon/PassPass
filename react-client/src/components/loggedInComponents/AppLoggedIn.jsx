@@ -49,7 +49,7 @@ class AppLoggedIn extends React.Component {
                 <li className="nav-item nav-link" onClick={() => {this.pageChange('sell')}}>
                   Sell Passes
                 </li>
-                <li className="nav-right nav-link" onClick={this.props.logout}>
+                <li className="nav-item nav-link" onClick={this.props.logout}>
                   Log Out
                 </li>
               </ul>

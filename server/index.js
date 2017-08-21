@@ -184,7 +184,7 @@ app.post('/user/search', (req, res) => {
 });
 
 app.get('/user/restricted', (req, res) => {
-  database.getRestrictedStudios(req.session.user[0], (err, results) => {
+  database.getRestrictedStudios({ id: req.session.passport.user }, (err, results) => {
     if (err) {
       console.log('ERROR failed to get restricted studios ', err);
       res.sendStatus(500);
@@ -195,7 +195,7 @@ app.get('/user/restricted', (req, res) => {
 
 app.post('/user/restricted', (req, res) => {
   const studio = req.body.studio;
-  database.addRestrictedStudio(req.session.user[0], studio, (err, results) => {
+  database.addRestrictedStudio({ id: req.session.passport.user }, studio, (err, results) => {
     if (err) {
       console.log('ERROR failed to add restricted studio ', err);
       res.sendStatus(500);
@@ -206,7 +206,7 @@ app.post('/user/restricted', (req, res) => {
 
 app.post('/pass/new', (req, res) => {
   const forSaleBlock = {
-    seller_id: req.session.user[0].id,
+    seller_id: req.session.passport.user,
     pass_volume: req.body.quantity,
     current_price: req.body.price,
     period_start: req.body.dateStart,

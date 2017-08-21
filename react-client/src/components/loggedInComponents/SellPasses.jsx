@@ -8,6 +8,7 @@ class SellPasses extends React.Component {
     super(props);
     this.state =
     {currentlySelling: []};
+    this.getInfo = this.getInfo.bind(this);
   }
 
   componentDidMount() {
@@ -31,7 +32,7 @@ class SellPasses extends React.Component {
   render () {
     return (
       <div className="sellPasses">
-        <SellPassesAddSale />
+        <SellPassesAddSale getInfo={this.getInfo}/>
         <SellPassesList className="sellPassesList" data={this.state.currentlySelling}/>
       </div>
     );

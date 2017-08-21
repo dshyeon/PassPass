@@ -64,6 +64,7 @@ class SellPassesAddSale extends React.Component {
       context: this,
       success: (data) => {
         console.log('POST /pass/new SUCCEEDED: ', data);
+        this.props.getInfo();
         this.setState({
           addSalePrice: '',
           addSaleDateStart: '',
