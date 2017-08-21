@@ -231,7 +231,7 @@ class SellPassesPassBlock extends React.Component {
             </div>
           </div>
         </div>
-      ); 
+      );
     } else {
       return (
         <div className="sellPassesAddSale">
@@ -240,51 +240,57 @@ class SellPassesPassBlock extends React.Component {
           <div className="row addSaleRow">
             <div className="addSaleSearchInput col-sm">
               <label htmlFor="addSaleDateStart">Sell passes starting on:</label>
-              <input 
-                type="date" 
-                className="form-control" 
-                id="addSaleDateStart" 
-                placeholder="Start Date" 
-                value={this.formatDateForYYYMMDDOutPut(this.state.current_start)} 
-                onChange={this.handleChangeStart.bind(this)} 
+              <input
+                type="date"
+                className="form-control"
+                id="addSaleDateStart"
+                placeholder="Start Date"
+                value={this.formatDateForYYYMMDDOutPut(this.state.current_start)}
+                onChange={this.handleChangeStart.bind(this)}
                 required />
             </div>
             <div className="addSaleSearchInput col-sm">
               <label htmlFor="addSaleDateEnd">These passes are available until:</label>
-              <input 
-                type="date" 
-                className="form-control" 
-                id="addSaleDateEnd" 
-                placeholder="End Date" 
-                value={this.formatDateForYYYMMDDOutPut(this.state.current_end)} 
-                onChange={this.handleChangeEnd.bind(this)} 
+              <input
+                type="date"
+                className="form-control"
+                id="addSaleDateEnd"
+                placeholder="End Date"
+                value={this.formatDateForYYYMMDDOutPut(this.state.current_end)}
+                onChange={this.handleChangeEnd.bind(this)}
                 required />
             </div>
           </div>
           <div className="row addSaleRow">
             <div className="addSaleSearchInput col-sm">
               <label htmlFor="addSalePrice">Price Per Pass ($):</label>
-              <input 
-                type="number" 
-                step="0.01" 
+              <input
+                type="number"
+                step="0.01"
                 className="form-control"
                 id="addSalePrice"
-                placeholder="e.g. 6.50" 
-                min="0" 
-                value={this.dollars(this.state.current_price)} 
+                placeholder="e.g. 6.50"
+                min="0"
+                value={this.dollars(this.state.current_price)}
                 onChange={this.handleChangePrice.bind(this)}/>
             </div>
             <div className="addSaleSearchInput col-sm">
-              <label htmlFor="addSaleQuantity">Number of Passes:</label>
+                    <label htmlFor="addSaleQuantity">Number of Passes:</label>
+                      <div class="input-group">
               <div className="input-group">
-                <input 
-                  type="text" 
+               <span className = "input-group-addon">
+                <button type="button" onClick={this.addPass.bind(this)}>+</button>
+               </span>
+                <input
+                  type="text"
                   className="form-control"
                   id="addSaleQuantity"
                   className="form-control"
                   value = {this.state.pass_volume}/>
-                <button type="button" onClick={this.addPass.bind(this)}>+</button>
-                <button type="button" onClick={this.subtractPass.bind(this)}>-</button>
+                  <span className = "input-group-addon">
+                    <button type="button" onClick={this.subtractPass.bind(this)}>-</button>
+                  </span>
+              </div>
               </div>
             </div>
           </div>
@@ -292,7 +298,7 @@ class SellPassesPassBlock extends React.Component {
             <div className="addSaleSearchInput col-sm">
               <label htmlFor="addSaleRestrictedSelect">Restricted Studios:</label>
               <select multiple className="form-control" id="addSaleRestrictedSelect" value={this.state.addSaleRestrictedSelect} onChange={this.handleChangeSelect}>
-                {this.state.existingRestricted.map((item) => 
+                {this.state.existingRestricted.map((item) =>
                   <option key={item.studio} value={item.studio}>{item.studio}</option>
                 )}
               </select>
