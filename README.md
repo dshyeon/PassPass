@@ -1,27 +1,38 @@
 # PassPass
 
+Pass Pass is a digital marketplace to allow ClassPass users to sell extra passes. 
+
+Users can post:
+* Number of passes they have available for sale 
+* Price per pass
+* Date range passes are valid
+* Excluded studio locations, where they have already used their membership, as ClassPass restricts visits to the same studio per subscription month
+
+Users can browse other user’s passes for sale, and filter by those same criteria; buyers can contact sellers by email to discuss the purchase.
+
 ## Team
 
-  - Cody
-  - Martin
-  - Michael
-  - Kelly
+  - [Cody](https://github.com/cody-unger)
+  - [Kelly](https://github.com/whithang)
+  - [Martin](https://github.com/mkchang)
+  - [Michael](https://github.com/mbntex)
 
 ## Table of Contents
 
-1. [Usage](#Usage)
+1. [Usage](#usage)
+    1. [App](#app)
 1. [Requirements](#requirements)
 1. [Development](#development)
     1. [Installing Dependencies](#installing-dependencies)
-    1. [Tasks](#tasks)
-1. [Roadmap](#roadmap)
+    1. [Testing](#testing)
+    1. [Roadmap](#roadmap)
 1. [Contributing](#contributing)
+1. [Deployment](#deployment)
 
 ## Usage
 
-### Online
+### App
 https://hungryhippopasspass.herokuapp.com/
-
 
 ## Requirements
 
@@ -77,13 +88,14 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
 To deploy on Heroku:
 
 Add ClearDB's addon, use the free ignite database. This will automatically add a `CLEARDB_DATABASE_URL` config variable. This is in the format of: 
+
 `mysql://<username>:<password>@<hostname>/<database name>?reconnect=true`
 
 To add the schema to ClearDB, run the following command in your terminal:
 ```bash
 mysql -h <hostname> -u <username> -p <database name> < schema.sql
 ```
-it will then prompt you for your password. You can log in to your data base by running only `mysql -h <hostname> -u <username> -p <database name>`. You will have to `use <database name>` after logging in. Note this means your database name is different than you may be using in your `schema.sql` for local development.
+it will then prompt you for your password. You can log in to your data base by running only `mysql -h <hostname> -u <username> -p <database name>`. You will have to `use <database name>` after logging in. **Note** this means your database name is different than you may be using in your `schema.sql` for local development.
 
 Additional config variables to be set are:
 - FB_CALLBACKURL

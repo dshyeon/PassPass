@@ -1,7 +1,6 @@
 import React from 'react';
 import $ from 'jquery';
 
-
 class SellPassesPassBlock extends React.Component {
   constructor(props) {
     super(props);
@@ -12,14 +11,21 @@ class SellPassesPassBlock extends React.Component {
       current_price: this.props.BlockData.current_price,
       current_start: this.formatDateForYYYMMDDOutPut(this.props.BlockData.period_start),
       current_end: this.formatDateForYYYMMDDOutPut(this.props.BlockData.period_end),
-      excluded: this.props.BlockData.exclusions,
+      excluded: this.props.BlockData.exclusions ? this.props.BlockData.exclusions.replace(/,/i, ', ') : null,
       current_block_id: this.props.BlockData.id,
-      last_state: {}
+      last_state: {},
+      addSaleAddRestricted: '',
+      addSaleRestrictedSelect: this.props.BlockData.exclusions ? this.props.BlockData.exclusions.split(',') : [],
+      existingRestricted: []
     };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleChangeSelect = this.handleChangeSelect.bind(this);
+    this.getRestricted = this.getRestricted.bind(this);
+    this.addRestricted = this.addRestricted.bind(this);
   }
 
   componentDidMount() {
-    console.log('PROPS = ', this.props);
+    this.getRestricted();
   }
 
   //FORMAT DATES
@@ -63,7 +69,8 @@ class SellPassesPassBlock extends React.Component {
 
   //ON EDIT POST BUTTON CLICK
   editPost() {
-    if(this.state.active === false) {this.setState({active: true});
+    if (this.state.active === false) {
+      this.setState({active: true});
     } else {
       this.setState({active: false});
     }
@@ -94,8 +101,8 @@ class SellPassesPassBlock extends React.Component {
     return parseFloat(priceString);
   }
 
-infoChanged () {
-  var that = this;
+  infoChanged () {
+    var that = this;
     $.ajax({
       method: 'POST',
       url: '/pass/edit',
@@ -109,19 +116,16 @@ infoChanged () {
     });
   }
 
-//UPON SAVE DATA CLICK
+  //UPON SAVE DATA CLICK
   saveNewBlockData() {
     this.editPost();
     this.state.last_state = {};
-    console.log('NOW THE STATE SAVED WILL BE = ', this.state);
     this.infoChanged();
   }
 
   notSavingData() {
     this.state = this.state.last_state;
     this.setState({active: false});
-    // this.editPost();
-    console.log('NOW THE STATE SAVED WILL BE = ', this.state);
   }
 
   handleChangeExclusions(event) {
@@ -140,9 +144,62 @@ infoChanged () {
     this.setState({current_end: event.target.value});
   }
 
+  handleChange(event) {
+    var newState = {};
+    newState[event.target.id] = event.target.value;
+    this.setState(newState);
+  }
+
+  handleChangeSelect(event) {
+    const selected = [...event.target.options].filter(option => option.selected).map(option => option.value);
+    this.setState({
+      addSaleRestrictedSelect: selected,
+      excluded: selected.length > 0 ? selected.join(', ') : null,
+    });
+  }
+
+  getRestricted() {
+    $.ajax({
+      url: '/user/restricted',
+      method: 'GET',
+      context: this,
+      success: (data) => {
+        console.log('GET /user/restricted SUCCEEDED');
+        this.setState({
+          existingRestricted: data
+        });
+      },
+      error: (err) => {
+        console.log('GET /user/restricted FAILED');
+      }
+    });
+  }
+
+  addRestricted() {
+    if (this.state.existingRestricted.map(({ studio }) => studio.toLowerCase()).includes(this.state.addSaleAddRestricted.toLowerCase())) {
+      console.warn('Studio name already exists');
+    } else {
+      $.ajax({
+        url: '/user/restricted',
+        method: 'POST',
+        data: JSON.stringify({studio: this.state.addSaleAddRestricted}),
+        contentType: 'application/json',
+        context: this,
+        success: (data) => {
+          console.log('POST /user/restricted SUCCEEDED');
+          this.setState({addSaleAddRestricted: ''});
+          this.getRestricted();
+        },
+        error: (err) => {
+          console.log('POST /user/restricted FAILED: ', err);
+        }
+      });
+    }
+  }
+
   render() {
-    if(this.state.active === false) {
-        return (
+    if (this.state.active === false) {
+      return (
         <div className="sellPassesPassBlock">
           <div className="row">
             <div className="col-sm">
@@ -183,8 +240,7 @@ infoChanged () {
           <div className="row addSaleRow">
             <div className="addSaleSearchInput col-sm">
               <label htmlFor="addSaleDateStart">Sell passes starting on:</label>
-
-                Start Date: <input 
+              <input 
                 type="date" 
                 className="form-control" 
                 id="addSaleDateStart" 
@@ -196,56 +252,55 @@ infoChanged () {
             <div className="addSaleSearchInput col-sm">
               <label htmlFor="addSaleDateEnd">These passes are available until:</label>
               <input 
-              type="date" 
-              className="form-control" 
-              id="addSaleDateEnd" 
-              placeholder="End Date" 
-              value={this.formatDateForYYYMMDDOutPut(this.state.current_end)} 
-              onChange={this.handleChangeEnd.bind(this)} 
-              required />
+                type="date" 
+                className="form-control" 
+                id="addSaleDateEnd" 
+                placeholder="End Date" 
+                value={this.formatDateForYYYMMDDOutPut(this.state.current_end)} 
+                onChange={this.handleChangeEnd.bind(this)} 
+                required />
             </div>
           </div>
           <div className="row addSaleRow">
             <div className="addSaleSearchInput col-sm">
-              <label htmlFor="addSalePrice">Price Per Pass:</label>
-              $<input 
-              type="number" 
-              step="0.01" 
-              className="form-control"
-              id="addSalePrice"
-              placeholder="e.g. 6.50" 
-              min="0" 
-              value={this.dollars(this.state.current_price)} 
-              onChange={this.handleChangePrice.bind(this)}/>
+              <label htmlFor="addSalePrice">Price Per Pass ($):</label>
+              <input 
+                type="number" 
+                step="0.01" 
+                className="form-control"
+                id="addSalePrice"
+                placeholder="e.g. 6.50" 
+                min="0" 
+                value={this.dollars(this.state.current_price)} 
+                onChange={this.handleChangePrice.bind(this)}/>
             </div>
             <div className="addSaleSearchInput col-sm">
               <label htmlFor="addSaleQuantity">Number of Passes:</label>
-                <div class="input-group">
+              <div className="input-group">
                 <input 
                   type="text" 
                   className="form-control"
                   id="addSaleQuantity"
                   className="form-control"
                   value = {this.state.pass_volume}/>
-                  <button type="button" onClick={this.addPass.bind(this)}>+</button>
-                  <button type="button" onClick={this.subtractPass.bind(this)}>-</button>
-                  </div>
+                <button type="button" onClick={this.addPass.bind(this)}>+</button>
+                <button type="button" onClick={this.subtractPass.bind(this)}>-</button>
+              </div>
             </div>
           </div>
           <div className="row addSaleRow">
             <div className="addSaleSearchInput col-sm">
               <label htmlFor="addSaleRestrictedSelect">Restricted Studios:</label>
-              {/*}
               <select multiple className="form-control" id="addSaleRestrictedSelect" value={this.state.addSaleRestrictedSelect} onChange={this.handleChangeSelect}>
                 {this.state.existingRestricted.map((item) => 
                   <option key={item.studio} value={item.studio}>{item.studio}</option>
                 )}
               </select>
-              */}
             </div>
             <div className="addSaleSearchInput col-sm">
               <label htmlFor="addSaleAddRestricted">Add New Restricted Studio:</label>
-              <input type="text" className="form-control" id="addSaleAddRestricted" value = {(this.state.excluded === null) ? undefined : this.state.excluded} onChange={this.handleChangeExclusions.bind(this)}/>
+              <input type="text" className="form-control" id="addSaleAddRestricted" placeholder="Type name of studio" value={this.state.addSaleAddRestricted} onChange={this.handleChange} />
+              <button className="addStudio btn btn-md btn-info btn-block" onClick={this.addRestricted}>Add Studio</button>
             </div>
           </div>
           <div className="row addSaleRow">
@@ -260,7 +315,6 @@ infoChanged () {
       );
     }
   }
-};
-
+}
 
 export default SellPassesPassBlock;

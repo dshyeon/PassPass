@@ -164,7 +164,7 @@ class SellPassesAddSale extends React.Component {
           </div>
           <div className="row addSaleRow">
             <div className="addSaleSearchInput col-sm">
-              <label htmlFor="addSalePrice">Price Per Pass:</label>
+              <label htmlFor="addSalePrice">Price Per Pass ($):</label>
               <input 
                 type="number"
                 min="0"

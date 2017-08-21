@@ -232,8 +232,9 @@ app.post('/pass/new', (req, res) => {
 });
 
 app.post('/pass/edit', (req, res) => {
-  database.makeBlockChanges(req.body, function(data) {
-    res.status(200).send(data);
+  database.makeBlockChanges(Object.assign({ userId: req.session.passport.user }, req.body), req.body.addSaleRestrictedSelect, function(err, data) {
+    err && res.sendStatus(500);
+    data && res.status(200).send(data);
   });
 });
 
@@ -254,9 +255,9 @@ app.post('/pass/buyer/search', (req, res) => {
 });
 
 app.get('/pass/seller/search', (req, res) => {
- database.findAllFromCurrentUser(req.session.passport.user, function(userCurrentSaleBlocks) {
-  res.send(userCurrentSaleBlocks);
- });
+  database.findAllFromCurrentUser(req.session.passport.user, function(userCurrentSaleBlocks) {
+    res.send(userCurrentSaleBlocks);
+  });
 });
 
 app.post('/pass/seller/clone', (req, res) => {

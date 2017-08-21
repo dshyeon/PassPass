@@ -114,7 +114,6 @@ module.exports.addSale = function(forSaleBlock, restrictedStudios, callback) {
     const blockId = results.insertId;
     let error;
     if (restrictedStudios && !err) {
-      // TODO fix asyc calls in each forEach iteration, only do callback when all are done
       module.exports.connection.query(`SELECT id FROM restricted_list WHERE user_id=${forSaleBlock.seller_id} AND studio IN ("${restrictedStudios.join('", "')}")`, function(err, results) {
         if (err) {
           callback(err, results);
@@ -142,8 +141,6 @@ module.exports.addRestrictedStudio = function(user, studio, callback) {
     callback(err, results);
   });
 };
-
-// connection.end();
 
 module.exports.getForSaleBlocks = function(searchQueries, callback) {
   var queryString = 'SELECT users.email, users.first_name, ' +
@@ -177,9 +174,19 @@ module.exports.getForSaleBlocks = function(searchQueries, callback) {
   });
 };
 
-
 module.exports.findAllFromCurrentUser = function(currentUserId, callback) {
-  var queryString = 'SELECT users.id, users.email, for_sale_block.* FROM users, for_sale_block WHERE users.id = for_sale_block.seller_id AND users.id = "' + currentUserId + '";';
+  var queryString = `\
+    SELECT users.email, users.first_name, for_sale_block.id, for_sale_block.pass_volume, \
+      for_sale_block.passes_sold, for_sale_block.current_price, for_sale_block.period_start, \
+      for_sale_block.period_end, A.exclusions \
+    FROM users \
+    INNER JOIN for_sale_block ON users.id = for_sale_block.seller_id \
+    LEFT JOIN (SELECT restricted_studios.block_id, GROUP_CONCAT(restricted_list.studio SEPARATOR ",") \
+      AS exclusions \
+      FROM restricted_studios \
+      INNER JOIN restricted_list ON restricted_studios.exempt_studio_id=restricted_list.id \
+      GROUP BY restricted_studios.block_id) A ON for_sale_block.id=A.block_id \
+    WHERE users.id=${currentUserId}`;
   module.exports.connection.query(queryString, function(err, rows, fields) {
     if(err) {
       throw err;
@@ -188,20 +195,33 @@ module.exports.findAllFromCurrentUser = function(currentUserId, callback) {
   })
 };
 
-
-module.exports.makeBlockChanges = function(currentStateObject, callback) {
-  var queryString = 'UPDATE for_sale_block SET pass_volume=' + currentStateObject.pass_volume + ', passes_sold=' + currentStateObject.passes_sold + ', current_price=' + currentStateObject.current_price + ', period_start="' + currentStateObject.current_start + '", period_end="' + currentStateObject.current_end + '", exclusions="' + currentStateObject.excluded + '" WHERE id=' + currentStateObject.current_block_id + ';';
-  module.exports.connection.query(queryString, function(err, rows, fields) {
-    if(err) {
-      throw err;
+module.exports.makeBlockChanges = function(currentStateObject, restrictedStudios, callback) {
+  var queryString = 'UPDATE for_sale_block SET pass_volume=' + currentStateObject.pass_volume + 
+    ', passes_sold=' + currentStateObject.passes_sold + ', current_price=' + currentStateObject.current_price + 
+    ', period_start="' + currentStateObject.current_start + '", period_end="' + currentStateObject.current_end + 
+    '" WHERE id=' + currentStateObject.current_block_id;
+  module.exports.connection.query(queryString, function(err, results, fields) {
+    if (err) {
+      callback(err, null);
     }
-    callback(rows);
-  })
+    module.exports.connection.query(`DELETE FROM restricted_studios WHERE block_id=${currentStateObject.current_block_id}`, function (error, results, fields) {
+      if (err) {
+        callback(err, null);
+      }
+      if (restrictedStudios) {
+        module.exports.connection.query(`SELECT id FROM restricted_list WHERE user_id=${currentStateObject.userId} AND studio IN ("${restrictedStudios.join('", "')}")`, function(err, results) {
+          if (err) {
+            callback(err, null);
+          } else {
+            const studios = results.map(({id}) => `(${currentStateObject.current_block_id}, ${id})`).join(',');
+            module.exports.connection.query(`INSERT INTO restricted_studios (block_id, exempt_studio_id) VALUES ${studios}`, function(err, results) {
+              callback(err, results);
+            });
+          }
+        });
+      } else {
+        callback(err, results);
+      }
+    });
+  });
 };
-
-
-
-
-
-
-
