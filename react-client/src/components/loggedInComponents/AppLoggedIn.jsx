@@ -3,6 +3,7 @@ import $ from 'jquery';
 import {
   BrowserRouter as Router,
   Route,
+  Redirect,
   Link
 } from 'react-router-dom';
 import Interactions from './Interactions.jsx';
@@ -39,7 +40,9 @@ class AppLoggedIn extends React.Component {
               <span className="navbar-toggler-icon"></span>
             </button>
             <h1>
-              <Link to="/interactions" className="navbar-brand">PassPass</Link>
+              <a onClick={() => {this.pageChange('home')}}>
+                <Link to="/interactions" className="navbar-brand">PassPass</Link>
+              </a>
             </h1>
             &emsp;&emsp;&emsp;
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
@@ -57,14 +60,18 @@ class AppLoggedIn extends React.Component {
             </div>
           </nav>
           <div>
-            <Route exact path="/interactions" render={() => (
-              this.props.authenicated ? (
-                <Interactions authenicated={this.props.authenicated}/>
-              ) : (
-                <AppLoggedOut />
-              )
-              )}
-            />
+            <Route exact path="/interactions" render={() => {
+                if (this.props.authenicated && this.state.page === 'home') {
+                  return <Interactions authenicated={this.props.authenicated} pageChange={this.pageChange.bind(this)}/>
+                } else if (this.props.authenicated && this.state.page === 'buy') {
+                  return <Redirect to="/buypasses" />
+                } else if (this.props.authenicated && this.state.page === 'sell') {
+                  return <Redirect to="/sellpasses" />
+                } else {
+                  return <AppLoggedOut />
+                }
+              }
+            }/>
             <Route path="/buypasses" render={() => (
                 this.props.authenicated ? (
                   <BuyPasses authenicated={this.props.authenicated}/>
