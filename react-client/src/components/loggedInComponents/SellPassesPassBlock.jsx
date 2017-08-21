@@ -1,7 +1,6 @@
 import React from 'react';
 import $ from 'jquery';
 
-var testData = 123;
 
 class SellPassesPassBlock extends React.Component {
   constructor(props) {
@@ -142,77 +141,126 @@ infoChanged () {
   }
 
   render() {
-    // return (
-    //   <div className="sellPassesPassBlock">
-    //     <div className="row">
-    //       <div className="col-sm">
-    //         <div className="sellPassesPassBlockInfo">
-    //           <b>Passes Available:</b>
-    //           <div className="sellPassesPassBlockInfoContent">{this.props.BlockData.pass_volume}</div>
-    //         </div>
-    //         <div className="sellPassesPassBlockInfo">
-    //           <b>Pass Price:</b>
-    //           <div className="sellPassesPassBlockInfoContent">${this.props.BlockData.current_price.toFixed(2)}</div>
-    //         </div>
-    //       </div>
-    //       <div className="col-sm">
-    //         <div className="sellPassesPassBlockInfo">
-    //           <b>Sale Period:</b>
-    //           <div className="sellPassesPassBlockInfoContent">{new Date(this.props.BlockData.period_start.slice(0, 10)).toDateString().slice(4) + ' through ' + new Date(this.props.BlockData.period_end.slice(0, 10)).toDateString().slice(4)}</div>
-    //         </div>
-    //         <div className="sellPassesPassBlockInfo">
-    //           <b>Restricted Studios:</b>
-    //           <div className="restrict">{this.commentary(this.props.BlockData.exclusions)}</div>
-    //         </div>
-    //       </div>
-    //     </div>
-    //     <div className="row">
-    //       <div className="col-md-3">
-    //         <button className="editSaleButton btn btn-md btn-primary btn-block">Edit This Post</button>
-    //       </div>
-    //       <div className="col-md-9">
-    //       </div>
-    //     </div>
-    //   </div>
-    // ); 
     if(this.state.active === false) {
-      return (
-        <div>
-          <li>{this.state.pass_volume} &nbsp;
-          Passes Priced At ${this.dollars(this.state.current_price)} &nbsp;
-          Offered For Dates: {this.cleanDates(this.state.current_start)} - {this.cleanDates(this.state.current_end)} &nbsp;
-          ||&nbsp; Exclusions: {this.commentary(this.state.excluded)}<button className="editbutton" type="button" onClick={this.editPost.bind(this)}>Edit This Post</button></li>
-          <br />
+        return (
+        <div className="sellPassesPassBlock">
+          <div className="row">
+            <div className="col-sm">
+              <div className="sellPassesPassBlockInfo">
+                <b>Passes Available:</b>
+                <div className="sellPassesPassBlockInfoContent">{this.state.pass_volume}</div>
+              </div>
+              <div className="sellPassesPassBlockInfo">
+                <b>Pass Price:</b>
+                <div className="sellPassesPassBlockInfoContent">${this.dollars(this.state.current_price)}</div>
+              </div>
+            </div>
+            <div className="col-sm">
+              <div className="sellPassesPassBlockInfo">
+                <b>Sale Period:</b>
+                <div className="sellPassesPassBlockInfoContent">{new Date(this.state.current_start.slice(0, 10)).toDateString().slice(4) + ' through ' + new Date(this.state.current_end.slice(0, 10)).toDateString().slice(4)}</div>
+              </div>
+              <div className="sellPassesPassBlockInfo">
+                <b>Restricted Studios:</b>
+                <div className="restrict">{this.commentary(this.state.excluded)}</div>
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-3">
+              <button className="editSaleButton btn btn-md btn-primary btn-block" type="button" onClick={this.editPost.bind(this)}>Edit This Post</button>
+            </div>
+            <div className="col-md-9">
+            </div>
+          </div>
         </div>
-      );
+      ); 
     } else {
       return (
-        <div>
-        <h3>Edit This Block Of Passes You Are Selling</h3>
-        Pass Volume: <input type="text" value = {this.state.pass_volume}/>
-        <button type="button" onClick={this.addPass.bind(this)}>+</button>
-        <button type="button" onClick={this.subtractPass.bind(this)}>-</button>
-        <br/>
-        Passes You Have Sold From This Block: <input type="text" value = {this.state.passes_sold}/>
-        <button type="button" onClick={this.addPassSold.bind(this)}>+</button>
-        <button type="button" onClick={this.subtractPassSold.bind(this)}>-</button>
-        <br/>
-        Current Price: $<input type="number" step="0.01" min="0" value={this.dollars(this.state.current_price)} onChange={this.handleChangePrice.bind(this)}/>
-        <br/>
-        Start Date: <input type="date" className="form-control" id="addSaleDateStart" placeholder="Start Date" value={this.formatDateForYYYMMDDOutPut(this.state.current_start)} onChange={this.handleChangeStart.bind(this)} required />
-        <br/>
-        End Date: <input type="date" className="form-control" id="addSaleDateEnd" placeholder="End Date" value={this.formatDateForYYYMMDDOutPut(this.state.current_end)} onChange={this.handleChangeEnd.bind(this)} required />
-        <br/>
-        Current Exclusions: <input type="text" value = {(this.state.excluded === null) ? undefined : this.state.excluded} onChange={this.handleChangeExclusions.bind(this)}/>
-        <br/>
-        <br/>
-        <button type="button" onClick={this.saveNewBlockData.bind(this)}>Save These Changes</button>
-        <br/>
-        <button type="button" onClick={this.notSavingData.bind(this)}>Do NOT Save These Changes</button>
+        <div className="sellPassesAddSale">
+          <div className="row addSaleRow"><h2 className="col">Edit A group Of Passes You Are Selling</h2></div>
+          <div className="row addSaleRow"><h4 className="col">Remember To Edit Passes That You Offer When You Make A Sale</h4></div>
+          <div className="row addSaleRow">
+            <div className="addSaleSearchInput col-sm">
+              <label htmlFor="addSaleDateStart">Sell passes starting on:</label>
+
+                Start Date: <input 
+                type="date" 
+                className="form-control" 
+                id="addSaleDateStart" 
+                placeholder="Start Date" 
+                value={this.formatDateForYYYMMDDOutPut(this.state.current_start)} 
+                onChange={this.handleChangeStart.bind(this)} 
+                required />
+            </div>
+            <div className="addSaleSearchInput col-sm">
+              <label htmlFor="addSaleDateEnd">These passes are available until:</label>
+              <input 
+              type="date" 
+              className="form-control" 
+              id="addSaleDateEnd" 
+              placeholder="End Date" 
+              value={this.formatDateForYYYMMDDOutPut(this.state.current_end)} 
+              onChange={this.handleChangeEnd.bind(this)} 
+              required />
+            </div>
+          </div>
+          <div className="row addSaleRow">
+            <div className="addSaleSearchInput col-sm">
+              <label htmlFor="addSalePrice">Price Per Pass:</label>
+              $<input 
+              type="number" 
+              step="0.01" 
+              className="form-control"
+              id="addSalePrice"
+              placeholder="e.g. 6.50" 
+              min="0" 
+              value={this.dollars(this.state.current_price)} 
+              onChange={this.handleChangePrice.bind(this)}/>
+            </div>
+            <div className="addSaleSearchInput col-sm">
+              <label htmlFor="addSaleQuantity">Number of Passes:</label>
+                <div class="input-group">
+                <input 
+                  type="text" 
+                  className="form-control"
+                  id="addSaleQuantity"
+                  className="form-control"
+                  value = {this.state.pass_volume}/>
+                  <button type="button" onClick={this.addPass.bind(this)}>+</button>
+                  <button type="button" onClick={this.subtractPass.bind(this)}>-</button>
+                  </div>
+            </div>
+          </div>
+          <div className="row addSaleRow">
+            <div className="addSaleSearchInput col-sm">
+              <label htmlFor="addSaleRestrictedSelect">Restricted Studios:</label>
+              {/*}
+              <select multiple className="form-control" id="addSaleRestrictedSelect" value={this.state.addSaleRestrictedSelect} onChange={this.handleChangeSelect}>
+                {this.state.existingRestricted.map((item) => 
+                  <option key={item.studio} value={item.studio}>{item.studio}</option>
+                )}
+              </select>
+              */}
+            </div>
+            <div className="addSaleSearchInput col-sm">
+              <label htmlFor="addSaleAddRestricted">Add New Restricted Studio:</label>
+              <input type="text" className="form-control" id="addSaleAddRestricted" value = {(this.state.excluded === null) ? undefined : this.state.excluded} onChange={this.handleChangeExclusions.bind(this)}/>
+            </div>
+          </div>
+          <div className="row addSaleRow">
+            <div className="addSaleSearchInput col-sm">
+              <button className="postSaleButton btn btn-md btn-success btn-block" onClick={this.saveNewBlockData.bind(this)}>Save Changes</button>
+            </div>
+            <div className="addSaleSearchInput col-sm">
+              <button className="cancelSaleButton btn btn-md btn-danger btn-block" onClick={this.notSavingData.bind(this)}>Cancel</button>
+            </div>
+          </div>
         </div>
-      )
+      );
     }
   }
-}
+};
+
 
 export default SellPassesPassBlock;
