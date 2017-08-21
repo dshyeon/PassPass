@@ -4,6 +4,7 @@ import {
   BrowserRouter as Router,
   Route,
   Redirect,
+  Switch,
   Link
 } from 'react-router-dom';
 import SignUpBox from './SignUpBox.jsx';
@@ -44,6 +45,7 @@ class AppLoggedOut extends React.Component {
             </div>
           </nav>
           <div>
+            <Switch>
             <Route exact path="/" render={(props) => (
                 this.state.signup ? (
                   <Redirect to="/signup" />
@@ -68,14 +70,15 @@ class AppLoggedOut extends React.Component {
                 )
               )}
             />
-          <Route path="/" render={(props) => (
-                this.state.signup ? (
-                  <Redirect to="/signup" />
-                ) : (
-                  <SignInBox signUpChange={this.signUpChange.bind(this)} login={this.props.login.bind(this)}/>
-                )
-              )}
-            />
+            <Route path="/*" render={(props) => (
+                  this.state.signup ? (
+                    <Redirect to="/signup" />
+                  ) : (
+                    <SignInBox signUpChange={this.signUpChange.bind(this)} login={this.props.login.bind(this)}/>
+                  )
+                )}
+              />
+            </Switch>
           </div>
         </div>
       </Router>

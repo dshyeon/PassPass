@@ -29,6 +29,14 @@ class App extends React.Component {
     return (
       <Router>
     		<div>
+          <Route path="/interactions" render={() => (
+              this.state.authenicated ? (
+                <AppLoggedIn logout={this.logOut.bind(this)} authenicated={this.state.authenicated}/>
+              ) : (
+                <Redirect to="/"/>
+              )
+            )}
+          />
           <Route path="/" render={() => (
               this.state.authenicated ? (
                 <Redirect to='/interactions'/>
@@ -37,14 +45,7 @@ class App extends React.Component {
               )
             )}
           />
-        <Route path="/interactions" render={() => (
-              this.state.authenicated ? (
-                <AppLoggedIn logout={this.logOut.bind(this)} authenicated={this.state.authenicated}/>
-              ) : (
-                <Redirect to="/"/>
-              )
-            )}
-          />
+        
     		</div>
     	</Router>
     )
