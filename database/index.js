@@ -157,8 +157,8 @@ module.exports.getRestrictedStudios = function(user, callback) {
   });
 };
 
-module.exports.addRestrictedStudio = function(id, studio, callback) {
-  module.exports.connection.query('INSERT INTO restricted_list (studio, user_id) VALUES (' + studio +', ' + id + ')', function(err, results) {
+module.exports.addRestrictedStudio = function(user, studio, callback) {
+  module.exports.connection.query(`INSERT INTO restricted_list (studio, user_id) VALUES ("${studio}", ${user.id})`, function(err, results) {
     callback(err, results);
   });
 };

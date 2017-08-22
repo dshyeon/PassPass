@@ -203,7 +203,7 @@ app.get('/user/restricted', (req, res) => {
 
 app.post('/user/restricted', (req, res) => {
   const studio = req.body.studio;
-  database.addRestrictedStudio(req.session.passport.user, studio, (err, results) => {
+  database.addRestrictedStudio({ id: req.session.passport.user }, studio, (err, results) => {
     if (err) {
       console.log('ERROR failed to add restricted studio ', err);
       res.sendStatus(500);
