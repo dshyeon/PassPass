@@ -10,7 +10,9 @@ import {
 import Interactions from './Interactions.jsx';
 import BuyPasses from './BuyPasses.jsx';
 import SellPasses from './SellPasses.jsx';
+import AboutPassPass from './AboutPassPass.jsx';
 import AppLoggedOut from '../loggedOutComponents/AppLoggedOut.jsx';
+
 
 class AppLoggedIn extends React.Component {
   constructor(props) {
@@ -49,6 +51,9 @@ class AppLoggedIn extends React.Component {
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
               <ul className="navbar-nav mr-auto">
                 <li className="nav-item">
+                  <Link to="/aboutpasspass" className="nav-link">About PassPass</Link>
+                </li>
+                <li className="nav-item">
                   <Link to="/buypasses" className="nav-link">Buy Passes</Link>
                 </li>
                 <li className="nav-item">
@@ -85,6 +90,14 @@ class AppLoggedIn extends React.Component {
             <Route path="/sellpasses" render={() => (
                 this.props.authenicated ? (
                   <SellPasses authenicated={this.props.authenicated}/>
+                ) : (
+                  <AppLoggedOut />
+                )
+              )}
+            />
+            <Route path="/aboutpasspass" render={() => (
+                this.props.authenicated ? (
+                  <AboutPassPass authenicated={this.props.authenticated}/>
                 ) : (
                   <AppLoggedOut />
                 )
