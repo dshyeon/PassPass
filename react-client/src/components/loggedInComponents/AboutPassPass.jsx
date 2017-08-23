@@ -2,6 +2,7 @@ import React from 'react';
 
 var AboutPassPass = () => (
   <div className="about" >
+    <br></br>
     <h2>
       What is PassPass?
     </h2>
