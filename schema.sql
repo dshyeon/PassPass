@@ -4,7 +4,7 @@
  *    mysql -u <USER> -p < schema.sql
  *  On your personal computer, if you haven't set up
  *  a password, it'll be
- *    mysql -u root < schema.sql
+ *    mysql -u <USER> < schema.sql
 */
 
 DROP DATABASE IF EXISTS pass_database;

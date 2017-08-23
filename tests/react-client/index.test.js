@@ -6,7 +6,14 @@ import AppLoggedIn from '../../react-client/src/components/loggedInComponents/Ap
 import BuyPasses from '../../react-client/src/components/loggedInComponents/BuyPasses.jsx';
 import BuyPassesSearch from '../../react-client/src/components/loggedInComponents/BuyPassesSearch.jsx';
 import BuyPassesList from '../../react-client/src/components/loggedInComponents/BuyPassesList.jsx';
+import AboutPassPass from '../../react-client/src/components/loggedInComponents/AboutPassPass.jsx';
 import { shallow, mount } from 'enzyme';
+
+describe('AboutPassPass', () => {
+  test('AboutPassPass should be a component', () => {
+    expect(<AboutPassPass/>).toBeDefined();
+  });
+});
 
 describe('AppLoggedOut', () => {
 
@@ -20,9 +27,9 @@ describe('AppLoggedOut', () => {
     expect(app.find('input')).toHaveLength(3);
   });
 
-  xdescribe('SignInBox', () => {
-    test('POST called when sign in button is clicked', () => {
-      // TODO fix signup to post to correct endpoint and for server to handle
+  describe('SignInBox', () => {
+    xtest('POST called when sign in button is clicked', () => {
+      //  fix signup to post to correct endpoint and for server to handle
       sinon.spy(SignInBox.prototype, 'handleSignIn');
       const app = mount(<SignInBox />);
       app.find('button').simulate('click');
@@ -31,6 +38,8 @@ describe('AppLoggedOut', () => {
 
   });
 });
+
+
 
 describe('BuyPasses', () => {
 
