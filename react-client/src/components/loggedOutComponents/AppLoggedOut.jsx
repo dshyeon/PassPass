@@ -50,7 +50,7 @@ class AppLoggedOut extends React.Component {
                 this.state.signup ? (
                   <Redirect to="/signup" />
                 ) : (
-                  <SignInBox signUpChange={this.signUpChange.bind(this)} login={this.props.login.bind(this)}/>
+                  <SignInBox getProfileData={this.props.getProfileData.bind(this)} signUpChange={this.signUpChange.bind(this)} login={this.props.login.bind(this)}/>
                 )
               )}
             />
@@ -58,7 +58,9 @@ class AppLoggedOut extends React.Component {
                   this.state.signup ? (
                     <Redirect to="/signup" />
                   ) : (
-                    <SignInBox signUpChange={this.signUpChange.bind(this)} login={this.props.login.bind(this)}/>
+                    <SignInBox signUpChange={this.signUpChange.bind(this)} login={this.props.login.bind(this)}
+                    getProfileData={this.props.getProfileData.bind(this)}
+                    />
                   )
                 )}
               />
@@ -74,7 +76,8 @@ class AppLoggedOut extends React.Component {
                   this.state.signup ? (
                     <Redirect to="/signup" />
                   ) : (
-                    <SignInBox signUpChange={this.signUpChange.bind(this)} login={this.props.login.bind(this)}/>
+                    <SignInBox signUpChange={this.signUpChange.bind(this)}
+                      getProfileData={this.props.getProfileData.bind(this)} login={this.props.login.bind(this)}/>
                   )
                 )}
               />

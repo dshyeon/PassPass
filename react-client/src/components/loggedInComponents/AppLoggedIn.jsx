@@ -11,6 +11,7 @@ import Interactions from './Interactions.jsx';
 import BuyPasses from './BuyPasses.jsx';
 import SellPasses from './SellPasses.jsx';
 import AboutPassPass from './AboutPassPass.jsx';
+import YourProfile from './YourProfile.jsx';
 import AppLoggedOut from '../loggedOutComponents/AppLoggedOut.jsx';
 
 
@@ -59,6 +60,9 @@ class AppLoggedIn extends React.Component {
                 <li className="nav-item">
                   <Link to="/sellpasses" className="nav-link">Sell Passes</Link>
                 </li>
+                <li className="nav-item">
+                  <Link to="/yourprofile" className="nav-link">Your Profile</Link>
+                </li>
                 <li className="nav-item nav-link" onClick={this.props.logout}>
                   Log Out
                 </li>
@@ -98,6 +102,14 @@ class AppLoggedIn extends React.Component {
             <Route path="/aboutpasspass" render={() => (
                 this.props.authenicated ? (
                   <AboutPassPass authenicated={this.props.authenticated}/>
+                ) : (
+                  <AppLoggedOut />
+                )
+              )}
+            />
+          <Route path="/yourprofile" render={() => (
+                this.props.authenicated ? (
+                  <YourProfile authenicated={this.props.authenticated} profileData={this.props.profileData}/>
                 ) : (
                   <AppLoggedOut />
                 )

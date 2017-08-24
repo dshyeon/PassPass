@@ -14,8 +14,14 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      authenicated: false
+      authenicated: false,
+      profileData: {}
+
     };
+  }
+
+  getProfileData(data) {
+    this.setState({profileData: data});
   }
 
   logIn(){
@@ -24,6 +30,7 @@ class App extends React.Component {
 
   logOut(){
     this.setState({authenicated: !this.state.authenicated});
+
   }
 
   render () {
@@ -33,7 +40,7 @@ class App extends React.Component {
           <Switch>
           <Route path="/interactions" render={() => (
               this.state.authenicated ? (
-                <AppLoggedIn logout={this.logOut.bind(this)} authenicated={this.state.authenicated}/>
+                <AppLoggedIn logout={this.logOut.bind(this)} authenicated={this.state.authenicated} profileData={this.state.profileData}/>
               ) : (
                 <Redirect to="/"/>
               )
@@ -43,7 +50,7 @@ class App extends React.Component {
               this.state.authenicated ? (
                 <Redirect to='/interactions'/>
               ) : (
-                <AppLoggedOut login={this.logIn.bind(this)} authenicated={this.state.authenicated}/>
+                <AppLoggedOut getProfileData={this.getProfileData.bind(this)} login={this.logIn.bind(this)} authenicated={this.state.authenicated}/>
               )
             )}
           />

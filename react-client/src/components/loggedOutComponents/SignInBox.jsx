@@ -44,11 +44,13 @@ class SignInBox extends React.Component {
 		  }),
 		  success: function (data) {
         if (data.message) {
-          console.log(data.message);
+          console.log(data.message, 'data message');
           //push this error message to a popup with more appropriate wording/display
           window.alert(data.message);
         } else {
           console.log('successful login ', data[0]);
+          let userData = data[0];
+          context.props.getProfileData(userData);
           context.props.login();
         }
 		  },

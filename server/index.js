@@ -118,6 +118,7 @@ var successUser = (req, res, user, callback) => {
     });
 }
 
+
 app.post('/auth/email', (req, res, next) => {
   passport.authenticate('local', (err, user, info) => { //info is optional argument passed by the strategy's callback
     //req.user contains the authenticated user if approved
@@ -144,6 +145,12 @@ app.post('/auth/email', (req, res, next) => {
       });
     }
   })(req, res, next);
+});
+
+app.post('/pass/boughtsold', (req, res) => {
+  database.getUserBoughtSold(req.body.userId, (result) => {
+    res.send(result);
+  });
 });
 
 app.post('/auth/signup', (req, res) => {
@@ -267,6 +274,8 @@ app.get('/pass/seller/search', (req, res) => {
     res.send(userCurrentSaleBlocks);
   });
 });
+
+
 
 app.post('/pass/seller/clone', (req, res) => {
   // for creating a new record for seller off an old one (req obj has id)

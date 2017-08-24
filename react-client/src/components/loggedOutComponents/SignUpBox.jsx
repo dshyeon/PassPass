@@ -48,7 +48,7 @@ class SignUpBox extends React.Component {
 		  }),
 		  success: function (data) {
         if (data.sqlMessage) {
-          console.log(data.sqlMessage);
+          console.log(data.sqlMessage, 'data message sql');
           //push this error message to a popup with more appropriate wording/display
         } else {
           console.log('successful login');
