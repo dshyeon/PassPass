@@ -147,6 +147,12 @@ app.post('/auth/email', (req, res, next) => {
   })(req, res, next);
 });
 
+app.post('/pass/boughtsold', (req, res) => {
+  database.getUserBoughtSold(req.body.userId, (result) => {
+    res.send(result);
+  });
+});
+
 app.post('/auth/signup', (req, res) => {
   var rememberMe = req.body.rememberMe;
   req.body.salt = cryptoRandomString(10); //use this salt to create a new user
@@ -269,10 +275,6 @@ app.get('/pass/seller/search', (req, res) => {
   });
 });
 
-app.post('/pass/boughtsold', (req, res) => {
-  // database.getUserBoughtSold()
-  console.log(req.body, 'BOUGHT SOLD BODY')
-})
 
 
 app.post('/pass/seller/clone', (req, res) => {

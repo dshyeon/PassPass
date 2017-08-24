@@ -12,9 +12,7 @@ class YourProfile extends React.Component {
   componentDidMount () {
     this.setState ({
       userId: this.props.profileData.id
-    },
-    // this.getPastBoughtSoldPasses()
-    );
+    });
   }
 
   componentDidUpdate() {
@@ -29,7 +27,11 @@ class YourProfile extends React.Component {
       contentType: 'application/json',
       data: JSON.stringify({userId: this.state.userId}),
       success: function(boughtSold) {
-				console.log(boughtSold, 'boughtSold')
+				if(boughtSold.length === 0) {
+          console.log(boughtSold, 'NULLLL')
+        } else {
+          console.log(boughtSold, 'NOTNULLL')
+        }
       },
       error: function(xhr, error) {
         console.log('error:', error);
@@ -41,13 +43,41 @@ class YourProfile extends React.Component {
     return (
       <div className="about" >
         <br></br>
-      <h2 className="profileHeader">
+        <div className="profilePicture">PROFILE PICTURE MAYBE</div>
+        <h2 className="profileHeader">
           Welcome to PassPass, {this.props.profileData.first_name}!
         </h2>
+        <br></br>
+        <ul className="profileList">
+          Expired Passes
+        </ul>
+        <ul className="profileList">
+          Currently Available Passes
+        </ul>
+        <ul className="profileList">
+          Pending Passes
+        </ul>
+        <div className="profileQuote">
+          Workout Quote
+        </div>
       </div>
     )
   }
 }
+
+// function Greeting(props) {
+//   const isLoggedIn = props.isLoggedIn;
+//   if (isLoggedIn) {
+//     return <UserGreeting />;
+//   }
+//   return <GuestGreeting />;
+// }
+//
+// ReactDOM.render(
+//   // Try changing to isLoggedIn={true}:
+//   <Greeting isLoggedIn={false} />,
+//   document.getElementById('root')
+// );
 
 
 //SELECT * FROM sold_passes WHERE seller_id = <CURRENT USER ID>

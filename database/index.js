@@ -60,6 +60,22 @@ module.exports.findUserById = function(id, callback) {
   );
 };
 
+module.exports.getUserBoughtSold = function(userId, callback) {
+    module.exports.connection.query('SELECT * FROM sold_passes WHERE seller_id =' + userId, (error, results, fields) => {
+      if (error || !results) {
+        console.log('*********** database find user by ID error ', error);
+        callback(error);
+      }
+      if (results.length > 0) {
+        callback(null, results);
+      } else {
+        console.log(results);
+        callback(null, results);
+      }
+    }
+  );
+}
+
 module.exports.authUser = function(user, callback) {
   var values = [user.email, user.password + user.salt];
   module.exports.connection.query('SELECT * FROM users WHERE email= ? AND password=SHA2( ? , 0)',

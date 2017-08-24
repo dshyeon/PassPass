@@ -185,5 +185,29 @@ input[type=number] {
 }
 
 .profileHeader {
-	text-align: center;
+	float: top;
+	margin: 50px;
+}
+
+.profilePicture {
+	border: 1px solid black;
+	width: 210px;
+	height: 150px;
+	margin: 20px;
+	float: left;
+}
+
+.profileList {
+	border: 1px solid black;
+	float: right;
+	margin-right: 30px;
+	height: 100px
+}
+
+.profileQuote {
+	border: 1px solid black;
+	width: 210px;
+	height: 200px;
+	margin: 20px;
+	float: left;
 }
