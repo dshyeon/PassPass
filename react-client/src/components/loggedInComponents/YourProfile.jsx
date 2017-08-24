@@ -1,11 +1,11 @@
 import React from 'react';
 
-var YourProfile = () => (
+var YourProfile = (props) => (
   <div className="about" >
     <br></br>
-    <h1>
-      USER PROFILE GOES HERE!
-    </h1>
+    <h2>
+      Welcome to PassPass, {props.profileData.first_name}!
+    </h2>
   </div>
 );
 

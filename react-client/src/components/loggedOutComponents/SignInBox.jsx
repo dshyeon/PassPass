@@ -31,6 +31,7 @@ class SignInBox extends React.Component {
   }
 
   handleSignIn (event) {
+    console.log(this.props)
     var context = this;
     event.preventDefault();
   	$.ajax({
@@ -49,6 +50,8 @@ class SignInBox extends React.Component {
           window.alert(data.message);
         } else {
           console.log('successful login ', data[0]);
+          let userData = data[0];
+          context.props.getProfileData(userData);
           context.props.login();
         }
 		  },

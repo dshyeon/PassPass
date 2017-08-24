@@ -109,7 +109,7 @@ class AppLoggedIn extends React.Component {
             />
           <Route path="/yourprofile" render={() => (
                 this.props.authenicated ? (
-                  <YourProfile authenicated={this.props.authenticated}/>
+                  <YourProfile authenicated={this.props.authenticated} profileData={this.props.profileData}/>
                 ) : (
                   <AppLoggedOut />
                 )
