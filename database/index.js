@@ -61,15 +61,16 @@ module.exports.findUserById = function(id, callback) {
 };
 
 module.exports.getUserBoughtSold = function(userId, callback) {
-    module.exports.connection.query('SELECT * FROM sold_passes WHERE seller_id =' + userId, (error, results, fields) => {
+    module.exports.connection.query('SELECT * FROM sold_passes WHERE buyer_id =' + userId, (error, results, fields) => {
       if (error || !results) {
         console.log('*********** database find user by ID error ', error);
         callback(error);
       }
       if (results.length > 0) {
-        callback(null, results);
+        console.log(results, 'there are bought and sold_passes')
+        callback(results);
       } else {
-        console.log(results);
+        console.log(results, 'Id is ok, but there are no bought passes');
         callback(null, results);
       }
     }

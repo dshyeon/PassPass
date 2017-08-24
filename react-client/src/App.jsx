@@ -21,7 +21,6 @@ class App extends React.Component {
   }
 
   getProfileData(data) {
-    console.log(this)
     this.setState({profileData: data});
   }
 

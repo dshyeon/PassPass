@@ -31,7 +31,6 @@ class SignInBox extends React.Component {
   }
 
   handleSignIn (event) {
-    console.log(this.props)
     var context = this;
     event.preventDefault();
   	$.ajax({
@@ -45,7 +44,7 @@ class SignInBox extends React.Component {
 		  }),
 		  success: function (data) {
         if (data.message) {
-          console.log(data.message);
+          console.log(data.message, 'data message');
           //push this error message to a popup with more appropriate wording/display
           window.alert(data.message);
         } else {

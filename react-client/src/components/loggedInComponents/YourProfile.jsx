@@ -5,19 +5,15 @@ class YourProfile extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      userId: 0
+      userId: this.props.profileData.id,
+      previouslyBoughtPasses: false
     };
   }
 
-  componentDidMount () {
-    this.setState ({
-      userId: this.props.profileData.id
-    });
-  }
-
-  componentDidUpdate() {
+  componentWillMount () {
     this.getPastBoughtSoldPasses();
   }
+
 
   getPastBoughtSoldPasses() {
     var context = this;
@@ -27,12 +23,14 @@ class YourProfile extends React.Component {
       contentType: 'application/json',
       data: JSON.stringify({userId: this.state.userId}),
       success: function(boughtSold) {
-				if(boughtSold.length === 0) {
+				if (boughtSold === null) {
+          this.setState({previouslyBoughtPasses: false})
           console.log(boughtSold, 'NULLLL')
         } else {
+          this.setState({previouslyBoughtPasses: true})
           console.log(boughtSold, 'NOTNULLL')
         }
-      },
+      }.bind(this),
       error: function(xhr, error) {
         console.log('error:', error);
       }
@@ -49,13 +47,17 @@ class YourProfile extends React.Component {
         </h2>
         <br></br>
         <ul className="profileList">
-          Expired Passes
+          <strong>Expired Passes</strong>
+          {!this.state.previouslyBoughtPasses &&
+              <li>
+                You have no previously purchased passes.
+              </li >}
         </ul>
         <ul className="profileList">
-          Currently Available Passes
+          <strong>Currently Available Passes</strong>
         </ul>
         <ul className="profileList">
-          Pending Passes
+          <strong>Pending Passes</strong>
         </ul>
         <div className="profileQuote">
           Workout Quote
