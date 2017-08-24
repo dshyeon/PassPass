@@ -5,7 +5,7 @@ module.exports.connection = mysql.createConnection(
   {
     host: 'localhost',
     user: 'root',
-    password: 'password',
+    password: 'root',
     database: 'pass_database'
   }
 );
@@ -60,8 +60,9 @@ module.exports.findUserById = function(id, callback) {
   );
 };
 
-module.exports.getUserBoughtSold = function(userId, callback) {
-    module.exports.connection.query('SELECT * FROM sold_passes WHERE buyer_id =' + userId, (error, results, fields) => {
+
+module.exports.getPendingPasses = function(userId, callback) {
+    module.exports.connection.query('SELECT * FROM pending_passes JOIN for_sale_block ON for_sale_block_id WHERE for_sale_block_id = for_sale_block.id AND perspective_buyer_id =' + userId, (error, results, fields) => {
       if (error || !results) {
         console.log('*********** database find user by ID error ', error);
         callback(error);

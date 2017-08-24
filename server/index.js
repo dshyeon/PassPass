@@ -147,8 +147,8 @@ app.post('/auth/email', (req, res, next) => {
   })(req, res, next);
 });
 
-app.post('/pass/boughtsold', (req, res) => {
-  database.getUserBoughtSold(req.body.userId, (result) => {
+app.post('/passes/pending', (req, res) => {
+  database.getPendingPasses(req.body.userId, (result) => {
     res.send(result);
   });
 });
