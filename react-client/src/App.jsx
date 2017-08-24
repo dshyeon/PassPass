@@ -18,7 +18,6 @@ class App extends React.Component {
       profileData: {}
 
     };
-    // console.log(this.state.profileData, 'this.state.profileData')
   }
 
   getProfileData(data) {
