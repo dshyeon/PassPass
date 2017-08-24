@@ -6,29 +6,29 @@ class YourProfile extends React.Component {
     super(props);
     this.state = {
       userId: this.props.profileData.id,
-      previouslyBoughtPasses: false
+      pendingPasses: false
     };
   }
 
   componentWillMount () {
-    this.getPastBoughtSoldPasses();
+    this.getPendingPasses();
   }
 
 
-  getPastBoughtSoldPasses() {
+  getPendingPasses() {
     var context = this;
     $.ajax({
       method: 'POST',
-      url: '/pass/boughtsold',
+      url: '/passes/pending',
       contentType: 'application/json',
       data: JSON.stringify({userId: this.state.userId}),
-      success: function(boughtSold) {
-				if (boughtSold === null) {
-          this.setState({previouslyBoughtPasses: false})
-          console.log(boughtSold, 'NULLLL')
+      success: function(pendingPasses) {
+				if (pendingPasses === null) {
+          this.setState({pendingPasses: false})
+          console.log(pendingPasses, 'NULLLL')
         } else {
           this.setState({previouslyBoughtPasses: true})
-          console.log(boughtSold, 'NOTNULLL')
+          console.log(pendingPasses, 'NOTNULLL')
         }
       }.bind(this),
       error: function(xhr, error) {
@@ -48,16 +48,24 @@ class YourProfile extends React.Component {
         <br></br>
         <ul className="profileList">
           <strong>Expired Passes</strong>
-          {!this.state.previouslyBoughtPasses &&
-              <li>
-                You have no previously purchased passes.
-              </li >}
         </ul>
         <ul className="profileList">
           <strong>Currently Available Passes</strong>
         </ul>
         <ul className="profileList">
           <strong>Pending Passes</strong>
+          {
+            this.state.pendingPasses = false &&
+              <li>
+                You don't have any pending passes.
+              </li>
+          }
+          {
+            this.state.pendingPasses = true &&
+              <li>
+                You have pending passes!
+              </li>
+          }
         </ul>
         <div className="profileQuote">
           Workout Quote
