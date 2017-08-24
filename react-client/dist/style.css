@@ -211,3 +211,7 @@ input[type=number] {
 	margin: 20px;
 	float: left;
 }
+
+ul {
+  list-style-type: none;
+}
