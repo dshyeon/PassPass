@@ -26,7 +26,9 @@ CREATE TABLE users (
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   updated_at DATETIME ON UPDATE CURRENT_TIMESTAMP,
   rating int,
-  review_count int
+  review_count int,
+  customer_id VARCHAR(30) UNIQUE,
+  merchant_id VARCHAR(30) UNIQUE
   );
 
 CREATE TABLE sessions (

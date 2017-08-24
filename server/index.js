@@ -8,6 +8,9 @@ var session = require('express-session');
 var SessionStore = require('express-mysql-session')(session);
 var cryptoRandomString = require('crypto-random-string');
 var path = require('path');
+var stripe = require('stripe')(
+  "sk_test_J9JR0cXKMJL61WGB8O0CWgfG"
+);
 
 var session_secret;
 var fb;
@@ -156,28 +159,35 @@ app.post('/passes/pending', (req, res) => {
 app.post('/auth/signup', (req, res) => {
   var rememberMe = req.body.rememberMe;
   req.body.salt = cryptoRandomString(10); //use this salt to create a new user
-
-  database.newUser(req.body, (err, user) => {
-    if (err) {
-      console.log('************ server side new user signup error ', err);
-      res.send(err);
-    } else {
-      req.body.id = user.insertId;
-      req.logIn(user[0], err => { //calls serializeUser
-        //find user id at req.session.passport.user
-
-        if (err) {
-          res.send(err);
-        } else {
-          successUser(req, res, req.body, (err, user) => {
-            if (err) {res.send(err);}
-            console.log('*************** about to redirect to interactions');
-            res.redirect('/interactions');
-            //or res.send(user);
-          });
-        }
-      });
-    }
+  console.log(req.body, '@@@#!@#@#@@@!#@@#@#!@#@#@')
+  //create a stripe customer account before saving user to database
+  stripe.customers.create({
+    description: 'Customer for' + req.body.first_name + ' ' + req.body.last_name,
+  }, function(err, customer) {
+    // asynchronously called
+    var newreq = req.body;
+    newreq.customerId = customer.id;
+    database.newUser(newreq, (err, user) => {
+      if (err) {
+        console.log('************ server side new user signup error ', err);
+        res.send(err);
+      } else {
+        req.body.id = user.insertId;
+        req.logIn(user[0], err => { //calls serializeUser
+          //find user id at req.session.passport.user
+          if (err) {
+            res.send(err);
+          } else {
+            successUser(req, res, req.body, (err, user) => {
+              if (err) {res.send(err);}
+              console.log('*************** about to redirect to interactions');
+              res.redirect('/interactions');
+              //or res.send(user);
+            });
+          }
+        });
+      }
+    });
   });
 });
 
@@ -220,6 +230,25 @@ app.post('/user/restricted', (req, res) => {
 });
 
 app.post('/pass/new', (req, res) => {
+  console.log(req.body)
+  console.log(req.session)
+  database.findUserById(req.session.passport.user, (err, rows, fields) => {
+    if(!rows[0].merchant_id){
+      stripe.accounts.create({
+        type: 'custom',
+        country: 'US',
+        email: rows[0].email
+      }, function(err, account) {
+        // asynchronously called
+        console.log(account, '23432423432')
+        if(err){
+          console.log(err, "error@")
+        }
+        console.log(rows[0].id, rows[0].merchant_id)
+        database.newMerchantAcct(rows[0].id, account.id);
+      });
+    }
+  })
   const forSaleBlock = {
     seller_id: req.session.passport.user,
     pass_volume: req.body.quantity,
@@ -232,6 +261,7 @@ app.post('/pass/new', (req, res) => {
   const restrictedStudios = req.body.restrictedSelect;
 
   database.addSale(forSaleBlock, restrictedStudios, (err, results) => {
+    // console.log('gets into addsale')
     if (err) {
       console.log('ERROR failed to add sale block: ', err);
       res.sendStatus(500);
