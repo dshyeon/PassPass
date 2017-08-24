@@ -6,7 +6,7 @@ class YourProfile extends React.Component {
     super(props);
     this.state = {
       userId: this.props.profileData.id,
-      pendingPasses: false
+      havePendingPasses: false
     };
   }
 
@@ -23,11 +23,10 @@ class YourProfile extends React.Component {
       contentType: 'application/json',
       data: JSON.stringify({userId: this.state.userId}),
       success: function(pendingPasses) {
-				if (pendingPasses === null) {
-          this.setState({pendingPasses: false})
+				if (pendingPasses.length === 0) {
           console.log(pendingPasses, 'NULLLL')
         } else {
-          this.setState({previouslyBoughtPasses: true})
+          this.setState({havePendingPasses: true})
           console.log(pendingPasses, 'NOTNULLL')
         }
       }.bind(this),
@@ -55,13 +54,13 @@ class YourProfile extends React.Component {
         <ul className="profileList">
           <strong>Pending Passes</strong>
           {
-            this.state.pendingPasses = false &&
+            !this.state.havePendingPasses &&
               <li>
                 You don't have any pending passes.
               </li>
           }
           {
-            this.state.pendingPasses = true &&
+            this.state.havePendingPasses &&
               <li>
                 You have pending passes!
               </li>
