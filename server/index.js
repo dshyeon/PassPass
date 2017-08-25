@@ -192,7 +192,6 @@ app.post('/auth/signup', (req, res) => {
           if (err) {
             res.send(err);
           } else {
-            console.log(req.body)
             successUser(req, res, req.body, (err, user) => {
               if (err) {res.send(err);}
               console.log('*************** about to redirect to interactions');

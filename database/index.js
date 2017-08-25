@@ -306,5 +306,5 @@ module.exports.makeBlockChanges = function(currentStateObject, restrictedStudios
 };
 
 module.exports.postTransactionUpdate = function(transactionData, cb) {
-    
+
 }
