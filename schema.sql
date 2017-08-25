@@ -106,6 +106,14 @@ CREATE TABLE pending_passes (
   FOREIGN KEY (for_sale_block_id) REFERENCES for_sale_block(id)
 );
 
+CREATE TABLE payment_options (
+  id int PRIMARY KEY AUTO_INCREMENT,
+  numberHash VARCHAR(255) NOT NULL UNIQUE,
+  expDate date NOT NULL,
+  csv int,
+  FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
 INSERT INTO users (id, email, password, salt, first_name, last_name, phone, created_at, updated_at, rating, review_count) VALUES
   (1, 'billy@bob.com', SHA2('billysPasswordcPjfn67sdv', 0), 'cPjfn67sdv', 'Billy', 'Bob', '3332224444', '2017-03-05', '2017-03-09', 4, 4),
   (2, 'sally@sal.com', SHA2('sallysPassword8nJHBh665v', 0), '8nJHBh665v', 'Sally', 'Sal', '1112224444', '2017-04-15', NULL,3,10),

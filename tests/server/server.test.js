@@ -7,7 +7,7 @@ var superReq = supertest.agent(server);
 describe('Server', function() {
   describe('GET Static Files', () => {
     test('should return the content of index.html', (done) => {
-      superReq
+
         .get('/')
         .expect(200, /<div id="appLoggedOut"/, done);
     });
@@ -59,6 +59,15 @@ describe('Server', function() {
         .expect(db.connection.query("SELECT customer_id FROM users WHERE username = 'abhi';")).toBeTruthy()
     })
   });
+
+  describe('Add Passes', done => {
+    superReq
+      .post('/pass/new')
+      .type('form')
+      .send({
+
+      })
+  })
 
 
   describe('Buy Passes Search', () => {
