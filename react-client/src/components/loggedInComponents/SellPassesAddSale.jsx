@@ -22,7 +22,7 @@ class SellPassesAddSale extends React.Component {
     this.addRestricted = this.addRestricted.bind(this);
     this.handleCancelPost = this.handleCancelPost.bind(this);
   }
-  
+
   componentDidMount() {
     this.getRestricted();
   }
@@ -46,7 +46,7 @@ class SellPassesAddSale extends React.Component {
     });
   }
 
-  
+
   handleAddSale() {
     const forSaleBlock = {
       price: this.state.addSalePrice,
@@ -76,7 +76,7 @@ class SellPassesAddSale extends React.Component {
         });
       },
       error: (err) => {
-        console.log('POST /pass/new FAILED');
+        console.log(err, 'POST /pass/new FAILED');
       }
     });
   }
@@ -131,7 +131,7 @@ class SellPassesAddSale extends React.Component {
       });
     }
   }
-  
+
   render() {
     let addSaleRow;
     if (this.state.showAdd) {
@@ -142,51 +142,51 @@ class SellPassesAddSale extends React.Component {
           <div className="row addSaleRow">
             <div className="addSaleSearchInput col-sm">
               <label htmlFor="addSaleDateStart">Passes are valid starting on:</label>
-              <input 
+              <input
                 type="date"
                 className="form-control"
                 id="addSaleDateStart"
                 placeholder="mm/dd/yyyy"
-                value={this.state.addSaleDateStart} 
-                onChange={this.handleChange} 
+                value={this.state.addSaleDateStart}
+                onChange={this.handleChange}
                 required />
             </div>
             <div className="addSaleSearchInput col-sm">
               <label htmlFor="addSaleDateEnd">Passes are valid until:</label>
-              <input 
+              <input
                 type="date"
                 className="form-control"
                 id="addSaleDateEnd"
                 placeholder="mm/dd/yyyy"
-                value={this.state.addSaleDateEnd} 
+                value={this.state.addSaleDateEnd}
                 onChange={this.handleChange} required />
             </div>
           </div>
           <div className="row addSaleRow">
             <div className="addSaleSearchInput col-sm">
               <label htmlFor="addSalePrice">Price Per Pass ($):</label>
-              <input 
+              <input
                 type="number"
                 min="0"
                 step="0.01"
                 className="form-control"
                 id="addSalePrice"
                 placeholder="e.g. 4.50"
-                value={this.state.addSalePrice} 
-                onChange={this.handleChange} 
+                value={this.state.addSalePrice}
+                onChange={this.handleChange}
                 required />
             </div>
             <div className="addSaleSearchInput col-sm">
               <label htmlFor="addSaleQuantity">Number of Passes:</label>
-              <input 
+              <input
                 type="number"
                 min="1"
                 step="1"
                 className="form-control"
                 id="addSaleQuantity"
                 placeholder="e.g. 3"
-                value={this.state.addSaleQuantity} 
-                onChange={this.handleChange} 
+                value={this.state.addSaleQuantity}
+                onChange={this.handleChange}
                 required />
             </div>
           </div>
@@ -194,7 +194,7 @@ class SellPassesAddSale extends React.Component {
             <div className="addSaleSearchInput col-sm">
               <label htmlFor="addSaleRestrictedSelect">Restricted Studios:</label>
               <select multiple className="form-control" id="addSaleRestrictedSelect" value={this.state.addSaleRestrictedSelect} onChange={this.handleChangeSelect}>
-                {this.state.existingRestricted.map((item) => 
+                {this.state.existingRestricted.map((item) =>
                   <option key={item.studio} value={item.studio}>{item.studio}</option>
                 )}
               </select>
@@ -227,9 +227,9 @@ class SellPassesAddSale extends React.Component {
           </div>
         </div>);
     }
-    
+
     return (
-      <div className="addSale container">        
+      <div className="addSale container">
         {addSaleRow}
       </div>
     );

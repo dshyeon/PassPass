@@ -1,19 +1,19 @@
 var supertest = require('supertest');
 var path = require('path');
 var server = require('../../server/index');
-
+var db = require('../../database/index');
 var superReq = supertest.agent(server);
 
 describe('Server', function() {
   describe('GET Static Files', () => {
     test('should return the content of index.html', (done) => {
-      superReq
+
         .get('/')
         .expect(200, /<div id="appLoggedOut"/, done);
     });
 
   });
-  
+
   xdescribe('Priviledged Access', () => {
     test('Redirects to sign in page when not logged in', () => {
       superReq
@@ -24,14 +24,14 @@ describe('Server', function() {
         })
         .end(done);
     });
-    
+
     test('should return the content of logged-in.html when logged in', (done) => {
       // TODO log in this session
       superReq
         .get('/logged-in.html')
         .expect(200, /<div id="appLoggedIn"/, done);
     });
-    
+
   });
 
   xdescribe('Account Creation', () => {
@@ -47,7 +47,28 @@ describe('Server', function() {
           done(err);
         });
     });
+    test('signup creates stripe customer account', done => {
+      superReq
+        .post('/signup')
+        .type('form')
+        .send({
+          username:'abhi',
+          password:'bahbi',
+          email:'nonsense58493@gmail.com'
+        })
+        .expect(db.connection.query("SELECT customer_id FROM users WHERE username = 'abhi';")).toBeTruthy()
+    })
   });
+
+  describe('Add Passes', done => {
+    superReq
+      .post('/pass/new')
+      .type('form')
+      .send({
+
+      })
+  })
+
 
   describe('Buy Passes Search', () => {
     test('should send all for_sale_blocks (excluding logged-in user) on blank search', (done) => {
@@ -66,12 +87,12 @@ describe('Server', function() {
       superReq
         .post('/pass/buyer/search')
         .send({
-          searchQueries: { 
+          searchQueries: {
                   startDateInput: '2017-05-10',
                   endDateInput: '2017-08-24',
                   priceInput: '20',
                   passesCountInput: '3',
-                  gymInput: 'C.C. Cycling' 
+                  gymInput: 'C.C. Cycling'
                 }
         })
         .expect('Content-Type', /json/)
@@ -86,12 +107,12 @@ describe('Server', function() {
       superReq
         .post('/pass/buyer/search')
         .send({
-          searchQueries: { 
+          searchQueries: {
                   startDateInput: 'fawef',
                   endDateInput: 'sdfasdf',
                   priceInput: 'ewfaew',
                   passesCountInput: 'awefwe',
-                  gymInput: 'wafaef,wefawef' 
+                  gymInput: 'wafaef,wefawef'
                 }
         })
         .expect('Content-Type', /json/)

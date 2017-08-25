@@ -26,7 +26,9 @@ CREATE TABLE users (
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   updated_at DATETIME ON UPDATE CURRENT_TIMESTAMP,
   rating int,
-  review_count int
+  review_count int,
+  customer_id VARCHAR(30) UNIQUE,
+  merchant_id VARCHAR(30) UNIQUE
   );
 
 CREATE TABLE sessions (
@@ -103,6 +105,20 @@ CREATE TABLE pending_passes (
   FOREIGN KEY (perspective_buyer_id) REFERENCES users(id),
   FOREIGN KEY (for_sale_block_id) REFERENCES for_sale_block(id)
 );
+
+CREATE TABLE payment_options (
+  id int PRIMARY KEY AUTO_INCREMENT,
+  user int,
+  numberHash VARCHAR(255) NOT NULL UNIQUE,
+  expDate date NOT NULL,
+  csv int,
+  FOREIGN KEY (user) REFERENCES users(id)
+);
+
+CREATE TABLE transfers (
+  id int PRIMARY KEY AUTO_INCREMENT,
+
+)
 
 INSERT INTO users (id, email, password, salt, first_name, last_name, phone, created_at, updated_at, rating, review_count) VALUES
   (1, 'billy@bob.com', SHA2('billysPasswordcPjfn67sdv', 0), 'cPjfn67sdv', 'Billy', 'Bob', '3332224444', '2017-03-05', '2017-03-09', 4, 4),

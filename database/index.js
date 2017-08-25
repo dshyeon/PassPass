@@ -1,4 +1,4 @@
-var mysql      = require('mysql');
+var mysql = require('mysql');
 
 module.exports.connection = mysql.createConnection(
   process.env.JAWSDB_URL ||
@@ -131,9 +131,9 @@ module.exports.authUser = function(user, callback) {
 };
 
 module.exports.newUser = function(user, callback) {
-  var values = [user.email, user.password + user.salt, user.salt, user.first_name, user.last_name, user.phone];
-  module.exports.connection.query('INSERT INTO users (email, password, salt, first_name, last_name, phone) ' +
-    'VALUES (?, SHA2(?, 0), ?, ?, ?, ?)', values, function(error, results, fields) {
+  var values = [user.email, user.password + user.salt, user.salt, user.first_name, user.last_name, user.phone, user.customerId];
+  module.exports.connection.query('INSERT INTO users (email, password, salt, first_name, last_name, phone, customer_ID) ' +
+    'VALUES (?, SHA2(?, 0), ?, ?, ?, ?, ?)', values, function(error, results, fields) {
       if (error) {
         console.log('*********** database add new user error ', error);
         callback(error);
@@ -144,6 +144,20 @@ module.exports.newUser = function(user, callback) {
     }
   );
 };
+
+module.exports.newMerchantAcct = function(userId, acctNumber){
+  module.exports.connection.query(`UPDATE users SET merchant_id = "${acctNumber}" where id = ${userId}`)
+}
+
+module.exports.getMerchantAcctNum = function(email) {
+  var querystring = `SELECT merchant_id FROM users WHERE email="${email}";`;
+  module.exports.connection.query(querystring, (err, res) => {
+    if (err || res === null) {
+      console.log('error getting merchid')
+    }
+    return res;
+  });
+}
 
 // add back in for facebook authentication
 // module.exports.findOrCreateUser = function (user, callback) {
@@ -174,6 +188,7 @@ module.exports.addUserToSession = function(user, session, callback) {
         console.log('*********** database add user to session error ', error);
         throw error;
         callback(error);
+        console.log(session, '@@S@@')
       }
       if (results) {
         callback(null, results);
@@ -183,10 +198,11 @@ module.exports.addUserToSession = function(user, session, callback) {
 };
 
 module.exports.addSale = function(forSaleBlock, restrictedStudios, callback) {
+
   module.exports.connection.query('INSERT INTO for_sale_block SET ?', forSaleBlock, function(err, results) {
     const blockId = results.insertId;
-    let error;
-    if (restrictedStudios && !err) {
+    // let error;
+    if (restrictedStudios.length > 0 && !err) {
       module.exports.connection.query(`SELECT id FROM restricted_list WHERE user_id=${forSaleBlock.seller_id} AND studio IN ("${restrictedStudios.join('", "')}")`, function(err, results) {
         if (err) {
           callback(err, results);
@@ -298,3 +314,7 @@ module.exports.makeBlockChanges = function(currentStateObject, restrictedStudios
     });
   });
 };
+
+module.exports.postTransactionUpdate = function(transactionData, cb) {
+
+}
