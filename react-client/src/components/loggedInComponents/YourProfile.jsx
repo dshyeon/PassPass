@@ -56,7 +56,7 @@ class YourProfile extends React.Component {
             console.log(this.state.pendingPasses, 'DID IT WORK??')
           }
         }.bind(this),
-          error: function(xhr, error) {
+          error: function(error) {
           console.log('error:', error);
         }
     });
