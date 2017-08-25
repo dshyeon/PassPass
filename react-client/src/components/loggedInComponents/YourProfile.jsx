@@ -1,7 +1,6 @@
 import React from 'react';
 import $ from 'jquery';
 import PendingPasses from './PendingPasses.jsx';
-import PendingSellerData from './PendingSellerData.jsx';
 
 class YourProfile extends React.Component {
   constructor (props) {
@@ -10,7 +9,6 @@ class YourProfile extends React.Component {
       userId: this.props.profileData.id,
       havePendingPasses: false,
       pendingPasses: [],
-      pendingSellerData: []
     };
   }
 
@@ -45,13 +43,22 @@ class YourProfile extends React.Component {
         if (pendingSellerData.length === 0) {
           console.log(pendingSellerData, 'NULLLL')
         } else {
-          this.setState({pendingSellerData: pendingSellerData})
-          console.log(this.state.pendingSellerData, 'pendingSellerData STATE')
+          console.log(pendingSellerData, 'CONSOLELOG')
+            let i = 0;
+            pendingSellerData.map((seller) => {
+              this.state.pendingPasses[i].first_name = seller.first_name;
+              this.state.pendingPasses[i].email = seller.email;
+              i++
+            })
+            this.setState({
+              pendingPasses: this.state.pendingPasses
+            })
+            console.log(this.state.pendingPasses, 'DID IT WORK??')
+          }
+        }.bind(this),
+          error: function(xhr, error) {
+          console.log('error:', error);
         }
-      }.bind(this),
-      error: function(xhr, error) {
-        console.log('error:', error);
-      }
     });
   }
 
@@ -83,9 +90,6 @@ class YourProfile extends React.Component {
               <ul>
                 {this.state.pendingPasses.map((pass, index) =>
                   <PendingPasses pass={pass} key={index} />
-                )}
-                {this.state.pendingSellerData.map((seller, index) =>
-                  <PendingSellerData seller={seller} key={index} />
                 )}
               </ul>
           }

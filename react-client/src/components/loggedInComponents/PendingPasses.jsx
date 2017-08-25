@@ -18,10 +18,10 @@ var PendingPasses = (props) => (
       Passes Available: {props.pass.pass_volume - props.pass.passes_sold}
     </li>
     <li>
-      {/* Seller: {props.seller.first_name} */}
+      Seller: {props.pass.first_name}
     </li>
     <li>
-      {/* Email: {props.seller.email} */}
+      Email: {props.pass.email}
     </li>
   </div>
 );
@@ -38,6 +38,9 @@ var PendingPasses = (props) => (
 //     period_start: 2017-04-20T07:00:00.000Z,
 //     period_end: 2017-04-30T07:00:00.000Z,
 //     passes_sold: 5 } ]
+
+// [ RowDataPacket { first_name: 'Billy', email: 'billy@bob.com' } ]
+
 
 
 
