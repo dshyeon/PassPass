@@ -89,12 +89,12 @@ CREATE TABLE restricted_list (
     FOREIGN KEY (for_sale_block_id) REFERENCES for_sale_block(id)
   );
 
--- CREATE TABLE restricted_studios (
---     block_id int,
---     exempt_studio_id int,
---     FOREIGN KEY (block_id) REFERENCES for_sale_block(id),
---     FOREIGN KEY (exempt_studio_id) REFERENCES restricted_list(id)
---   );
+CREATE TABLE restricted_studios (
+    block_id int,
+    exempt_studio_id int,
+    FOREIGN KEY (block_id) REFERENCES for_sale_block(id),
+    FOREIGN KEY (exempt_studio_id) REFERENCES restricted_list(id)
+  );
 
 CREATE TABLE pending_passes (
   id int PRIMARY KEY AUTO_INCREMENT,
@@ -137,5 +137,5 @@ INSERT INTO restricted_list (id, studio, for_sale_block_id) VALUES
   (4, 'Gold Gym', 1),
   (5, 'none', 5);
 
--- INSERT INTO restricted_studios (block_id, exempt_studio_id)
---   VALUES (1, 1), (1, 3), (2, 3), (3, 2), (3, 4), (5, 2);
+INSERT INTO restricted_studios (block_id, exempt_studio_id)
+  VALUES (1, 1), (1, 3), (2, 3), (3, 2), (3, 4), (5, 2);
