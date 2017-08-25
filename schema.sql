@@ -114,6 +114,11 @@ CREATE TABLE payment_options (
   FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
+CREATE TABLE transfers (
+  id int PRIMARY KEY AUTO_INCREMENT,
+
+)
+
 INSERT INTO users (id, email, password, salt, first_name, last_name, phone, created_at, updated_at, rating, review_count) VALUES
   (1, 'billy@bob.com', SHA2('billysPasswordcPjfn67sdv', 0), 'cPjfn67sdv', 'Billy', 'Bob', '3332224444', '2017-03-05', '2017-03-09', 4, 4),
   (2, 'sally@sal.com', SHA2('sallysPassword8nJHBh665v', 0), '8nJHBh665v', 'Sally', 'Sal', '1112224444', '2017-04-15', NULL,3,10),

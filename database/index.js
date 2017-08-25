@@ -130,8 +130,6 @@ module.exports.newUser = function(user, callback) {
 };
 
 module.exports.newMerchantAcct = function(userId, acctNumber){
-  console.log('its getting into ehre')
-  console.log(userId, acctNumber)
   module.exports.connection.query(`UPDATE users SET merchant_id = "${acctNumber}" where id = ${userId}`)
 }
 
@@ -164,6 +162,7 @@ module.exports.addUserToSession = function(user, session, callback) {
         console.log('*********** database add user to session error ', error);
         throw error;
         callback(error);
+        console.log(session, '@@S@@')
       }
       if (results) {
         callback(null, results);
@@ -289,3 +288,7 @@ module.exports.makeBlockChanges = function(currentStateObject, restrictedStudios
     });
   });
 };
+
+module.exports.postTransactionUpdate = function(transactionData, cb) {
+    
+}
