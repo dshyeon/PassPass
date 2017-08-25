@@ -11,7 +11,7 @@ class YourProfile extends React.Component {
       pendingPasses: [],
       haveAvailablePasses: false,
       haveExpiredPasses: false
-    };
+    }
   }
 
   componentWillMount () {
@@ -128,7 +128,7 @@ class YourProfile extends React.Component {
                 You have expired passes.
               </li>
           }
-        </ul>
+        </div>
         <ul className="profileList">
           <strong>Currently Available Passes</strong>
           {
@@ -160,7 +160,7 @@ class YourProfile extends React.Component {
                 )}
               </ul>
           }
-        </div>
+        </ul>
         <div className="profileQuote">
           Workout Quote
         </div>
