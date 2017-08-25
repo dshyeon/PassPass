@@ -24,6 +24,7 @@ var PendingPasses = (props) => (
       <li>
         Email: {props.pass.email}
       </li>
+      <input type="submit" value="Delete" className="deleteFromPendingButton" onClick={props.deletePendingPass.bind(this, props.pass)}/>
       <li>
         <form className="form-Message" onSubmit={(event) => {props.post(event, props.pass.email)}} >
           <label htmlFor="inputMessage" className="sr-only">message</label>
@@ -32,7 +33,7 @@ var PendingPasses = (props) => (
             type="text"
             id="inputMessage"
             className="form-control"
-            placeholder="Message" 
+            placeholder="Message"
             required
           />
           <button className="btn btn-md btn-primary btn-block" type="submit">Send Message</button>
