@@ -1,7 +1,7 @@
 var supertest = require('supertest');
 var path = require('path');
 var server = require('../../server/index');
-
+var db = require('../../database/index');
 var superReq = supertest.agent(server);
 
 describe('Server', function() {
@@ -56,7 +56,7 @@ describe('Server', function() {
           password:'bahbi',
           email:'nonsense58493@gmail.com'
         })
-        .expect()
+        .expect(db.connection.query("SELECT customer_id FROM users WHERE username = 'abhi';")).toBeTruthy()
     })
   });
 
