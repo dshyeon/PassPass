@@ -69,6 +69,7 @@ CREATE TABLE sold_passes (
     buyer_id int,
     notes VARCHAR(255),
     sell_date DATE,
+    expiration_date DATE,
     FOREIGN KEY (seller_id) REFERENCES users(id),
     FOREIGN KEY (buyer_id) REFERENCES users(id)
   );
@@ -142,9 +143,9 @@ INSERT INTO messages (sender_id, reciever_id, time_sent, text) VALUES
   (1, 2, '2017-05-06 11:13:40', 'Absolutely!'),
   (3, 2, '2017-02-05 15:40:01', 'I\'d like to buy passes from you.');
 
-INSERT INTO sold_passes (seller_id, buyer_id, notes, sell_date) VALUES
-  (1, 2, 'Easy to work with', '2017-02-05'),
-  (3, 2, NULL, '2017-07-12');
+INSERT INTO sold_passes (seller_id, buyer_id, notes, sell_date, expiration_date) VALUES
+  (1, 2, 'Easy to work with', '2017-02-05', '2017-02-26'),
+  (3, 2, NULL, '2017-07-12', '2017-07-26');
 
 INSERT INTO restricted_list (id, studio, for_sale_block_id) VALUES
   (1, 'C.C. Cycling', 2),

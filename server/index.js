@@ -168,6 +168,17 @@ app.post ('/passes/pending/add', (req, res) => {
   console.log(req.body, '@@###$$$@@##$$$')
   database.addToPending(req.body.pass.id, req.body.profileData.id, () => {
     res.sendStatus(200);
+  })
+})
+app.post('/passes/available', (req, res) => {
+  database.getAvailablePasses(req.body.userId, (result) => {
+    res.send(result);
+  });
+});
+
+app.post('/passes/expired', (req, res) => {
+  database.getExpiredPasses(req.body.userId, (result) => {
+    res.send(result);
   });
 });
 
