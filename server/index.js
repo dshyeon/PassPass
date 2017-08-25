@@ -172,11 +172,12 @@ app.post ('/passes/pending/add', (req, res) => {
 });
 
 app.post ('/passes/pending/buy', (req, res) => {
-  // console.log(req.body, '@@###$$$@@##$$$')
+  console.log(req.body, '@@###$$$@@##$$$')
   stripeHelpers.createTransferToPassPass(req.body, (err, res) => {
     if(err){
       console.log('transfercreation bruk')
     }
+    console.log('here')
     console.log(res)
   });
 });
