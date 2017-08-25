@@ -11,7 +11,7 @@ class BuyPassesList extends React.Component {
 	addToPending (pass) {
 		$.ajax({
 			method: 'POST',
-			url: '/passes/pending/buy',
+			url: '/passes/pending/add',
 			contentType: 'application/json',
 			data: JSON.stringify({pass: pass, profileData: this.props.profileData}),
 			success: function(result) {
