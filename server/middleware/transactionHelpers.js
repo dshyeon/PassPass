@@ -6,8 +6,13 @@ module.exports.createTransferToPassPass = (data, cb) => {
   stripe.transfers.create ( {
     amount:'' ,
     currency: "usd",
+<<<<<<< HEAD
     destination: "acct_1032D82eZvKYlo2C",
     transfer_group: "ORDER_95"
+=======
+    destination: "data.merchant_acct",
+    transfer_group: "data.userId"
+>>>>>>> 2 tests working 1 still broke
   }, function (err, transfer) {
     // asynchronously called
     if(err) {
