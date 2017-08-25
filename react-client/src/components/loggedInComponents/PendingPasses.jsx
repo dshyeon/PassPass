@@ -1,7 +1,7 @@
 import React from 'react';
 
 var PendingPasses = (props) => (
-  <div>
+  <div className="profilePending">
     <li>
       Pass Start Date: {new Date(props.pass.period_start.slice(0, 10)).toDateString().slice(4)}
     </li>

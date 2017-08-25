@@ -198,7 +198,7 @@ input[type=number] {
 }
 
 .profileList {
-	border: 1px solid black;
+	/*border: 1px solid black;*/
 	float: right;
 	margin-right: 30px;
 	height: 100px
@@ -210,6 +210,12 @@ input[type=number] {
 	height: 200px;
 	margin: 20px;
 	float: left;
+}
+
+.profilePending {
+	margin-bottom: 20px;
+	background: rgb(64,224,208);
+	border-radius: 10px;
 }
 
 ul {
