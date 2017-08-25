@@ -77,7 +77,6 @@ class YourProfile extends React.Component {
         if (availablePasses.length === 0) {
           console.log(availablePasses, '@@@@@@@ NO AVAILABLE');
         } else {
-          console.log(availablePasses, '@@@@@@@ YAS AVAILABLE');
           this.setState({haveAvailablePasses: true})
         }
       }.bind(this),
