@@ -71,14 +71,6 @@ CREATE TABLE sold_passes (
     FOREIGN KEY (buyer_id) REFERENCES users(id)
   );
 
-CREATE TABLE restricted_list (
-    id int PRIMARY KEY AUTO_INCREMENT,
-    studio VARCHAR(100),
-    user_id int,
-    FOREIGN KEY (user_id) REFERENCES users(id)
-  );
-
-
 CREATE TABLE for_sale_block (
   id int PRIMARY KEY AUTO_INCREMENT,
   pass_volume int,
@@ -89,6 +81,13 @@ CREATE TABLE for_sale_block (
   passes_sold int,
   FOREIGN KEY (seller_id) REFERENCES users(id)
 );
+
+CREATE TABLE restricted_list (
+    id int PRIMARY KEY AUTO_INCREMENT,
+    studio VARCHAR(100),
+    for_sale_block_id int,
+    FOREIGN KEY (for_sale_block_id) REFERENCES for_sale_block(id)
+  );
 
 CREATE TABLE restricted_studios (
     block_id int,
@@ -131,12 +130,12 @@ INSERT INTO sold_passes (seller_id, buyer_id, notes, sell_date) VALUES
   (1, 2, 'Easy to work with', '2017-02-05'),
   (3, 2, NULL, '2017-07-12');
 
-INSERT INTO restricted_list (id, studio, user_id) VALUES
+INSERT INTO restricted_list (id, studio, for_sale_block_id) VALUES
   (1, 'C.C. Cycling', 2),
   (2, 'Edmond Climbing', 1),
   (3, 'Edmond Climbing', 2),
   (4, 'Gold Gym', 1),
-  (5, 'none', NULL);
+  (5, 'none', 5);
 
 INSERT INTO restricted_studios (block_id, exempt_studio_id)
   VALUES (1, 1), (1, 3), (2, 3), (3, 2), (3, 4), (5, 2);

@@ -153,6 +153,12 @@ app.post('/passes/pending', (req, res) => {
   });
 });
 
+app.post('/passes/pending/seller', (req, res) => {
+  database.getPendingSellerData(req.body.userId, (result) => {
+    res.send(result);
+  })
+})
+
 app.post('/auth/signup', (req, res) => {
   var rememberMe = req.body.rememberMe;
   req.body.salt = cryptoRandomString(10); //use this salt to create a new user

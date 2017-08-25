@@ -61,6 +61,7 @@ module.exports.findUserById = function(id, callback) {
 };
 
 
+
 module.exports.getPendingPasses = function(userId, callback) {
     module.exports.connection.query('SELECT * FROM pending_passes JOIN for_sale_block ON for_sale_block_id WHERE for_sale_block_id = for_sale_block.id AND perspective_buyer_id =' + userId, (error, results, fields) => {
       if (error || !results) {
@@ -76,6 +77,23 @@ module.exports.getPendingPasses = function(userId, callback) {
       }
     }
   );
+}
+
+module.exports.getPendingSellerData = function (userId, callback) {
+  module.exports.connection.query('SELECT first_name, email FROM users JOIN for_sale_block JOIN pending_passes WHERE seller_id = users.id AND for_sale_block_id = for_sale_block.id AND perspective_buyer_id =' + userId, (error, results, fields) => {
+    if (error || !results) {
+      console.log('*********** database find user by ID error ', error);
+      callback(error);
+    }
+    if (results.length > 0) {
+      console.log(results, 'seller info')
+      callback(results);
+    } else {
+      console.log(results, 'no seller info');
+      callback(null, results);
+    }
+  }
+);
 }
 
 module.exports.authUser = function(user, callback) {
