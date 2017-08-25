@@ -108,12 +108,16 @@ CREATE TABLE pending_passes (
 
 CREATE TABLE payment_options (
   id int PRIMARY KEY AUTO_INCREMENT,
-  user int,
   numberHash VARCHAR(255) NOT NULL UNIQUE,
   expDate date NOT NULL,
   csv int,
-  FOREIGN KEY (user) REFERENCES users(id)
+  FOREIGN KEY (user_id) REFERENCES users(id)
 );
+
+CREATE TABLE transfers (
+  id int PRIMARY KEY AUTO_INCREMENT,
+
+)
 
 INSERT INTO users (id, email, password, salt, first_name, last_name, phone, created_at, updated_at, rating, review_count) VALUES
   (1, 'billy@bob.com', SHA2('billysPasswordcPjfn67sdv', 0), 'cPjfn67sdv', 'Billy', 'Bob', '3332224444', '2017-03-05', '2017-03-09', 4, 4),

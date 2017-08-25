@@ -190,6 +190,7 @@ module.exports.addUserToSession = function(user, session, callback) {
         console.log('*********** database add user to session error ', error);
         throw error;
         callback(error);
+        console.log(session, '@@S@@')
       }
       if (results) {
         callback(null, results);
@@ -315,3 +316,7 @@ module.exports.makeBlockChanges = function(currentStateObject, restrictedStudios
     });
   });
 };
+
+module.exports.postTransactionUpdate = function(transactionData, cb) {
+
+}

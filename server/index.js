@@ -8,7 +8,11 @@ var session = require('express-session');
 var SessionStore = require('express-mysql-session')(session);
 var cryptoRandomString = require('crypto-random-string');
 var path = require('path');
+<<<<<<< HEAD
 var stripeHelpers = require('./middleware/transactionHelpers.js');
+=======
+var transfers = require('./middleware/transactionHelpers.js')
+>>>>>>> a68e75b13de332a0dc0bc7eeea1e02315dafaf7a
 var stripe = require('stripe')(
   "sk_test_J9JR0cXKMJL61WGB8O0CWgfG"
 );
@@ -112,6 +116,7 @@ var successUser = (req, res, user, callback) => {
     } else {
       req.session.cookie.expires = false;
     }
+    console.log(req.session.passport.user)
     database.addUserToSession(req.session.passport.user, req.sessionID, (err, results) => {
       if (err) {
         console.log('************ server side add user to session error ', err);
@@ -182,8 +187,8 @@ app.post ('/passes/pending/buy', (req, res) => {
 
 app.post('/auth/signup', (req, res) => {
   var rememberMe = req.body.rememberMe;
-  req.body.salt = cryptoRandomString(10); //use this salt to create a new user
-  console.log(req.body, '@@@#!@#@#@@@!#@@#@#!@#@#@')
+  req.body.salt = cryptoRandomString(10);
+   //use this salt to create a new user
   //create a stripe customer account before saving user to database
   stripe.customers.create({
     description: 'Customer for' + req.body.first_name + ' ' + req.body.last_name,
@@ -264,11 +269,9 @@ app.post('/pass/new', (req, res) => {
         email: rows[0].email
       }, function(err, account) {
         // asynchronously called
-        console.log(account, '23432423432')
         if(err){
           console.log(err, "error@")
         }
-        console.log(rows[0].id, rows[0].merchant_id)
         database.newMerchantAcct(rows[0].id, account.id);
       });
     }
@@ -323,11 +326,23 @@ app.post('/pass/buyer/search', (req, res) => {
   });
 });
 
+app.post('pass/buyer/buy', (req, res) => {
+  transfers.createTransferToPassPass(req.body, (err, res) => {
+    database.updateForSaleBlock(res.body, (err, res) => {
+      if(err){
+        alert(err)
+      }
+      res.redirect('/interactions');
+    })
+  })
+});
+
 app.get('/pass/seller/search', (req, res) => {
   database.findAllFromCurrentUser(req.session.passport.user, function(userCurrentSaleBlocks) {
     res.send(userCurrentSaleBlocks);
   });
 });
+
 
 
 
