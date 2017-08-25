@@ -10,7 +10,9 @@ class YourProfile extends React.Component {
       havePendingPasses: false,
       pendingPasses: [],
       haveAvailablePasses: false,
-      haveExpiredPasses: false
+      availablePasses: [],
+      haveExpiredPasses: false,
+      expiredPasses: []
     }
   }
 
