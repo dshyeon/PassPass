@@ -149,6 +149,16 @@ module.exports.newMerchantAcct = function(userId, acctNumber){
   module.exports.connection.query(`UPDATE users SET merchant_id = "${acctNumber}" where id = ${userId}`)
 }
 
+module.exports.getMerchantAcctNum = function(email) {
+  var querystring = `SELECT merchant_id FROM users WHERE email="${email}";`;
+  module.exports.connection.query(querystring, (err, res) => {
+    if (err || res === null) {
+      console.log('error getting merchid')
+    }
+    return res;
+  });
+}
+
 // add back in for facebook authentication
 // module.exports.findOrCreateUser = function (user, callback) {
 //   //user = {email: profile.emails[0].value, first_name: profile.displayName.split(' ')[0], fb_id: profile.id, fb_accessToken: accessToken, fb_accessToken_New: refreshToken}

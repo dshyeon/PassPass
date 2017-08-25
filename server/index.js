@@ -8,7 +8,7 @@ var session = require('express-session');
 var SessionStore = require('express-mysql-session')(session);
 var cryptoRandomString = require('crypto-random-string');
 var path = require('path');
-var transfers = require('./middleware/transactionHelpers.js')
+var stripeHelpers = require('./middleware/transactionHelpers.js');
 var stripe = require('stripe')(
   "sk_test_J9JR0cXKMJL61WGB8O0CWgfG"
 );
@@ -165,8 +165,19 @@ app.post('/passes/pending/seller', (req, res) => {
 });
 
 app.post ('/passes/pending/add', (req, res) => {
+  console.log(req.body, '@@###$$$@@##$$$')
   database.addToPending(req.body.pass.id, req.body.profileData.id, () => {
     res.sendStatus(200);
+  });
+});
+
+app.post ('/passes/pending/buy', (req, res) => {
+  // console.log(req.body, '@@###$$$@@##$$$')
+  stripeHelpers.createTransferToPassPass(req.body, (err, res) => {
+    if(err){
+      console.log('transfercreation bruk')
+    }
+    console.log(res)
   });
 });
 
