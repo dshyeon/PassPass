@@ -1,12 +1,14 @@
 import React from 'react';
 import $ from 'jquery';
 import PendingPasses from './PendingPasses.jsx';
+import CurrentPasses from './CurrentPasses.jsx';
 
 class YourProfile extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
       userId: this.props.profileData.id,
+      allPasses: [],
       havePendingPasses: false,
       pendingPasses: [],
       haveCurrentlyAvailablePasses: false,
@@ -33,7 +35,8 @@ class YourProfile extends React.Component {
         console.log('error:', error);
       }
     });
-    console.log(pass);
+  }
+
   updateMessageState(event) {
   	var newState = this.state;
   	newState[event.target.id] = event.target.value;
@@ -47,14 +50,11 @@ class YourProfile extends React.Component {
       url: '/passes/all',
       contentType: 'application/json',
       data: JSON.stringify({userId: this.state.userId}),
-      success: function(pendingPasses) {
-        console.log(pendingPasses, "PENDINGDPASS")
-				if (pendingPasses.length === 0) {
-        } else {
-          this.setState({havePendingPasses: true, pendingPasses: pendingPasses})
-        }
+      success: function(allPasses) {
+        // console.log(allPasses, "PENDINGDPASS")
+        this.setState({allPasses: allPasses})
       }.bind(this),
-      error: function(xhr, error) {
+      error: function(error) {
         console.log('error:', error);
       }
     });
@@ -64,18 +64,39 @@ class YourProfile extends React.Component {
       contentType: 'application/json',
       data: JSON.stringify({userId: this.state.userId}),
       success: function(pendingSellerData) {
-        if (pendingSellerData.length === 0) {
-          console.log(pendingSellerData, 'NULLLL')
-        } else {
           let i = 0;
-            pendingSellerData.map((seller) => {
-              this.state.pendingPasses[i].first_name = seller.first_name;
-              this.state.pendingPasses[i].email = seller.email;
-              i++
-            })
-            this.setState({
-              pendingPasses: this.state.pendingPasses
-            })
+          pendingSellerData.map((seller) => {
+            this.state.allPasses[i].first_name = seller.first_name;
+            this.state.allPasses[i].email = seller.email;
+            i++;
+          })
+          this.setState({
+            allPasses: this.state.allPasses
+          })
+          console.log(this.state.allPasses)
+          for (var j = 0; j < this.state.allPasses.length; j++) {
+            var pass = this.state.allPasses[j];
+            if (pass.purchased === 'false') {
+              this.state.pendingPasses.push(pass);
+              this.setState({
+                havePendingPasses: true
+              })
+            } else {
+              var currentDate = new Date();
+              var expirationDate = new Date(pass.period_end);
+              console.log(currentDate, "current", expirationDate, "expirationDate")
+              if (expirationDate > currentDate) {
+                this.state.currentlyAvailablePasses.push(pass);
+                this.setState({
+                  haveCurrentlyAvailablePasses: true
+                })
+              } else {
+                this.state.expiredPasses.push(pass);
+                this.setState({
+                  haveExpiredPasses: true
+                })
+              }
+            }
           }
         }.bind(this),
           error: function(error) {
@@ -138,16 +159,22 @@ class YourProfile extends React.Component {
         <ul className="profileList">
           <strong>Currently Available Passes</strong>
           {
-            !this.state.haveAvailablePasses &&
+            !this.state.haveCurrentlyAvailablePasses &&
               <li>
                 You don't have any available passes.
               </li>
           }
           {
-            this.state.haveAvailablePasses &&
-              <li>
-                You have available passes!
-              </li>
+            this.state.haveCurrentlyAvailablePasses &&
+            <ul>
+              {this.state.currentlyAvailablePasses.map((pass, index) =>
+                <CurrentPasses
+                  pass={pass}
+                  key={index}
+                />
+              )}
+            </ul>
+
           }
         </ul>
         <ul className="profileList">
@@ -162,16 +189,13 @@ class YourProfile extends React.Component {
             this.state.havePendingPasses &&
               <ul>
                 {this.state.pendingPasses.map((pass, index) =>
-<<<<<<< b86cbdb39f0f21191d89474ec4615c4da96ae448
                   <PendingPasses
                     pass={pass}
                     key={index}
                     post={this.postChatMessage.bind(this)}
                     update={this.updateMessageState.bind(this)}
+                    deletePendingPass={this.deletePendingPass.bind(this)}
                   />
-=======
-                  <PendingPasses deletePendingPass={this.deletePendingPass.bind(this)} pass={pass} key={index} />
->>>>>>> delete button works on YourProfile
                 )}
               </ul>
           }

@@ -23,7 +23,6 @@ var CurrentPasses = (props) => (
     <li>
       Email: {props.pass.email}
     </li>
-    <input type="submit" value="Delete" className="deleteFromPendingButton" onClick={props.deletePendingPass.bind(this, props.pass)}/>
   </div>
 );
 
