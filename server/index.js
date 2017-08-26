@@ -187,9 +187,9 @@ app.post ('/passes/pending/buy', (req, res) => {
   console.log(req.body, '@@###$$$@@##$$$')
   stripeHelpers.createTransferToPassPass(req.body, (err, res) => {
     if(err){
-      console.log('transfercreation bruk')
+      console.log('transfercreation bruk', err)
     }
-    console.log('here')
+
     console.log(res)
   });
 });

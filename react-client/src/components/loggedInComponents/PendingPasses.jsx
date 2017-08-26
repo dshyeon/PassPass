@@ -25,7 +25,7 @@ var PendingPasses = (props) => (
         Email: {props.pass.email}
       </li>
       <li>
-        {console.log(props.pass);}
+        {console.log(props.pass)}
         <Checkout stuff={props.pass}/>
       </li>
       <li>
