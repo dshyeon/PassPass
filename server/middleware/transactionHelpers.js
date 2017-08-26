@@ -5,10 +5,10 @@ var stripe = require('stripe')(
 
 module.exports.createTransferToPassPass = (data, callback) => {
   console.log(data, '234234');
-  var passInfo = data.pass;
+  var passInfo = data;
   var profileData = data.profileData;
 
-  var amount = passInfo.current_price * 100;
+  var amount = passInfo.amount * 100;
   var merchantAcct = db.getMerchantAcctNum(passInfo.email);
   stripe.charges.create({
     amount: 100,

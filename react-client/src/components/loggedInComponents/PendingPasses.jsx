@@ -1,9 +1,7 @@
 import React from 'react';
 import Checkout from './PendingPasses.jsx';
-
 var PendingPasses = (props) => (
   <div className="profilePending">
-<<<<<<< HEAD
     <ul>
       <li>
         Pass Start Date: {new Date(props.pass.period_start.slice(0, 10)).toDateString().slice(4)}
@@ -28,6 +26,10 @@ var PendingPasses = (props) => (
       </li>
       <input type="submit" value="Delete" className="deleteFromPendingButton" onClick={props.deletePendingPass.bind(this, props.pass)}/>
       <li>
+        {console.log(props.pass);}
+        <Checkout stuff={props.pass}/>
+      </li>
+      <li>
         <form className="form-Message" onSubmit={(event) => {props.post(event, props.pass.email)}} >
           <label htmlFor="inputMessage" className="sr-only">message</label>
           <input
@@ -42,32 +44,6 @@ var PendingPasses = (props) => (
         </form>
       </li>
     </ul>
-=======
-    <li>
-      Pass Start Date: {new Date(props.pass.period_start.slice(0, 10)).toDateString().slice(4)}
-    </li>
-    <li>
-      Pass End Date: {new Date(props.pass.period_end.slice(0, 10)).toDateString().slice(4)}
-    </li>
-    <li>
-      Restricted Gyms:
-    </li>
-    <li>
-    Price: {props.pass.current_price}
-    </li>
-    <li>
-      Passes Available: {props.pass.pass_volume - props.pass.passes_sold}
-    </li>
-    <li>
-      Seller: {props.pass.first_name}
-    </li>
-    <li>
-      Email: {props.pass.email}
-    </li>
-    <li>
-      <Checkout />
-    </li>
->>>>>>> card token sent to server
   </div>
 );
 
