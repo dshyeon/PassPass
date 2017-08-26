@@ -1,25 +1,41 @@
 import React from 'react';
 import $ from 'jquery';
 import PendingPasses from './PendingPasses.jsx';
+import CurrentPasses from './CurrentPasses.jsx';
+import ExpiredPasses from './ExpiredPasses.jsx';
 
 class YourProfile extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
       userId: this.props.profileData.id,
+      allPasses: [],
       havePendingPasses: false,
       pendingPasses: [],
-      haveAvailablePasses: false,
-      availablePasses: [],
+      haveCurrentlyAvailablePasses: false,
+      currentlyAvailablePasses: [],
       haveExpiredPasses: false,
       expiredPasses: []
-    }
+    };
   }
 
   componentWillMount () {
-    this.getPendingPasses();
-    this.getAvailablePasses();
-    this.getExpiredPasses();
+    this.getAllPasses();
+  }
+
+  deletePendingPass(pass) {
+    $.ajax({
+      method: 'POST',
+      url: '/passes/delete',
+      contentType: 'application/json',
+      data: JSON.stringify({id: pass.id}),
+      success: function(results) {
+				console.log(results, 'SUCCESS');
+      },
+      error: function(xhr, error) {
+        console.log('error:', error);
+      }
+    });
   }
 
   updateMessageState(event) {
@@ -28,20 +44,18 @@ class YourProfile extends React.Component {
     this.setState(newState);
   }
 
-  getPendingPasses() {
-    var context = this;
+
+  getAllPasses() {
     $.ajax({
       method: 'POST',
-      url: '/passes/pending',
+      url: '/passes/all',
       contentType: 'application/json',
       data: JSON.stringify({userId: this.state.userId}),
-      success: function(pendingPasses) {
-				if (pendingPasses.length === 0) {
-        } else {
-          this.setState({havePendingPasses: true, pendingPasses: pendingPasses})
-        }
+      success: function(allPasses) {
+        // console.log(allPasses, "PENDINGDPASS")
+        this.setState({allPasses: allPasses})
       }.bind(this),
-      error: function(xhr, error) {
+      error: function(error) {
         console.log('error:', error);
       }
     });
@@ -51,20 +65,39 @@ class YourProfile extends React.Component {
       contentType: 'application/json',
       data: JSON.stringify({userId: this.state.userId}),
       success: function(pendingSellerData) {
-        if (pendingSellerData.length === 0) {
-          console.log(pendingSellerData, 'NULLLL')
-        } else {
-          console.log(pendingSellerData, 'CONSOLELOG')
-            let i = 0;
-            pendingSellerData.map((seller) => {
-              this.state.pendingPasses[i].first_name = seller.first_name;
-              this.state.pendingPasses[i].email = seller.email;
-              i++
-            })
-            this.setState({
-              pendingPasses: this.state.pendingPasses
-            })
-            console.log(this.state.pendingPasses, 'DID IT WORK??')
+          let i = 0;
+          pendingSellerData.map((seller) => {
+            this.state.allPasses[i].first_name = seller.first_name;
+            this.state.allPasses[i].email = seller.email;
+            i++;
+          })
+          this.setState({
+            allPasses: this.state.allPasses
+          })
+          console.log(this.state.allPasses)
+          for (var j = 0; j < this.state.allPasses.length; j++) {
+            var pass = this.state.allPasses[j];
+            if (pass.purchased === 'false') {
+              this.state.pendingPasses.push(pass);
+              this.setState({
+                havePendingPasses: true
+              })
+            } else {
+              var currentDate = new Date();
+              var expirationDate = new Date(pass.period_end);
+              console.log(currentDate, "current", expirationDate, "expirationDate")
+              if (expirationDate > currentDate) {
+                this.state.currentlyAvailablePasses.push(pass);
+                this.setState({
+                  haveCurrentlyAvailablePasses: true
+                })
+              } else {
+                this.state.expiredPasses.push(pass);
+                this.setState({
+                  haveExpiredPasses: true
+                })
+              }
+            }
           }
         }.bind(this),
           error: function(error) {
@@ -73,51 +106,14 @@ class YourProfile extends React.Component {
     });
   }
 
-  getAvailablePasses() {
-    $.ajax({
-      method: 'POST',
-      url: '/passes/available',
-      contentType: 'application/json',
-      data: JSON.stringify({userId: this.state.userId}),
-      success: function(availablePasses) {
-        if (availablePasses.length === 0) {
-          console.log(availablePasses, '@@@@@@@ NO AVAILABLE');
-        } else {
-          this.setState({haveAvailablePasses: true})
-        }
-      }.bind(this),
-      error: function(err) {
-        console.log(err, '###### ERROR')
-      }
-    });
-  }
 
-  getExpiredPasses() {
-    $.ajax({
-      method: 'POST',
-      url: '/passes/expired',
-      contentType: 'application/json',
-      data: JSON.stringify({userId: this.state.userId}),
-      success: function(expiredPasses) {
-        if (expiredPasses.length === 0) {
-          console.log(expiredPasses, '@@@@@@@ NO EXPIRED');
-        } else {
-          console.log(expiredPasses, '@@@@@@@ YES EXPIRED');
-          this.setState({haveExpiredPasses: true})
-        }
-      }.bind(this),
-      error: function(err) {
-        console.log(err, '####### ERROR');
-      }
-    });
-  }
-  
+
 
   postChatMessage (event, email) {
     event.preventDefault();
     let message = {
       msgBody: this.state.inputMessage,
-      msgTo: email 
+      msgTo: email
     }
     $.ajax({
       method: 'POST',
@@ -141,7 +137,7 @@ class YourProfile extends React.Component {
     return (
       <div className="about" >
         <br></br>
-        <div className="profilePicture">PROFILE PICTURE MAYBE</div>
+        {/* <div className="profilePicture">PROFILE PICTURE MAYBE</div> */}
         <h2 className="profileHeader">
           Welcome to PassPass, {this.props.profileData.first_name}!
         </h2>
@@ -156,24 +152,35 @@ class YourProfile extends React.Component {
           }
           {
             this.state.haveExpiredPasses &&
-              <li>
-                You have expired passes.
-              </li>
+            <ul>
+              {this.state.expiredPasses.map((pass, index) =>
+                <ExpiredPasses
+                  pass={pass}
+                  key={index}
+                />
+              )}
+            </ul>
           }
         </div>
         <ul className="profileList">
           <strong>Currently Available Passes</strong>
           {
-            !this.state.haveAvailablePasses &&
+            !this.state.haveCurrentlyAvailablePasses &&
               <li>
                 You don't have any available passes.
               </li>
           }
           {
-            this.state.haveAvailablePasses &&
-              <li>
-                You have available passes!
-              </li>
+            this.state.haveCurrentlyAvailablePasses &&
+            <ul>
+              {this.state.currentlyAvailablePasses.map((pass, index) =>
+                <CurrentPasses
+                  pass={pass}
+                  key={index}
+                />
+              )}
+            </ul>
+
           }
         </ul>
         <ul className="profileList">
@@ -193,14 +200,12 @@ class YourProfile extends React.Component {
                     key={index}
                     post={this.postChatMessage.bind(this)}
                     update={this.updateMessageState.bind(this)}
+                    deletePendingPass={this.deletePendingPass.bind(this)}
                   />
                 )}
               </ul>
           }
         </ul>
-        <div className="profileQuote">
-          Workout Quote
-        </div>
       </div>
     )
   }
