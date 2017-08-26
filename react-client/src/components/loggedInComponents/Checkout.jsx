@@ -66,7 +66,7 @@ class Checkout extends React.Component{
       description: 'card',
       source: token.id,
       currency: 'USD',
-      amount: this.props.stuff.pass.current_price,
+      amount: this.props.stuff.pass.current_price*100,
       email: this.props.stuff.pass.email || 'fail email',
       passId: '' + this.props.stuff.pass.id
     })
@@ -78,7 +78,7 @@ class Checkout extends React.Component{
     return(
       <StripeCheckout
         description={this.props.stuff.pass.description}
-        amount={this.props.stuff.pass.current_price}
+        amount={this.props.stuff.pass.current_price*100}
         token={this.onToken.bind(this)}
         currency={this.state.currency}
         stripeKey="pk_test_6EnH0U0AtzWmpg4xNaEtIlLa"
