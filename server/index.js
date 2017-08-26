@@ -193,9 +193,9 @@ app.post ('/passes/pending/buy', (req, res) => {
       console.log('transfercreation bruk', err)
     }else{
       console.log(res, '!@#$%^&*(*&^%$)')
-      db.switchFromPendingtoBought(res.transfer_group) {
-
-      }
+      // db.switchFromPendingtoBought(res.transfer_group) {
+      //
+      // }
     }
 
   });
