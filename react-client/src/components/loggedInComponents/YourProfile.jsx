@@ -137,7 +137,7 @@ class YourProfile extends React.Component {
     return (
       <div className="about" >
         <br></br>
-        <div className="profilePicture">PROFILE PICTURE MAYBE</div>
+        {/* <div className="profilePicture">PROFILE PICTURE MAYBE</div> */}
         <h2 className="profileHeader">
           Welcome to PassPass, {this.props.profileData.first_name}!
         </h2>
