@@ -9,11 +9,9 @@ class YourProfile extends React.Component {
       userId: this.props.profileData.id,
       havePendingPasses: false,
       pendingPasses: [],
-      haveAvailablePasses: false,
-      availablePasses: [],
-      haveExpiredPasses: false,
-      expiredPasses: []
-    }
+      havePurchasedPasses: false,
+      purchasedPasses: []
+    };
   }
 
   componentWillMount () {
