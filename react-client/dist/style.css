@@ -217,11 +217,3 @@ input[type=number] {
 	background: rgb(64,224,208);
 	border-radius: 10px;
 }
-
-ul {
-  list-style-type: none;
-}
-
-.addToPendingButton {
-	float: bottom;
-}
