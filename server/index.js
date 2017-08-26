@@ -187,13 +187,17 @@ app.post('/passes/delete', (req, res) => {
 
 
 app.post ('/passes/pending/buy', (req, res) => {
-  console.log(req.body, '@@###$$$@@##$$$')
+  // console.log(req.session, '@@###$$$@@##$$$')
   stripeHelpers.createTransferToPassPass(req.body, (err, res) => {
     if(err){
       console.log('transfercreation bruk', err)
+    }else{
+      console.log(res, '!@#$%^&*(*&^%$)')
+      db.switchFromPendingtoBought(res.transfer_group) {
+
+      }
     }
 
-    console.log(res)
   });
 });
 

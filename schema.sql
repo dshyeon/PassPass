@@ -117,7 +117,7 @@ CREATE TABLE pending_passes (
   for_sale_block_id int,
   purchased VARCHAR(20),
   FOREIGN KEY (perspective_buyer_id) REFERENCES users(id),
-  FOREIGN KEY (for_sale_block_id) REFERENCES for_sale_block(id)
+  FOREIGN KEY (for_sale_block_id) REFERENCES for_sale_block(id),
 );
 
 CREATE TABLE payment_options (

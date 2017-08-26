@@ -60,14 +60,15 @@ class Checkout extends React.Component{
   };
 
   onToken(token) {
-    console.log(this.props.stuff)
+
     axios.post('/passes/pending/buy',
     {
       description: 'card',
       source: token.id,
       currency: 'USD',
-      amount: this.props.stuff.current_price || 'fail email',
-      email: this.props.stuff.email || 'fail email'
+      amount: this.props.stuff.current_price,
+      email: this.props.stuff.email || 'fail email',
+      passId: '' + this.props.stuff.id
     })
     .then(this.successPayment)
     .catch(this.errorPayment);

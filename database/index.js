@@ -128,6 +128,11 @@ module.exports.updatePassesAvailable = function (passesSold, id, callback) {
     }
   });
 }
+//
+module.exports.switchFromPendingtoBought = function(data) {
+  console.log(data)
+  module.exports.connection.query('UPDATE pending_passes SET purchased = true WHERE for_sale_block_id=' + data + ';')
+}
 
 module.exports.authUser = function(user, callback) {
   var values = [user.email, user.password + user.salt];

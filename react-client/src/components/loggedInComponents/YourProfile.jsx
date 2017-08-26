@@ -20,6 +20,7 @@ class YourProfile extends React.Component {
   }
 
   componentWillMount () {
+<<<<<<< HEAD
     this.getAllPasses();
   }
 
@@ -36,6 +37,11 @@ class YourProfile extends React.Component {
         console.log('error:', error);
       }
     });
+=======
+    this.getPendingPasses();
+    // this.getAvailablePasses();
+    // this.getExpiredPasses();
+>>>>>>> transactions completed
   }
 
   updateMessageState(event) {
@@ -106,8 +112,50 @@ class YourProfile extends React.Component {
     });
   }
 
+<<<<<<< HEAD
 
 
+=======
+  // getAvailablePasses() {
+  //   $.ajax({
+  //     method: 'POST',
+  //     url: '/passes/available',
+  //     contentType: 'application/json',
+  //     data: JSON.stringify({userId: this.state.userId}),
+  //     success: function(availablePasses) {
+  //       if (availablePasses.length === 0) {
+  //         console.log(availablePasses, '@@@@@@@ NO AVAILABLE');
+  //       } else {
+  //         this.setState({haveAvailablePasses: true})
+  //       }
+  //     }.bind(this),
+  //     error: function(err) {
+  //       console.log(err, '###### ERROR')
+  //     }
+  //   });
+  // }
+  //
+  // getExpiredPasses() {
+  //   $.ajax({
+  //     method: 'POST',
+  //     url: '/passes/expired',
+  //     contentType: 'application/json',
+  //     data: JSON.stringify({userId: this.state.userId}),
+  //     success: function(expiredPasses) {
+  //       if (expiredPasses.length === 0) {
+  //         console.log(expiredPasses, '@@@@@@@ NO EXPIRED');
+  //       } else {
+  //         console.log(expiredPasses, '@@@@@@@ YES EXPIRED');
+  //         this.setState({haveExpiredPasses: true})
+  //       }
+  //     }.bind(this),
+  //     error: function(err) {
+  //       console.log(err, '####### ERROR');
+  //     }
+  //   });
+  // }
+
+>>>>>>> transactions completed
 
   postChatMessage (event, email) {
     event.preventDefault();
