@@ -2,6 +2,7 @@ import React from 'react';
 import $ from 'jquery';
 import PendingPasses from './PendingPasses.jsx';
 import CurrentPasses from './CurrentPasses.jsx';
+import ExpiredPasses from './ExpiredPasses.jsx';
 
 class YourProfile extends React.Component {
   constructor (props) {
@@ -151,9 +152,14 @@ class YourProfile extends React.Component {
           }
           {
             this.state.haveExpiredPasses &&
-              <li>
-                You have expired passes.
-              </li>
+            <ul>
+              {this.state.expiredPasses.map((pass, index) =>
+                <ExpiredPasses
+                  pass={pass}
+                  key={index}
+                />
+              )}
+            </ul>
           }
         </div>
         <ul className="profileList">
