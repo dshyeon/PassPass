@@ -166,13 +166,14 @@ module.exports.newMerchantAcct = function(userId, acctNumber){
   module.exports.connection.query(`UPDATE users SET merchant_id = "${acctNumber}" where id = ${userId}`)
 }
 
-module.exports.getMerchantAcctNum = function(email) {
+module.exports.getMerchantAcctNum = function(email, cb) {
   var querystring = `SELECT merchant_id FROM users WHERE email="${email}";`;
   module.exports.connection.query(querystring, (err, res) => {
-    if (err || res === null) {
+    if (err) {
       console.log('error getting merchid')
+      cb(err, null)
     }
-    return res;
+    cb(null, res[0].merchant_id);
   });
 }
 

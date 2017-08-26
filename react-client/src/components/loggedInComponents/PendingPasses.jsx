@@ -26,7 +26,7 @@ var PendingPasses = (props) => (
       </li>
       <input type="submit" value="Delete" className="deleteFromPendingButton" onClick={props.deletePendingPass.bind(this, props.pass)}/>
       <li>
-        {console.log(props.pass);}
+        {console.log(props.pass)}
         <Checkout stuff={props.pass}/>
       </li>
       <li>
