@@ -174,6 +174,7 @@ module.exports.newMerchantAcct = function(userId, acctNumber){
 module.exports.getMerchantAcctNum = function(email, cb) {
   var querystring = `SELECT merchant_id FROM users WHERE email="${email}";`;
   module.exports.connection.query(querystring, (err, res) => {
+    console.log(res, err, '123456543')
     if (err) {
       console.log('error getting merchid')
       cb(err, null)

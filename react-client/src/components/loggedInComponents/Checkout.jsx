@@ -60,15 +60,15 @@ class Checkout extends React.Component{
   };
 
   onToken(token) {
-
+    console.log(this.props)
     axios.post('/passes/pending/buy',
     {
       description: 'card',
       source: token.id,
       currency: 'USD',
-      amount: this.props.stuff.current_price,
-      email: this.props.stuff.email || 'fail email',
-      passId: '' + this.props.stuff.id
+      amount: this.props.stuff.pass.current_price,
+      email: this.props.stuff.pass.email || 'fail email',
+      passId: '' + this.props.stuff.pass.id
     })
     .then(this.successPayment)
     .catch(this.errorPayment);
@@ -77,8 +77,8 @@ class Checkout extends React.Component{
   render(){
     return(
       <StripeCheckout
-        description={this.props.stuff.description}
-        amount={this.props.stuff.current_price}
+        description={this.props.stuff.pass.description}
+        amount={this.props.stuff.pass.current_price}
         token={this.onToken.bind(this)}
         currency={this.state.currency}
         stripeKey="pk_test_6EnH0U0AtzWmpg4xNaEtIlLa"

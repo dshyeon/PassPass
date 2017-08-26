@@ -117,7 +117,7 @@ CREATE TABLE pending_passes (
   for_sale_block_id int,
   purchased VARCHAR(20),
   FOREIGN KEY (perspective_buyer_id) REFERENCES users(id),
-  FOREIGN KEY (for_sale_block_id) REFERENCES for_sale_block(id),
+  FOREIGN KEY (for_sale_block_id) REFERENCES for_sale_block(id)
 );
 
 CREATE TABLE payment_options (
@@ -129,13 +129,6 @@ CREATE TABLE payment_options (
   FOREIGN KEY (user) REFERENCES users(id)
 );
 
-<<<<<<< HEAD
-CREATE TABLE transfers (
-  id int PRIMARY KEY AUTO_INCREMENT
-);
-
-=======
->>>>>>> work on linking up card purchase
 INSERT INTO users (id, email, password, salt, first_name, last_name, phone, created_at, updated_at, rating, review_count) VALUES
   (1, 'billy@bob.com', SHA2('billysPasswordcPjfn67sdv', 0), 'cPjfn67sdv', 'Billy', 'Bob', '5208184579', '2017-03-05', '2017-03-09', 4, 4),
   (2, 'sally@sal.com', SHA2('sallysPassword8nJHBh665v', 0), '8nJHBh665v', 'Sally', 'Sal', '1112224444', '2017-04-15', NULL,3,10),

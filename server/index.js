@@ -187,7 +187,7 @@ app.post('/passes/delete', (req, res) => {
 
 
 app.post ('/passes/pending/buy', (req, res) => {
-  // console.log(req.session, '@@###$$$@@##$$$')
+  console.log(req.body, '@@###$$$@@##$$$')
   stripeHelpers.createTransferToPassPass(req.body, (err, res) => {
     if(err){
       console.log('transfercreation bruk', err)
