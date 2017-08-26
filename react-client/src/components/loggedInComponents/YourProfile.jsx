@@ -48,7 +48,7 @@ class YourProfile extends React.Component {
       contentType: 'application/json',
       data: JSON.stringify({userId: this.state.userId}),
       success: function(pendingPasses) {
-        console.log(pendingPasses, "PENDINGDPASSES")
+        console.log(pendingPasses, "PENDINGDPASS")
 				if (pendingPasses.length === 0) {
         } else {
           this.setState({havePendingPasses: true, pendingPasses: pendingPasses})

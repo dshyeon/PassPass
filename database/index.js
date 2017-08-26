@@ -94,7 +94,7 @@ module.exports.getPendingSellerData = function (userId, callback) {
 }
 
 module.exports.addToPending = function(passId, userId, callback) {
-  module.exports.connection.query('INSERT INTO pending_passes (perspective_buyer_id, for_sale_block_id, purchased) VALUES (' + userId + ',' + passId + ', false)', (error, results, fields) => {
+  module.exports.connection.query('INSERT INTO pending_passes (perspective_buyer_id, for_sale_block_id, purchased) VALUES (' + userId + ',' + passId + ', "false")', (error, results, fields) => {
     if (error || !results) {
       console.log('*********** database find user by ID error ', error);
       callback(error);
