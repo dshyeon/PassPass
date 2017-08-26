@@ -166,7 +166,7 @@ app.post('/passes/pending/seller', (req, res) => {
 });
 
 app.post ('/passes/pending/add', (req, res) => {
-  console.log(req.body, '@@###$$$@@##$$$')
+  console.log(req, '@@###$$$@@##$$$')
   database.addToPending(req.body.pass.id, req.body.profileData.id, () => {
     res.sendStatus(200);
   })

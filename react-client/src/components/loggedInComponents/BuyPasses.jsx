@@ -46,7 +46,7 @@ class BuyPasses extends React.Component {
       <div className="buyPasses">
         <BuyPassesSearch handleSearch={this.handleSearch.bind(this)}/>
 			  <BuyPassesList profileData={this.props.profileData} forSaleBlocks={this.state.forSaleBlocks} searchState={this.state.search}/>
-      </div>
+		</div>
     )
   }
 }

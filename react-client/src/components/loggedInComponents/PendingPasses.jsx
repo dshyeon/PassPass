@@ -1,7 +1,9 @@
 import React from 'react';
+import Checkout from './PendingPasses.jsx';
 
 var PendingPasses = (props) => (
   <div className="profilePending">
+<<<<<<< HEAD
     <ul>
       <li>
         Pass Start Date: {new Date(props.pass.period_start.slice(0, 10)).toDateString().slice(4)}
@@ -39,6 +41,32 @@ var PendingPasses = (props) => (
         </form>
       </li>
     </ul>
+=======
+    <li>
+      Pass Start Date: {new Date(props.pass.period_start.slice(0, 10)).toDateString().slice(4)}
+    </li>
+    <li>
+      Pass End Date: {new Date(props.pass.period_end.slice(0, 10)).toDateString().slice(4)}
+    </li>
+    <li>
+      Restricted Gyms:
+    </li>
+    <li>
+    Price: {props.pass.current_price}
+    </li>
+    <li>
+      Passes Available: {props.pass.pass_volume - props.pass.passes_sold}
+    </li>
+    <li>
+      Seller: {props.pass.first_name}
+    </li>
+    <li>
+      Email: {props.pass.email}
+    </li>
+    <li>
+      <Checkout />
+    </li>
+>>>>>>> card token sent to server
   </div>
 );
 
